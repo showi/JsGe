@@ -1,5 +1,6 @@
-var GeScreen = Class.create({
+var GeScreen = Class.create(GeObject, {
 	initialize: function(parent, id, width, height) {
+		this.id = id;
 		this.parent = parent;
 		this.width = width;
 		this.height = height;

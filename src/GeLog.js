@@ -1,5 +1,6 @@
-var GeLog = Class.create({
-	initialize: function(id) {
+var GeLog = Class.create(GeObject, {
+	initialize: function($super, id) {
+		$super();
 		this.elm = document.getElementById(id);
 		this.count = 0;
 		
@@ -12,7 +13,7 @@ var GeLog = Class.create({
 			this.count = 1;
 			this.elm.innerHTML = "";
 		}
-		date = new Date();
+		var date = new Date();
 		this.elm.innerHTML += "[" + date.getTime() + "] " + msg + "<br>";
 		this.count++;
 	}

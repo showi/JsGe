@@ -4,17 +4,24 @@
 <script src="lib/prototype-1.7.js"></script>
 
 <!-- Game Engine Component -->
+
+<script src="src/GeVar.js"></script>
+<script src="src/GeGenID.js"></script>
+<script src="src/GeObject.js"></script>
 <script src="src/GeLog.js"></script>
 <script src="src/GeVector2d.js"></script>
+
+<script src="src/GeScreen.js"></script>
 <script src="src/GeMouse.js"></script>
 <script src="src/GeImagePool.js"></script>
+
 <script src="src/GeBound_Shadow.js"></script>
 <script src="src/GePhyState.js"></script>
+<script src="src/GeCamera.js"></script>
 <script src="src/GeTree.js"></script>
-<script src="src/GeScreen.js"></script>
+<script src="src/GeBoundingCircle.js"></script>
 <script src="src/GeRenderer.js"></script>
 <script src="src/GeCore.js"></script>
-<script src="src/GeBoundingCircle.js"></script>
 <script src="src/core.js"></script>
 <!-- END -->
 
@@ -25,14 +32,27 @@
 }
 </style>
 </head>
-<body onLoad="Core.init();" style="background-color: grey;">  
-	<div align="center"><canvas id="GameScreen" width="640" height="480"></canvas>	</div>
-	<div><canvas id="GameScreen2" width="64" height="64"></canvas></div>
-	<div>GameStep:<span id="GameStep">0</span></div>
-	<div>ElapsedTime:<span id="GameElapsedTime">0</span></div>
-	<div>FPS:&nbsp;<span id="GameFPS">0</span></div>
-	<div>Accumulator:<span id="GameAccumulator">0</span></div>
-	<div>Click at(<span id="clickatX">0</span>,&nbsp;<span id="clickatY">0</span>)</div>
-	<div style="background-color: black; color: white;"><div>Log:</div><div id="GameLog" style="height: 200; overflow: scroll;"></div></div>
+<body onLoad="Core.init(640,480);" style="background-color: grey;">  
+	<div>
+		<canvas id="GameScreen"  width="640" height="480" />
+		
+	</div>
+<canvas id="GameScreen3" width="640" height="480" />
+	<div style="background-color: blue;">
+		<canvas id="GameScreen2" width="64" height="64" />
+	</div>
+	<!--<div>GameStep:<span id="GameStep">0</span></div>-->
+	<!--<div>ElapsedTime:<span id="GameElapsedTime">0</span></div>-->
+	<div>
+		FPS:&nbsp;<span id="GameFPS">0</span>
+	</div>
+	<!--<div>Accumulator:<span id="GameAccumulator">0</span></div>-->
+	<div>
+		Click at(<span id="clickatX">0</span>,&nbsp;<span id="clickatY">0</span>)
+	</div>
+	<div style="background-color: black; color: white;">
+		<div>Log:</div><div id="GameLog" style="height: 200; overflow: scroll;"></div>
+	</div>
+	
 </body>
 </html>
