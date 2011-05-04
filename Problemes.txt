@@ -1,0 +1,3 @@
+Implementer un cache pour le test de collision shadow
+
+les noeuds de l'arbre influence le positionement des enfants.
