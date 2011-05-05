@@ -15,11 +15,14 @@
 <script src="src/GeMouse.js"></script>
 <script src="src/GeImagePool.js"></script>
 
-<script src="src/GeBound_Shadow.js"></script>
+<script src="src/GeCollision.js"></script>
+<script src="src/GeBounding.js"></script>
+<script src="src/GeBoundingShadow.js"></script>
+<script src="src/GeBoundingCircle.js"></script>
+
 <script src="src/GePhyState.js"></script>
 <script src="src/GeCamera.js"></script>
 <script src="src/GeTree.js"></script>
-<script src="src/GeBoundingCircle.js"></script>
 <script src="src/GeRenderer.js"></script>
 <script src="src/GeCore.js"></script>
 <script src="src/core.js"></script>
@@ -34,18 +37,21 @@
 </head>
 <body onLoad="Core.init(640,480);" style="background-color: grey;">  
 	<div>
-		<canvas id="GameScreen"  width="640" height="480" />
-		
+		<canvas id="GameScreen"  width="640" height="480" ></canvas>
+			<div>
+		FPS:&nbsp;<span id="GameFPS">0</span>
+			</div>
 	</div>
-<canvas id="GameScreen3" width="640" height="480" />
+	<canvas id="GameScreen3" width="320" height="240"></canvas>
+		<div>
+		FPS:&nbsp;<span id="GameFPS3">0</span>
+	</div>
 	<div style="background-color: blue;">
 		<canvas id="GameScreen2" width="64" height="64" />
 	</div>
 	<!--<div>GameStep:<span id="GameStep">0</span></div>-->
 	<!--<div>ElapsedTime:<span id="GameElapsedTime">0</span></div>-->
-	<div>
-		FPS:&nbsp;<span id="GameFPS">0</span>
-	</div>
+
 	<!--<div>Accumulator:<span id="GameAccumulator">0</span></div>-->
 	<div>
 		Click at(<span id="clickatX">0</span>,&nbsp;<span id="clickatY">0</span>)

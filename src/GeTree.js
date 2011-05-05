@@ -1,7 +1,8 @@
 /*# > Object < #*/
-var GeBound = Class.create({
+var GeBound = Class.create(GeObject, {
 	/*# > Method < #*/
-	initialize: function(parent) {
+	initialize: function($super, parent) {
+		$super();
 		this.parent = parent;
 	},
 	add: function(bound) {
@@ -109,25 +110,39 @@ var GeTreeNode = Class.create(GeObject, {
 	update: function(dt) {
 		if (this.phys && !this.frozen()) {
 			this.phys.update(dt);
-			this.collide();
+			var c = this.collide();
+			if (c) {
+				//Log.w("col");
+				c.correct();
+			}
 		}
 		this.childs.each(function(item) {
 			if (item.phys && !item.frozen()) {
 				item.phys.update(dt);
-				item.collide();
+				var c = item.collide();
+				if (c) {
+					//Log.w("col");
+					c.correct();
+				}
 			}
 		});
 	},
 	
 	/*# > Method < #*/
 	collide: function() {
+		if (this.frozen()) {
+			return false;
+		}
 		if (!this.bound) {
 			Log.w("No bound for object " + this.id);
 		}
 		if (this.bound.shadow) {
 			//Log.w("Bounding Shadow for object " + this.id);
 			this.bound.shadow.collide();
-			
+		}
+		if (this.bound.circle) {
+			//Log.w("Bounding Circl for object " + this.id);
+			return this.bound.circle.collide();
 		}
 	},
 	
@@ -166,6 +181,7 @@ var GeGx_Monster = Class.create({
 		//ctx.drawImage(Core.Images.get("ball-infected-32x32.png").get(), 0, 0);
 		ctx.restore();
 	},
+
 });
 		
 /*# > Object < #*/
@@ -181,12 +197,18 @@ var GeTreeNode_Monster = Class.create(GeTreeNode, {
 		this.phys = new GePhysState(this);
 		this.phys.pos.x = Math.random()*640;
 		this.phys.pos.y = Math.random()*480;
-		this.phys.force.x = Math.random() / 2;
-		this.phys.force.y = Math.random() / 2;
+		this.phys.force.x = 0.1;//Math.random() / 5;
+		this.phys.force.y = 0.1;//Math.random() / 5;
 		this.gx = new GeGx_Monster(this);
 		this.bound = new GeBound(this);
-		//this.bound.add(new GeBound_Shadow(this));
+		//this.phys.pos.orientation = this.phys.force;
+		this.bound.add(new GeBoundingCircle(this, this.gx.width/2));
 	},
+	update: function($super, dt) {
+		alert("up");
+		//this.phys.pos.orientation = this.phys.force.clone();
+		$super(dt);
+	}
 });
 
 

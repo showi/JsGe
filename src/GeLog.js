@@ -9,7 +9,7 @@ var GeLog = Class.create(GeObject, {
 		if(!this.elm) {
 			return;
 		}
-		if (this.count > 9) {
+		if (this.count > 20) {
 			this.count = 1;
 			this.elm.innerHTML = "";
 		}

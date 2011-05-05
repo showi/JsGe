@@ -1,6 +1,7 @@
 var Vector2D = Class.create({
   initialize: function(x, y) {
 	this.set(x, y);
+	return this;
   },
   set: function(x, y) {
 	this.x = x;
@@ -21,15 +22,22 @@ var Vector2D = Class.create({
   add: function(b) {
 	this.x += b.x;
 	this.y += b.y;
+	return this;
   },
-
+  sub: function(b) {
+	this.x -= b.x;
+	this.y -= b.y;
+	return this;
+  },
   inv: function() {
 	this.x = - this.x;
 	this.y = - this.y;
+	return this;
   },
   mul: function(b) {
 	this.x *= b;
 	this.y *= b;
+	return this;
   },
   dist: function (b) {
 	var dist = Math.sqrt(Math.pow(b.x - this.x, 2) + Math.pow(b.y - this.y, 2));
@@ -39,13 +47,20 @@ var Vector2D = Class.create({
   dot: function(b) {
 	return this.x * b.x + this.y + b.y;
   },
-  
-  norm: function() {
+  angle: function(v) {
+	return Math.PI/180* Math.acos(this.dot(v));
+  },
+  normalize: function() {
 	var m = this.mag();
 	if (m > 0.0) {
-		this.x / m;
-		this.y / m;
+		this.x /= m;
+		this.y /= m;
 	}
+	return this;
+  },
+  link: function(A, B) {
+	this.x = B.x - A.x;
+	this.y = B.y - A.y;
 	return this;
   }
 });

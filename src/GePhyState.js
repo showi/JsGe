@@ -1,7 +1,11 @@
 var GePosition = Class.create(Vector2D, {
-	initialize: function($super, x, y, angle) {
+	initialize: function($super, x, y, orientation) {
 		$super(x, y);
-		this.orientation = angle;
+		if (orientation) {
+			this.orientation = orientation;
+		} else {
+			this.orientation = new Vector2D(0, 1);
+		}
 	},
 });
 
@@ -11,7 +15,7 @@ var GePosition = Class.create(Vector2D, {
 var GePhysState = Class.create({
 	initialize: function(parent) {
 		this.parent = parent;
-		this.pos = new GePosition(0.0, 0.0);
+		this.pos = new GePosition(0.0, 0.0, null);
 		//this.velocity = new Vector2D(0.0,0.0);
 		this.force = new Vector2D(0, 0);
 		this.movable = false;
@@ -19,6 +23,9 @@ var GePhysState = Class.create({
 		this.set_mass(10);
 		this.width = 32;
 		this.height = 32;
+	},
+	get_force: function() {
+		return this.force();
 	},
 	set_mass: function(mass) {
 		this.mass = mass;
