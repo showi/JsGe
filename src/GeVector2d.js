@@ -51,10 +51,13 @@ var Vector2D = Class.create({
   },
   
   dot: function(b) {
-	return this.x * b.x + this.y + b.y;
+	return this.x * b.x + this.y * b.y;
   },
   angle: function(v) {
-	return Math.PI/180* Math.acos(this.dot(v));
+	return Math.PI/180 * Math.acos(this.dot(v));
+  },
+  angled: function(v) {
+	return Math.acos(this.dot(v));  
   },
   normalize: function() {
 	var m = this.mag();

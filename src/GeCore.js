@@ -62,7 +62,7 @@ var GeCore = Class.create({
 			m = new GeTreeNode_Monster(null);
 			this.SgDynamic.add_child(m);
 		}
-		this.camera = new GeCamera(parent, m.phys.pos);
+		this.camera = new GeCamera(parent, m);
 		//this.camera.pos.orientation = m.phys.force; 
 		this.SgStatic.add_child(new GeTreeNode_Block(
 			new Vector2D(264,50),

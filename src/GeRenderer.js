@@ -1,4 +1,5 @@
 var GeRenderer = Class.create(GeObject, {
+	
 	initialize: function($super, parent, screen, camera, width, height) {
 		$super();
 		this.camera = camera;
@@ -11,23 +12,17 @@ var GeRenderer = Class.create(GeObject, {
 		this.lastFrameTime = date.getTime();
 		this.frameCount = 0;
 	},
+	
 	draw: function() {
 		this.screen.init_buffer();
 		var ctx = this.screen.buffer.getContext('2d');	
 		ctx.save();
-		//ctx.save();
 		if (this.camera) {
-		ctx.translate(this.screen.width / 2, this.screen.height / 2);
-		
-		//ctx.rotate(new Vector2D(0,1).angle(this.camera.pos.orientation));
-		ctx.translate(-this.camera.pos.x, -this.camera.pos.y);
-			//ctx.scale(2,2);
-			
-		
-			
+			//var o = new Vector2D(0, 1).angled(this.camera.object.phys.velocity);
+			//ctx.rotate(o);
+			ctx.translate(this.screen.width / 2, this.screen.height / 2);
+			ctx.translate(-this.camera.object.phys.pos.x, -this.camera.object.phys.pos.y);
 		}
-		//ctx.restore();
-		
 		this.parent.SG.draw(ctx);
 		ctx.restore();
 		var date = new Date();
@@ -41,6 +36,5 @@ var GeRenderer = Class.create(GeObject, {
 		}
 		this.frameCount++;	
 		this.screen.swap();	
-		//document.getElementById('GameFPS').innerHTML =  Math.round(this.FPS);
 	}
 });
