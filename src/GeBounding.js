@@ -1,6 +1,5 @@
-var GeBounding = Class.create(GeObject, {
-	initialize: function($super, parent) {
-		$super();
+var GeBounding = Class.create({
+	initialize: function(parent) {
 		this.type = 'base';
 		this.parent = parent;
 	},

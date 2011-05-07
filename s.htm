@@ -4,7 +4,7 @@
 <script src="lib/prototype-1.7.js"></script>
 
 <!-- Game Engine Component -->
-
+<script src="src/GeGlobals.js"></script>
 <script src="src/GeVar.js"></script>
 <script src="src/GeGenID.js"></script>
 <script src="src/GeObject.js"></script>
@@ -19,13 +19,17 @@
 <script src="src/GeBounding.js"></script>
 <script src="src/GeBoundingShadow.js"></script>
 <script src="src/GeBoundingCircle.js"></script>
+<script src="src/GeBoundingBox.js"></script>
 
 <script src="src/GePhyState.js"></script>
-<script src="src/GeCamera.js"></script>
+<script src="src/GeLevel.js"></script>
+
 <script src="src/GeTree.js"></script>
+<script src="src/GeCamera.js"></script>
+
 <script src="src/GeRenderer.js"></script>
 <script src="src/GeCore.js"></script>
-<script src="src/core.js"></script>
+<script src="src/GeInitGlobals.js"></script>
 <!-- END -->
 
 <style>
@@ -35,7 +39,7 @@
 }
 </style>
 </head>
-<body onLoad="Core.init(640,480);" style="background-color: grey;">  
+<body onLoad="ShoGE.Core.init(640,480);" style="background-color: grey;">  
 	<div>
 		<canvas id="GameScreen"  width="640" height="480" ></canvas>
 			<div>

@@ -12,13 +12,27 @@ var GeScreen = Class.create(GeObject, {
 		this.ctx = this.canvas.getContext('2d');
 		this.init_buffer(); 
 	},
+	get_layer: function(id) {
+		if (id < 0) {
+			id = 0;
+		}
+		if (id > 10) {
+			id = 10;
+		}
+		if (this.layers[id]) {
+			return this.layers[id];
+		}
+		var c = document.createElement('canvas');
+		this.layers[id] = c.getContext('2d');
+	},
 	init_buffer: function() {
+		this.layers = new Array();
 		var b = document.createElement('canvas');
 		b.width = this.width;
 		b.height = this.height;
 		this.buffer = b;
 		var ctx = b.getContext('2d');
-		ctx.fillStyle = "rgb(20,20,20)";
+		ctx.fillStyle = "rgb(20,20,250)";
 		ctx.fillRect (0, 0, this.width, this.height);
 	},
 	swap: function() {

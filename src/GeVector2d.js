@@ -3,6 +3,12 @@ var Vector2D = Class.create({
 	this.set(x, y);
 	return this;
   },
+  is_vector: function(v) {
+	if (v instanceof Vector2D) {
+		return true;
+	}
+	return false;
+  },
   set: function(x, y) {
 	this.x = x;
 	this.y = y;
@@ -52,7 +58,7 @@ var Vector2D = Class.create({
   },
   normalize: function() {
 	var m = this.mag();
-	if (m > 0.0) {
+	if (m != 0) {
 		this.x /= m;
 		this.y /= m;
 	}
@@ -62,5 +68,20 @@ var Vector2D = Class.create({
 	this.x = B.x - A.x;
 	this.y = B.y - A.y;
 	return this;
-  }
+  },
+  normal: function() {
+	var v = new Vector2D(0,0);
+	v.x = - this.y;
+	v.y =  this.x;
+	return v;
+  },
+  proj: function(b) {
+		var dp = this.dot(b);
+		var p = new Vector2D(0,0);
+		p.x = (dp / (b.x * b.x + b.y * b.y)) * b.x;
+		p.y = (dp / (b.x * b.x + b.y * b.y)) * b.y;
+		return p;
+  } 
+  
+  
 });

@@ -1,9 +1,9 @@
 var GeObject = Class.create({
 	initialize: function() {
-			this.core_id = GenID.get();
+			this.core_id = ShoGE.GenID.get();
 	},
 	
-	_getro: function() {
+	get_root: function() {
 		if (this.parent) {
 			return this.parent._getro();
 		} else {

@@ -6,4 +6,5 @@ var GeGenID = Class.create({
 		return this.id++;
 	}
 });
-var GenID = new GeGenID();
+
+ShoGE.GenID = new GeGenID();

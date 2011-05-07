@@ -16,20 +16,21 @@ var GePhysState = Class.create({
 	initialize: function(parent) {
 		this.parent = parent;
 		this.pos = new GePosition(0.0, 0.0, null);
-		//this.velocity = new Vector2D(0.0,0.0);
-		this.force = new Vector2D(0, 0);
+		this.velocity = new Vector2D(0.0,0.0);
+		this.force = new Vector2D(0.0, 0.0);
 		this.movable = false;
 		this.solid = false;
-		this.set_mass(10);
+		this.set_mass(10.0);
 		this.width = 32;
 		this.height = 32;
+		this.minval = 0.00001;
 	},
 	get_force: function() {
 		return this.force();
 	},
 	set_mass: function(mass) {
 		this.mass = mass;
-		this.invmass = 1 / mass;
+		this.invmass = 1.0 / mass;
 	},
 	setPosX: function(x) {
 		this.pos.x = x;
@@ -55,69 +56,67 @@ var GePhysState = Class.create({
   setMovable: function(bMovable) {
 	this.movable = bMovable;
   },
-  applyForce: function(force, dt) {
-	force.mul(dt);
+  applyForce: function(force) {
+	if (!this.force) {
+		this.force = new Vector2D(0,0);
+	}
 	this.force.add(force);
   },
   update: function(dt) {
-  //alert("x: " + this.velocity.x);
-	var vmag = this.force.mag();
-	//if (vmag < 0.0001) {
-	//	this.force.x = this.force.y = 0;
-	//}
-	//this.applyForce(new Vector2D(0, 0.0002), dt);
-  	if (this.pos.x < 16 || this.pos.x > 624) {
+
+	if (this.force) {
+		this.force.set(0,0);
+			// Gravity
+	//this.applyForce(new Vector2D(0.0, 9.81/1000).mul(dt));
+	// Friction (Loss Of energy)
+	//this.applyForce(
+	//	this.velocity.clone().normalize().inv().mul(this.minval).mul(dt)
+	//);
+		var m = this.force.clone();
+		m.mul(this.invmass).mul(dt);
+		if (Math.abs(m.x) < this.minval) m.x = 0;
+		if (Math.abs(m.y) < this.minval) m.y = 0;
+		this.velocity.add(m);
+		/*var s = new RK4State();
+		s.pos = this.pos.clone();
+		s.force = this.force.clone();
+		var i = new RK4Integrator();
+		i.integrate(s, ShoGE.Core.t, ShoGE.Core.dt);
+		this.pos = i.pos;*/
+		
+	}
+	if (Math.abs(this.velocity.x) < this.minval) {
+		this.velocity.x = 0;
+	}
+	if (Math.abs(this.velocity.y) < this.minval) {
+		this.velocity.y = 0;
+	}
+	if (this.velocity.x == 0 && this.velocity.y == 0) {
+		this.parent.freeze();
+	}
+	this.pos.add(this.velocity);
+	
+	
+	  	if (this.pos.x < 16 || this.pos.x > 640 - 16) {
 			if (this.pos.x < 16) {
 				this.pos.x = 16;
 			} else {
-				this.pos.x = 624;
+				this.pos.x = 640 - 16;
 			}
 			//this.force.x -= 0.002;
-			this.force.x = - this.force.x ;
+			this.velocity.x = - this.velocity.x ;
 	}
-	if (this.pos.y < 8 || this.pos.y > 464) {
+	if (this.pos.y < 17 || this.pos.y > 480 - 17) {
 		//this.force.y -= 0.002;
-		this.force.y = - this.force.y ;
-		if (this.pos.y < 8) {
-			this.pos.y = 8;
+		if (this.pos.y < 17) {
+			this.pos.y = 17;
 		} else {
-			this.pos.y = 464;
+			this.pos.y = 480 - 17;
 		}
+		this.velocity.y = - this.velocity.y ;
 	}
-	var m = this.force.clone();
-	m.mul(dt);
-	this.pos.add(m);
-	
+	this.pos.x = Math.round(this.pos.x);
+	this.pos.y = Math.round(this.pos.y);
   },
 });
 
-var RK4State = Class.create({
-	initialize: function() {
-		this.pos = new Vector2D(0, 0);
-		this.force = new Vector2D(0, 0);
-	},
-	set_pos: function(x, y) {
-		this.pos.set(x, y);
-	},
-	set_force: function(x, y) {
-		this.force.set(x, y);
-	},
-});
-
-var RK4Integrator = Class.create({
-	initialize: function() {
-
-	},
-	acceleration: function (state, t) {
-		return state.force * state.invmass;
-	},
-	evaluate: function(initial, t, dt, derivative) {
-		var state = new RK4State();
-		state.pos = initial.pos.clone();
-		state.force = initial.pos.clone();
-		var output = new RK4State();
-		output.pos = state.pos.clone();
-		output.force = this.acceleration(state, t + dt);
-		return output;
-	},
-});

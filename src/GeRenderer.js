@@ -18,7 +18,7 @@ var GeRenderer = Class.create(GeObject, {
 		//ctx.save();
 		if (this.camera) {
 		ctx.translate(this.screen.width / 2, this.screen.height / 2);
-		ctx.scale(0.5,0.5);
+		
 		//ctx.rotate(new Vector2D(0,1).angle(this.camera.pos.orientation));
 		ctx.translate(-this.camera.pos.x, -this.camera.pos.y);
 			//ctx.scale(2,2);

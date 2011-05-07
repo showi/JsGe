@@ -9,9 +9,9 @@ var GeMouse = Class.create({
 			var gs = $('GameScreen');
 			that.pos.x = Event.pointerX(event);
 			that.pos.y = Event.pointerY(event);
-			$('clickatX').innerHTML = that.pos.x;
-			$('clickatY').innerHTML = that.pos.y;
-			Log.w("Clicked at: " +  that.pos.x + ", "  + that.pos.y);
+			//$('clickatX').innerHTML = that.pos.x;
+			//$('clickatY').innerHTML = that.pos.y;
+			//Log.w("Clicked at: " +  that.pos.x + ", "  + that.pos.y);
 		});
 	},
 });
