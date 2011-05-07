@@ -1,4 +1,4 @@
 /*
 	Main
 */
-ShoGE.Core = new GeCore();
+ShoGE.Core = new GeCore(null);

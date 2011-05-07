@@ -7,19 +7,10 @@ var GeTreeNode_Collection = Class.create(GeTreeNode, {
         this.type = "collection";
 	},
 	update: function($super, dt) {
-	//alert("update");
 		var it = this.childs.iterator();
 		var child;
 		while(child = it.next()) {
 			child.data.update(dt);
-		}
-	},
-	
-	draw: function($super, ctx) {
-		var it = this.childs.iterator();
-		var child;
-		while(child = it.next()) {
-			child.data.draw(ctx);
 		}
 	},
 	
@@ -30,4 +21,5 @@ var GeTreeNode_Collection = Class.create(GeTreeNode, {
 			child.data.collide();
 		}
 	}
+	
 });

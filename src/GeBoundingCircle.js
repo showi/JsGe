@@ -40,9 +40,10 @@ var GeBoundingCircle = Class.create(GeBounding, {
 				}*/
 			}
 		}
-		for (var i = 0; i < node.childs.length; i++) {
-			var child = node.childs[i];
-				if (c = this.collide(child)) {
+		var it = node.childs.iterator();
+		var child;
+		while(child = it.next()) {
+				if (c = this.collide(child.data)) {
 					return c;
 				} 
 		}

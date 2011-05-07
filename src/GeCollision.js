@@ -14,7 +14,7 @@ var GeCollision = Class.create({
 	},
 	correct: function() {
 		if (this.type == 'cc') {
-			this.correct_cc();
+			//this.correct_cc();
 		}
 	},
 	correct_cc: function() {
@@ -31,6 +31,8 @@ var GeCollision = Class.create({
 	},
 	
 	response_cc: function() {
+		this.A.phys.velocity.inv();
+		this.B.phys.velocity.inv();
 	return;
 		var delta = this.A.phys.pos.link(this.A.phys.pos, this.B.phys.pos);
 		var d = delta.mag();
@@ -46,8 +48,9 @@ var GeCollision = Class.create({
 		var i = (-(1.0 + ConstantRestitution) * vn) / (this.A.phys.invmass + this.B.phys.invmass);
 		var impulse = mtd.mul(i);
 		
-		this.A.phys.velocity.add(impulse.clone().mul(this.A.phys.invmass));
-		this.B.phys.velocity.add(impulse.clone().mul(this.B.phys.invmass));
+		//this.A.phys.velocity.add(impulse.clone().mul(this.A.phys.invmass));
+		//this.B.phys.velocity.add(impulse.clone().mul(this.B.phys.invmass));
+		
 		/*
 		//Log.w("res cc");
 		var wn = this.wallNormal.inv();

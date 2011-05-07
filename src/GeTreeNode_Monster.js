@@ -9,13 +9,23 @@ var GeTreeNode_Monster = Class.create(GeTreeNode, {
         this.unfreeze();
         this.unhide();
 		this.enable_physics();
-        this.phys.pos.x = Math.random()*1024;
-        this.phys.pos.y = Math.random()*768;
-        this.phys.velocity.x = Math.random()*10 ;
-        this.phys.velocity.y = Math.random()*10;
+        this.phys.pos.x = Math.round(Math.random()*512);
+        this.phys.pos.y = Math.round(Math.random()*512);
+		var minus = 1;
+		if (Math.random() > 0.5) {
+			minus = -1
+		}
+        this.phys.velocity.x = Math.random()*10 * minus ;
+		minus = 1;
+		if (Math.random() > 0.5) {
+			minus = -1
+		}
+        this.phys.velocity.y = Math.random()*10 * minus;
+		
         this.gx = new GeGx_Monster(this);
         this.bound = new GeBound(this);
         this.bound.add(new GeBoundingCircle(this, this.gx.width/2));
+		this.bound.grid = 1;
 		
 		/* DEBUG */
 		var drawForce = new GeTreeNode_Vector(this, this.phys.force); //this.phys.force);
@@ -39,7 +49,16 @@ var GeTreeNode_Monster = Class.create(GeTreeNode, {
 		//drawForce.unhide();
 		this.add_child(drawForce);
 	},
+
+	preload_ressources: function($super) {
+		Log.w("Loading monster ressources");
+		ShoGE.Core.Images.add("ball-blue-32x32.png");
+		ShoGE.Core.Images.add("ball-cover-32x32.png");
+		$super();
+	},
+	
 });
+
 /*# > Object < #*/
 var GeGx_Monster = Class.create({
     /*# > Method < #*/

@@ -84,7 +84,14 @@ var Vector2D = Class.create({
 		p.x = (dp / (b.x * b.x + b.y * b.y)) * b.x;
 		p.y = (dp / (b.x * b.x + b.y * b.y)) * b.y;
 		return p;
-  } 
+  },
   
+  invX: function() {
+	this.x = - this.x;
+  },
+  
+  invY: function() {
+	this.y = - this.y;
+  },
   
 });

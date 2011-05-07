@@ -97,7 +97,7 @@ var GePhysState = Class.create({
 	this.pos.add(this.velocity);
 	
 	
-	  	if (this.pos.x < 16 || this.pos.x > 640 - 16) {
+	/*if (this.pos.x < 16 || this.pos.x > 640 - 16) {
 			if (this.pos.x < 16) {
 				this.pos.x = 16;
 			} else {
@@ -114,9 +114,29 @@ var GePhysState = Class.create({
 			this.pos.y = 480 - 17;
 		}
 		this.velocity.y = - this.velocity.y ;
+		}*/
+		this.grid_bounding();
+		this.pos.x = Math.round(this.pos.x);
+		this.pos.y = Math.round(this.pos.y);
+	},
+	
+	grid_bounding: function() {
+		if (!this.parent.bound || !this.parent.bound.grid) {
+			
+			return;
+		}
+		var ccell = this.parent.get_parent('cell');
+		if (!ccell) { return; }
+		//alert("plop");
+		var maxcellX = ccell.x * ccell.parent.cell_size + ccell.parent.cell_size;
+		var maxcellY = ccell.y * ccell.parent.cell_size + ccell.parent.cell_size;
+		if (this.pos.x < 0 || this.pos.x > maxcellX) {
+			this.velocity.invX();
+		}
+		if (this.pos.y < 0 || this.pos.y > maxcellY) {
+			this.velocity.invY();
+		}
+		
 	}
-	this.pos.x = Math.round(this.pos.x);
-	this.pos.y = Math.round(this.pos.y);
-  },
 });
 

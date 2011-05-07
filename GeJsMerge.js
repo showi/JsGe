@@ -1,4 +1,122 @@
 
+// Source: src/GeArray2D.js
+
+var GeArray2D = Class.create({
+	initialize: function(width, height) {
+		if (!width) { throw("GeArray2D: Cannot calcul array index without array width");}
+		this.width = width;
+		this.height = height;
+		this.data = new Array();
+	},
+	
+	get: function(x,y) {
+		return this.data[x*this.width + this.y];
+	},
+	
+	set: function(x,y, data) {
+		this.data[x*this.width + this.y] = data;
+	},
+});
+
+// Source: src/GeLinkedList.js
+
+var GeLinkedList_Iterator = Class.create({
+	initialize: function(ll) {
+		this.ll = ll;
+		this.current = ll.head;
+	},
+	next: function() {
+		if (!this.current) return null;
+		var elm = this.current;
+		this.current = this.current.next;
+		return elm;
+	},
+	prev: function() {
+		if (!this.current) return null;
+		var elm = this.current;
+		this.current = this.current.prev;
+		return elm;
+	},
+	reset_head: function() {
+		this.current = this.ll.head;
+	},
+	reset_tail: function() {
+		this.current = this.ll.tail;
+	}
+	
+});
+var GeLinkedList_Element = Class.create({
+	initialize: function(data) {
+		this.prev = null;
+		this.next = null;
+		this.data = data;
+	},
+});
+
+var GeLinkedList = Class.create({
+	initialize: function() {
+		this.head = null;
+		this.tail = null;
+	},
+	iterator: function() {
+		return new GeLinkedList_Iterator(this);
+	},
+	add: function(data) {
+		var elm = new GeLinkedList_Element(data);
+		if (!this.head && !this.tail) {
+			this.head = elm;
+			this.tail = elm;
+		} else {
+			this.tail.next = elm;
+			elm.prev = this.tail;
+			this.tail = elm;
+		} 
+		return elm;
+	},
+	
+	/*ins: function(target, inserted) {
+		var elm = this.head;
+		while(elm != target && elm.next) {
+			elm = this.head.next;
+		}
+		if (elm != target) {
+			throw("No matching target to insert element");
+		}
+		var next = elm.next;
+		elm.next = inserted;
+		inserted.prev = elm;
+		inserted.next = next;
+	},
+	*/
+	remove: function(remElm) {
+		var it = new GeLinkedList_Iterator(this);
+		var elm;
+		while(elm = it.next()) {
+			if (elm == remElm) {
+				if (elm == this.head) {
+					this.head = elm.next;
+				}
+				if (elm == this.tail) {
+					this.tail = elm.prev;
+				}
+				if (elm.prev) {
+					elm.prev.next = elm.next;	
+				}
+				if (elm.next) {
+					elm.next.prev = elm.prev;
+				}
+				elm.prev = null;
+				elm.next = null;
+				return elm;
+				
+				return 1;
+			}
+		}
+		return 0;
+	},
+});
+
+
 // Source: src/GeGlobals.js
 
 var ShoGE = new Object();
@@ -72,13 +190,18 @@ ShoGE.GenID = new GeGenID();
 // Source: src/GeObject.js
 
 var GeObject = Class.create({
-	initialize: function() {
-			this.core_id = ShoGE.GenID.get();
+	initialize: function(parent) {
+		this.core_id = ShoGE.GenID.get();
+		this.parent = parent;
+	},
+	
+	set_parent: function(parent) {
+		this.parent = parent;
 	},
 	
 	get_root: function() {
 		if (this.parent) {
-			return this.parent._getro();
+			return this.parent.get_root();
 		} else {
 			return this;
 		}
@@ -112,7 +235,7 @@ var GeLog = Class.create(GeObject, {
 //var Log;
 //var log;
 
-// Source: src/GeVector2d.js
+// Source: src/GeVector2D.js
 
 var Vector2D = Class.create({
   initialize: function(x, y) {
@@ -167,10 +290,13 @@ var Vector2D = Class.create({
   },
   
   dot: function(b) {
-	return this.x * b.x + this.y + b.y;
+	return this.x * b.x + this.y * b.y;
   },
   angle: function(v) {
-	return Math.PI/180* Math.acos(this.dot(v));
+	return Math.PI/180 * Math.acos(this.dot(v));
+  },
+  angled: function(v) {
+	return Math.acos(this.dot(v));  
   },
   normalize: function() {
 	var m = this.mag();
@@ -197,14 +323,22 @@ var Vector2D = Class.create({
 		p.x = (dp / (b.x * b.x + b.y * b.y)) * b.x;
 		p.y = (dp / (b.x * b.x + b.y * b.y)) * b.y;
 		return p;
-  } 
+  },
   
+  invX: function() {
+	this.x = - this.x;
+  },
+  
+  invY: function() {
+	this.y = - this.y;
+  },
   
 });
 
 // Source: src/GeScreen.js
 
 var GeScreen = Class.create(GeObject, {
+	
 	initialize: function(parent, id, width, height) {
 		this.id = id;
 		this.parent = parent;
@@ -218,6 +352,7 @@ var GeScreen = Class.create(GeObject, {
 		this.ctx = this.canvas.getContext('2d');
 		this.init_buffer(); 
 	},
+	
 	get_layer: function(id) {
 		if (id < 0) {
 			id = 0;
@@ -231,6 +366,7 @@ var GeScreen = Class.create(GeObject, {
 		var c = document.createElement('canvas');
 		this.layers[id] = c.getContext('2d');
 	},
+	
 	init_buffer: function() {
 		this.layers = new Array();
 		var b = document.createElement('canvas');
@@ -238,16 +374,22 @@ var GeScreen = Class.create(GeObject, {
 		b.height = this.height;
 		this.buffer = b;
 		var ctx = b.getContext('2d');
+		this.clear("rgb(50,50,50");
+		/*ctx.save();
 		ctx.fillStyle = "rgb(20,20,250)";
 		ctx.fillRect (0, 0, this.width, this.height);
+		ctx.restore();*/
 	},
+	
 	swap: function() {
-		//this.clear();
 		this.ctx.drawImage(this.buffer, 0, 0);
 	},
+	
 	clear: function(color) {
+		this.ctx.save();
 		this.ctx.fillStyle = color;
 		this.ctx.fillRect (0, 0, this.width, this.height);
+		this.ctx.restore();
 	}
 
 });
@@ -278,8 +420,8 @@ var GeMouse = Class.create({
 /*# > Object < #*/
 var GeMedia_Image = Class.create(GeObject, {
 	/*# > Method < #*/
-	initialize: function($super, src) {
-		$super();
+	initialize: function($super, parent, src) {
+		$super(parent);
 		if (src) {
 			this.set(src);
 		}
@@ -289,10 +431,12 @@ var GeMedia_Image = Class.create(GeObject, {
 		this.img = new Image();
 		this.img.src = src;
 		this.loaded = false;
-		var that = this;
+		var that = this;//this.onload.bind(this);
 		this.img.onload = function() {
 			that.loaded = true;
 			Log.w("Image '" + that.img.src + " loaded");
+			that.parent.total_loaded++;
+			//that.img.onload = null;
 		};
 	},
 	/*# > Method < #*/
@@ -305,31 +449,61 @@ var GeMedia_Image = Class.create(GeObject, {
 var GeMediaPool = Class.create(GeObject, {
 	/*# > Method < #*/
 	initialize: function($super, id) {
-		$super();
+		$super(parent);
 		this.pool = new Array();
 		this.path = "res/img/";
-		this.nothing = new GeMedia_Image(this.path + "nothing.png");
-	
+		this.nothing = new GeMedia_Image(this, this.path + "nothing.png");
+		this.total = 0;
+		this.total_loaded = 0;
 	},
-	/*# > Method < #*/
+	
 	add: function(src) {
 		if (this.pool[src]) {
-			alert("Image '" + src + " already in pool");
+			Log.w("Image '" + src + " already in pool");
 			return null;
 		}
-		this.pool[src] = new GeMedia_Image(this.path + src);
+		Log.w("Image added: " + src);
+		this.pool[src] = new GeMedia_Image(this, this.path + src);
 		return this.pool[src];
 	},
-	/*# > Method < #*/
+	
 	get: function(src) {
-		if (!this.pool[src] || !this.pool[src].loaded) {
+		if (!this.pool[src]) { throw("GeImagePool: Trying to get invalid image: " + src); }
+		if (!this.pool[src].loaded) {
 			return this.nothing;
 		}
 		return this.pool[src];
 	},
+	
+	is_loading: function() {
+		return !(this.total - this.total_loaded);
+	}
 });
 
 
+
+// Source: src/GeWaitLoading.js
+
+var GeWaitLoading = Class.create(GeObject, {
+	initialize: function($super, parent, screen, pool) {
+		this.set_parent(parent);
+		this.screen = screen;
+		this.pool = pool;
+	},
+	
+	is_loading: function() {
+		return this.pool.is_loading();
+	},
+	
+	draw: function() {
+		this.screen.init_buffer();
+		var ctx = this.screen.buffer.getContext('2d');	
+		ctx.save();
+		ctx.fillText("Loading images...", 10, 10);
+		ctx.restore();
+		this.screen.swap();
+	}
+});
 
 // Source: src/GeCollision.js
 
@@ -349,7 +523,7 @@ var GeCollision = Class.create({
 	},
 	correct: function() {
 		if (this.type == 'cc') {
-			this.correct_cc();
+			//this.correct_cc();
 		}
 	},
 	correct_cc: function() {
@@ -366,6 +540,8 @@ var GeCollision = Class.create({
 	},
 	
 	response_cc: function() {
+		this.A.phys.velocity.inv();
+		this.B.phys.velocity.inv();
 	return;
 		var delta = this.A.phys.pos.link(this.A.phys.pos, this.B.phys.pos);
 		var d = delta.mag();
@@ -381,8 +557,9 @@ var GeCollision = Class.create({
 		var i = (-(1.0 + ConstantRestitution) * vn) / (this.A.phys.invmass + this.B.phys.invmass);
 		var impulse = mtd.mul(i);
 		
-		this.A.phys.velocity.add(impulse.clone().mul(this.A.phys.invmass));
-		this.B.phys.velocity.add(impulse.clone().mul(this.B.phys.invmass));
+		//this.A.phys.velocity.add(impulse.clone().mul(this.A.phys.invmass));
+		//this.B.phys.velocity.add(impulse.clone().mul(this.B.phys.invmass));
+		
 		/*
 		//Log.w("res cc");
 		var wn = this.wallNormal.inv();
@@ -543,9 +720,10 @@ var GeBoundingCircle = Class.create(GeBounding, {
 				}*/
 			}
 		}
-		for (var i = 0; i < node.childs.length; i++) {
-			var child = node.childs[i];
-				if (c = this.collide(child)) {
+		var it = node.childs.iterator();
+		var child;
+		while(child = it.next()) {
+				if (c = this.collide(child.data)) {
 					return c;
 				} 
 		}
@@ -670,7 +848,7 @@ var GePhysState = Class.create({
 	this.pos.add(this.velocity);
 	
 	
-	  	if (this.pos.x < 16 || this.pos.x > 640 - 16) {
+	/*if (this.pos.x < 16 || this.pos.x > 640 - 16) {
 			if (this.pos.x < 16) {
 				this.pos.x = 16;
 			} else {
@@ -687,10 +865,30 @@ var GePhysState = Class.create({
 			this.pos.y = 480 - 17;
 		}
 		this.velocity.y = - this.velocity.y ;
+		}*/
+		this.grid_bounding();
+		this.pos.x = Math.round(this.pos.x);
+		this.pos.y = Math.round(this.pos.y);
+	},
+	
+	grid_bounding: function() {
+		if (!this.parent.bound || !this.parent.bound.grid) {
+			
+			return;
+		}
+		var ccell = this.parent.get_parent('cell');
+		if (!ccell) { return; }
+		//alert("plop");
+		var maxcellX = ccell.x * ccell.parent.cell_size + ccell.parent.cell_size;
+		var maxcellY = ccell.y * ccell.parent.cell_size + ccell.parent.cell_size;
+		if (this.pos.x < 0 || this.pos.x > maxcellX) {
+			this.velocity.invX();
+		}
+		if (this.pos.y < 0 || this.pos.y > maxcellY) {
+			this.velocity.invY();
+		}
+		
 	}
-	this.pos.x = Math.round(this.pos.x);
-	this.pos.y = Math.round(this.pos.y);
-  },
 });
 
 
@@ -722,9 +920,10 @@ var GeBound = Class.create(GeObject, {
     }
 });
 
+
 // Source: src/GeTreeNode.js
 
-/*# > Object < #*/var GeTreeNode = Class.create(GeObject, {    /*# > Method < #*/    initialize: function($super, parent) {        $super();        this.set_parent(parent);        this.childs = new Array();        this._init(parent);        Log.w("[" + this.id + "] Creating node tree: " + this.type);    },    /*# > Method < #*/    _init: function(parent) {        this.type = "basic";        this.bPhysUpdate = false;        this.bRedraw = false;    },    /*# > Method < #*/    set_parent: function(parent) {        this.parent = parent;    },    /*# > Method < #*/    set_physUpdate: function(bool) {        this.bPhysUpdate = bool;    },    /*# > Method < #*/    set_redraw: function(bool) {        this.bRedraw = bool;    },    /*# > Method < #*/    hide: function() {        this.set_redraw(false);        this.childs.each(function(item) {            item.hide();        });    },    /*# > Method < #*/    unhide: function() {        this.set_redraw(true);        this.childs.each(function(item) {            item.unhide();        });    },    /*# > Method < #*/    hidden: function() {        return !this.bRedraw;    },    /*# > Method < #*/    freeze: function() {        this.set_physUpdate(false);        this.childs.each(function(item) {            item.freeze();        });    },    /*# > Method < #*/    unfreeze: function() {        this.set_physUpdate(true);        this.childs.each(function(item) {            item.unfreeze();        });    },    /*# > Method < #*/    frozen: function() {        return !this.bPhysUpdate;    },    /*# > Method < #*/    get_parent: function() {        return this.parent;    },    /*# > Method < #*/    get_childs: function() {        return this.childs;    },    /*# > Method < #*/    add_child: function(node) {        this.childs.push(node);        node.parent = this;    },	enable_physics: function() {		if (!this.phys) {			this.phys = new GePhysState(this);		}	},    /*# > Method < #*/    update: function(dt) {		//Log.w("Update " + this.core_id);        if (this.phys && !this.frozen()) {            this.phys.update(dt);            var c = this.collide();            if (c) {  c.correct(); 					  c.response(); }        }		if (this.postupdate) { this.postupdate(dt) };        this.childs.each(function(item) {            if (item.phys && !item.frozen()) {                item.phys.update(dt);                var c = item.collide();                if (c) {  c.correct();						  c.response(); }            }			if (item.postupdate) {				item.postupdate(dt);			}        });		    },	//postupdate: function(dt) {		//; // STUB	//},    /*# > Method < #*/    collide: function() {        if (this.frozen()) {            return null;        }        if (!this.bound) {           // Log.w("No bound for object " + this.id);			return null;        }        if (this.bound.shadow) {            this.bound.shadow.collide(ShoGE.Core.SG);        }        if (this.bound.circle) {            var c = this.bound.circle.collide(ShoGE.Core.SG);			//if (c) Log.w("Collide");			return c;		}		return null;    },    /*# > Method < #*/    draw: function(ctx) {        ctx.save();        if (this.gx && !this.hidden()) {			ctx.save();            this.gx.draw(ctx);			ctx.restore();        }        this.childs.each(function(item) {            if (item.gx && !item.hidden()) {                ctx.save();				item.gx.draw(ctx);				ctx.restore();            }        });        ctx.restore();    }});
+var GeTreeNode = Class.create(GeObject, {    /*# > Method < #*/    initialize: function($super, parent) {        $super(parent);        this.set_parent(parent);        this.childs = new GeLinkedList();		this.iterator = this.childs.iterator();        this._init(parent);        Log.w("[" + this.core_id + "] Creating node tree: " + this.type);    },    /*# > Method < #*/    _init: function(parent) {        this.type = "basic";        this.bPhysUpdate = false;        this.bRedraw = false;    },    /*# > Method < #*/    set_parent: function(parent) {        this.parent = parent;    },    /*# > Method < #*/    set_physUpdate: function(bool) {        this.bPhysUpdate = bool;    },    /*# > Method < #*/    set_redraw: function(bool) {        this.bRedraw = bool;    },    /*# > Method < #*/    hide: function() {        this.set_redraw(false);		this.iterator.reset_head();		//var it = this.childs.iterator();		var child;		while(child = this.iterator.next()) {            child.data.hide();        }    },    /*# > Method < #*/    unhide: function() {        this.set_redraw(true);		this.iterator.reset_head();		//var it = this.childs.iterator();		var child;		while(child = this.iterator.next()) {			child.data.unhide();		}    },    /*# > Method < #*/    hidden: function() {        return !this.bRedraw;    },    /*# > Method < #*/    freeze: function() {        this.set_physUpdate(false);		this.iterator.reset_head();		var child;		while(child = this.iterator.next()) {            child.data.freeze();        }    },    /*# > Method < #*/    unfreeze: function() {        this.set_physUpdate(true);		this.iterator.reset_head(); 		//var it = this.childs.iterator();		var child;		while(child = this.iterator.next()) {			child.data.unfreeze();        }    },    /*# > Method < #*/    frozen: function() {        return !this.bPhysUpdate;    },    /*# > Method < #*/    get_parent: function() {        return this.parent;    },    /*# > Method < #*/    get_childs: function() {        return this.childs;    },    /*# > Method < #*/    add_child: function(node) {		node.parent = this;		this.childs.add(node);    },		get_parent: function(type) {		if (!this.parent) {			return null;		}		if (this.parent.type == type) {			return this.parent;		}		return this.parent.get_parent(type);	},		enable_physics: function() {		if (!this.phys) {			this.phys = new GePhysState(this);		}	},    /*# > Method < #*/    update: function(dt) {        if (this.phys && !this.frozen()) {            this.phys.update(dt);            var c = this.collide();            if (c) {  c.correct(); 					  c.response(); }        }		if (this.postupdate) { this.postupdate(dt) };       //	ShoGE.Core.Grid.replace(this);		this.iterator.reset_head();		var child;		while(child = this.iterator.next()) {			child.data.update(dt);		}    },    collide: function() {        if (this.frozen()) {            return null;        }        if (!this.bound) {			return null;        }        if (this.bound.shadow) {            this.bound.shadow.collide(ShoGE.Core.SG);        }        if (this.bound.circle) {            return this.bound.circle.collide(ShoGE.Core.SG);		}		return null;    },		preload_ressources: function() {		this.iterator.reset_head();		var child;		while(child = this.iterator.next()) {			child.data.preload_ressources();        }	},    /*# > Method < #*/    draw: function(ctx) {		ctx.save();        if (this.gx && !this.hidden()) {			ctx.save();            this.gx.draw(ctx);			ctx.restore();        }		this.iterator.reset_head();		var child;		while(child = this.iterator.next()) {			child.data.draw(ctx);        }        ctx.restore();    }});
 
 // Source: src/GeTreeNode_Map.js
 
@@ -755,6 +954,7 @@ var GeTreeNode_Map = Class.create(GeTreeNode, {
         this.gx = new GeGx_Map(this);
         this.unhide();
     },
+
 });
 
 // Source: src/GeTreeNode_Monster.js
@@ -770,13 +970,23 @@ var GeTreeNode_Monster = Class.create(GeTreeNode, {
         this.unfreeze();
         this.unhide();
 		this.enable_physics();
-        this.phys.pos.x = Math.random()*1024;
-        this.phys.pos.y = Math.random()*768;
-        this.phys.velocity.x = Math.random()*10 ;
-        this.phys.velocity.y = Math.random()*10;
+        this.phys.pos.x = Math.round(Math.random()*512);
+        this.phys.pos.y = Math.round(Math.random()*512);
+		var minus = 1;
+		if (Math.random() > 0.5) {
+			minus = -1
+		}
+        this.phys.velocity.x = Math.random()*10 * minus ;
+		minus = 1;
+		if (Math.random() > 0.5) {
+			minus = -1
+		}
+        this.phys.velocity.y = Math.random()*10 * minus;
+		
         this.gx = new GeGx_Monster(this);
         this.bound = new GeBound(this);
         this.bound.add(new GeBoundingCircle(this, this.gx.width/2));
+		this.bound.grid = 1;
 		
 		/* DEBUG */
 		var drawForce = new GeTreeNode_Vector(this, this.phys.force); //this.phys.force);
@@ -800,7 +1010,16 @@ var GeTreeNode_Monster = Class.create(GeTreeNode, {
 		//drawForce.unhide();
 		this.add_child(drawForce);
 	},
+
+	preload_ressources: function($super) {
+		Log.w("Loading monster ressources");
+		ShoGE.Core.Images.add("ball-blue-32x32.png");
+		ShoGE.Core.Images.add("ball-cover-32x32.png");
+		$super();
+	},
+	
 });
+
 /*# > Object < #*/
 var GeGx_Monster = Class.create({
     /*# > Method < #*/
@@ -831,27 +1050,18 @@ var GeGx_Vector = Class.create({
         this.height = 32;
 		this.color = "#FF0000";
     },
-
-    /*# > Method < #*/
+	
     draw: function(ctx) {
         var phys = this.parent.phys;
 		var B = phys.pos.clone().add(this.parent.vector.clone().mul(4));
-		ctx.save();
-		//ctx.fillStyle = this.color;
-		//ctx.beginPath();
 		ctx.moveTo(phys.pos.x, phys.pos.y);
 		ctx.lineTo(B.x, B.y);
-		//ctx.closePath();
 		ctx.strokeStyle = this.color;
 		ctx.stroke();
-		//ctx.closePath();
-		//ctx.fill();
-		ctx.restore();
-		//Log.w("Vector pos x: " + phys.pos.x + ", y: " + phys.pos.y + " To pos x: " + B.x + ", y: " + B.y);
     },
 
 });
-/*# > Object < #*/
+
 var GeTreeNode_Vector = Class.create(GeTreeNode, {
     initialize: function($super, parent, vector) {
         $super(parent);
@@ -873,78 +1083,77 @@ var GeTreeNode_Vector = Class.create(GeTreeNode, {
 
 // Source: src/GeTreeNode_Grid.js
 
+
 var GeTreeNode_Grid = Class.create(GeTreeNode, {
-	initialize: function($super, parent) {
+	
+	initialize: function($super, parent, width, height, cell_size) {
+		this.width = width;
+		this.height = height;
+		this.cell_size = cell_size;
 		$super(parent);
 	},
+	
 	_init: function(parent) {
 		this.type = "grid";
-		this.grid = new Array();
+		this.grid = new GeArray2D(this.width, this.height);
+		this.load(0,0);
+		this.load(1,0);
+		this.load(0,1);
+		this.load(1,1);
 	},
+	
 	get: function(x, y) {
-		if (!this.grid[x]) this.grid[x] = new Array();
-		if (!this.grid[x][y]) {
-			this.load(x,y);
-		}
-		return this.grid[x][y];
+		return this.grid.get(x, y);
 	},
+	
 	set: function(x, y, cell) {
 		cell.x = x;
 		cell.y = y;
-		if (!this.grid[x]) {
-			this.grid[x] = new Array();
-		}
-		this.grid[x][y] = cell;
+		this.grid.set(x, y, cell);
 		this.add_child(cell);
 	},
+	
 	load: function(x, y) {
 		var cell = new GeTreeNode_Cell(this, x, y);
-		this.add_child(cell);
+		this.set(x, y, cell);
+		//this.add_child(cell);
 	},
+	
+	add: function(node) {
+		var x = Math.round(node.phys.pos.x / this.cell_size);
+		var y = Math.round(node.phys.pos.y / this.cell_size);
+		//alert(x + ", " + y);
+		var cell = this.get(x, y)
+		//if (cell) 
+		cell.add_child(node);
+	},
+	
+	replace: function(node) {
+		if (!node.bound || !node.bound.grid) {
+			return;
+		}
+		var ccell = node.get_parent('cell');
+		if (!ccell) { 
+			//Log.w("Node " + this.type + "not in cell"); 
+			return; 
+		}
+		var x = Math.round(node.x / this.cell_size);
+		var y = Math.round(node.y / this.cell_size);
+		var ccell = node.get_parent('cell');
+		if (ccell.x == x && ccell.y == y) {
+			return;
+		}
+		var ncell;
+		if (ncell = this.get(x, y)) {
+			ccell.childs.remove(node);
+			ncell.add_child(node);
+		}
+	},
+	
+
 });
 
 // Source: src/GeTreeNode_Cell.js
-
-var GeGx_Cell = Class.create({
-    /*# > Method < #*/
-    initialize: function(parent) {
-        this.parent = parent;
-		//this.tiles = new Array();
-    },
-
-    /*# > Method < #*/
-    draw: function(ctx) {
-		if (!this.parent.tiles) {
-			return;
-		}
-		if (!this.cache) {
-			//alert("building cache");
-			this.cache = document.createElement('canvas');
-			this.cache.width = 512;
-			this.cache.height = 512;
-			var lctx = this.cache.getContext('2d');
-			lctx.save();
-			
-			for(var r = 0; r < 32; r ++) {
-				for(var c = 0; c < 32; c ++) {
-					lctx.save();
-					lctx.translate(c*16, r*16);
-					if (this.parent.tiles[r*32+c]) {
-						lctx.drawImage(ShoGE.Core.Images.get("tile-on.png").get(), 0,0);
-					} else {
-						lctx.drawImage(ShoGE.Core.Images.get("tile-off.png").get(), 0,0);
-					}
-					lctx.restore();
-				}	
-			}
-	
-		}
-				
-		//ctx.translate(128, 128);
-		ctx.drawImage(this.cache, 0,0);
-	},
-
-});
 
 var GeTreeNode_Cell = Class.create(GeTreeNode, {
 
@@ -952,6 +1161,7 @@ var GeTreeNode_Cell = Class.create(GeTreeNode, {
 		$super(parent);
 		this.x = x;
 		this.y = y;
+		//alert(this.x + ", " + this.y);
 		this.is_loaded = false;
 		this.load();
 	},
@@ -963,7 +1173,7 @@ var GeTreeNode_Cell = Class.create(GeTreeNode, {
 	},
 
 	load_shadow_info: function() {
-		this.tiles = new Array();
+		//this.tiles = new Array();
 		var canvas = document.createElement('canvas');
 		canvas.width = ShoGE.Core.Level.cell_size;
 		canvas.height = ShoGE.Core.Level.cell_size;
@@ -1013,10 +1223,62 @@ var GeTreeNode_Cell = Class.create(GeTreeNode, {
 		this.is_loaded = false;
 		this.img_shadow = new Image();
 		var that = this;
+		var src = this.get_level_path() + this.get_cell_path(this.x, this.y) + "shadow.png";
+		ShoGE.Core.Images.add("../../" + src);
 		this.img_shadow.onload = function() { that.loaded('shadow'); }	
-		this.img_shadow.src = this.get_level_path() + this.get_cell_path(this.x, this.y) + "shadow.png";
-	}
+		this.img_shadow.src = src;
+	},
+	
+	preload_ressources: function($super) {
+		ShoGE.Core.Images.add("tile-on.png");
+		ShoGE.Core.Images.add("tile-off.png");
+		$super();
+	},
 });
+
+var GeGx_Cell = Class.create({
+
+    initialize: function(parent) {
+        this.parent = parent;
+		//this.tiles = new Array();
+    },
+
+    draw: function(ctx) {
+		if (!this.parent.tiles) {
+			return;
+		}
+		if (!this.cache) {
+			//alert("building cache");
+			this.cache = document.createElement('canvas');
+			this.cache.width = 512;
+			this.cache.height = 512;
+			var lctx = this.cache.getContext('2d');
+			lctx.save();
+			
+			for(var r = 0; r < 32; r ++) {
+				for(var c = 0; c < 32; c ++) {
+					lctx.save();
+					lctx.translate(c*16, r*16);
+					if (this.parent.tiles[r*32+c]) {
+						lctx.drawImage(ShoGE.Core.Images.get("tile-on.png").get(), 0,0);
+					} else {
+						lctx.drawImage(ShoGE.Core.Images.get("tile-off.png").get(), 0,0);
+					}
+					lctx.restore();
+				}	
+			}
+	
+		}
+		
+		ctx.translate(this.parent.x * 512, this.parent.y * 512);
+		ctx.drawImage(this.cache, 0,0);
+		if (!ShoGE.Core.Images.get("tile-on.png").loaded && !ShoGE.Core.Images.get("tile-on.png").loaded) {
+			this.cache = null;
+		}
+	},
+
+});
+
 
 // Source: src/GeTreeNode_Collection.js
 
@@ -1029,21 +1291,21 @@ var GeTreeNode_Collection = Class.create(GeTreeNode, {
         this.type = "collection";
 	},
 	update: function($super, dt) {
-	//alert("update");
-		this.childs.each(function(item) {
-			item.update(dt);
-		});
+		var it = this.childs.iterator();
+		var child;
+		while(child = it.next()) {
+			child.data.update(dt);
+		}
 	},
-	draw: function($super, ctx) {
-		this.childs.each(function(item) {
-			item.draw(ctx);
-		});
-	},
+	
 	collide: function($super) {
-		this.childs.each(function(item) {
-			return item.collide();
-		});
+		var it = this.childs.iterator();
+		var child;
+		while(child = it.next()) {
+			child.data.collide();
+		}
 	}
+	
 });
 
 // Source: src/GeTreeNode_Block.js
@@ -1090,33 +1352,34 @@ var GeTreeNode_Coordinate = Class.create(GeTreeNode, {
 // Source: src/GeCamera.js
 
 var GeCamera = Class.create(GeTreeNode, {
-	initialize: function($super, parent, pos) {
+	initialize: function($super, parent, object) {
 		$super(parent);
-		if (pos) {
-			this.pos = pos;
+		if (object) {
+			this.object = object;
 		} else {
-			this.pos = new GePosition();
+			this.object = new GePosition(); // Bugged must be phys.pos...
 		}
 	},
+	
 	_init: function(parent) {
 		this.type = "camera";
 	},
+	
 	track: function(node) {
 		this.tracked = node;
-	
 	},
+	
 	untrack: function() {
 		this.tracked = null;
 	},
-	update: function(dt) {
-		this.trac
-	}
+	
 });
 
 
 // Source: src/GeRenderer.js
 
 var GeRenderer = Class.create(GeObject, {
+	
 	initialize: function($super, parent, screen, camera, width, height) {
 		$super();
 		this.camera = camera;
@@ -1129,15 +1392,20 @@ var GeRenderer = Class.create(GeObject, {
 		this.lastFrameTime = date.getTime();
 		this.frameCount = 0;
 	},
+	
 	draw: function() {
 		this.screen.init_buffer();
 		var ctx = this.screen.buffer.getContext('2d');	
 		ctx.save();
 		if (this.camera) {
+			var o = new Vector2D(1, 0).angle(this.camera.object.phys.velocity);
+			//ctx.rotate(o);
 			ctx.translate(this.screen.width / 2, this.screen.height / 2);
-			ctx.translate(-this.camera.pos.x, -this.camera.pos.y);
+			ctx.translate(-this.camera.object.phys.pos.x, -this.camera.object.phys.pos.y);
 		}
+		ctx.scale(0.5, 0.5);
 		this.parent.SG.draw(ctx);
+		
 		ctx.restore();
 		var date = new Date();
 		var ctime = date.getTime();
@@ -1155,10 +1423,11 @@ var GeRenderer = Class.create(GeObject, {
 
 // Source: src/GeCore.js
 
-var GeCore = Class.create({
+var GeCore = Class.create(GeObject, {
 	
 	/* -[meth]- */
-	initialize: function() {
+	initialize: function($super, parent) {
+		this.set_parent(parent);
 		var date = new Date();
 		this.bgcolor = "rgb(0,0,0)";
 		this.step = 0;
@@ -1184,19 +1453,22 @@ var GeCore = Class.create({
 		this.Mouse = new GeMouse();
 		this.Images = new GeMediaPool();
 		this.SG = new GeTreeNode_Collection(null, "World");
-		this.SgStatic = new GeTreeNode_Collection(this.SG, "static");
-		this.SG.add_child(this.SgStatic);
-		this.SgStatic.add_child(new GeTreeNode_Coordinate(this.SgStatic));
-		this.SgDynamic = new GeTreeNode_Collection(this.SG, "dynamic");
-		this.SG.add_child(this.SgDynamic);
-		this.load_ressources();
+		//this.SgStatic = new GeTreeNode_Collection(this.SG, "static");
+		//this.SG.add_child(this.SgStatic);
+		//this.SgStatic.add_child(new GeTreeNode_Coordinate(this.SgStatic));
+		//this.SgDynamic = new GeTreeNode_Collection(this.SG, "dynamic");
+		//this.SG.add_child(this.SgDynamic);
+		
 		this.Renderer = new GeRenderer(this, this.Screen, null, width, height);
-		this.Renderer2 = new GeRenderer(this, this.Screen2, this.camera, width/2, height/2);
+		
 		this.Level = new GeLevel(this, 'darks');
-		this.Grid = new GeTreeNode_Grid(this);
+		this.Grid = new GeTreeNode_Grid(this, 2,2, 512);
 		this.SG.add_child(this.Grid);
+		this.load_ressources();
+		this.ImageReady = new GeWaitLoading(parent, this.Screen, this.Images);
 		//this.Grid.set(1,1, new GeTreeNode_Cell(parent));
-		this.Grid.get(0,0);
+		//this.Grid.get(0,0);
+		this.SG.preload_ressources();
 		this.start();
 	},
 	
@@ -1205,28 +1477,24 @@ var GeCore = Class.create({
 	},
 	/* -[meth]- */
 	load_ressources: function() {
-		this.Images.add("alpha-1x1.png");
-		this.Images.add("ball-blue-32x32.png");
-		this.Images.add("ball-cover-32x32.png");
-		this.Images.add("ball-infected-32x32.png");
-		this.Images.add("lvl-test-shadow.png");
-		this.Images.add("map_green01.png");
-		this.Images.add("tile-on.png");
-		this.Images.add("tile-off.png");
+		//this.Images.add("alpha-1x1.png");
+		//this.Images.add("ball-blue-32x32.png");
+		//this.Images.add("ball-cover-32x32.png");
+		//this.Images.add("ball-infected-32x32.png");
+		//this.Images.add("lvl-test-shadow.png");
+		//this.Images.add("map_green01.png");
+		//this.Images.add("tile-on.png");
+		//this.Images.add("tile-off.png");
 		
 		var m = null;
-		for(var i = 0; i < 20; i++) {
+		for(var i = 0; i < 10; i++) {
 			m = new GeTreeNode_Monster(null);
-			this.SgDynamic.add_child(m);
+			this.Grid.add(m);
 		}
-		this.camera = new GeCamera(parent, m.phys.pos);
+		this.camera = new GeCamera(parent, m);
 		//this.camera.pos.orientation = m.phys.force; 
-		this.SgStatic.add_child(new GeTreeNode_Block(
-			new Vector2D(264,50),
-			new Vector2D(128,0),
-			new Vector2D(0,50)
-		));
-		this.SgStatic.add_child(this.camera);
+		this.SG.add_child(this.camera);
+		this.Renderer2 = new GeRenderer(this, this.Screen2, this.camera, this.width/2, this.height/2);
 		var map = new GeTreeNode_Map(null);
 		//this.SgStatic.add_child(map);
 		
@@ -1242,15 +1510,29 @@ var GeCore = Class.create({
 		// Render HTML Elemet (Updating html element is an heavy process)
 		this.timer = new PeriodicalExecuter(function(pe) {	
 			that.html_update();
-		}, 0.1);
-		// Our Game engine loop
-		this.timer = new PeriodicalExecuter(function(pe) {	
-			that.loop();
-		}, 0.000001);
+		}, 0.01);
+		
+		new PeriodicalExecuter(function(pe) {			
+			if (that.ImageReady.is_loading()) {
+				that.ImageReady.draw();
+			} else {
+				pe.stop();
+				that.start_loop();
+			}
+		}, 0.5);
+		
 	},
 	html_update: function(){
 		$('GameFPS').innerHTML = Math.round(this.Renderer.FPS);
 		$('GameFPS3').innerHTML = Math.round(this.Renderer2.FPS);
+	},
+	
+	start_loop: function() {
+		// Our Game engine loop
+		var that = this;
+		new PeriodicalExecuter(function(pe) {	
+			that.loop();
+		}, 0.0001);
 	},
 	/* -[meth]- */
 	loop: function() {	
@@ -1274,4 +1556,4 @@ var GeCore = Class.create({
 /*
 	Main
 */
-ShoGE.Core = new GeCore();
+ShoGE.Core = new GeCore(null);
