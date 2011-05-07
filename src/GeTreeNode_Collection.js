@@ -8,18 +8,26 @@ var GeTreeNode_Collection = Class.create(GeTreeNode, {
 	},
 	update: function($super, dt) {
 	//alert("update");
-		this.childs.each(function(item) {
-			item.update(dt);
-		});
+		var it = this.childs.iterator();
+		var child;
+		while(child = it.next()) {
+			child.data.update(dt);
+		}
 	},
+	
 	draw: function($super, ctx) {
-		this.childs.each(function(item) {
-			item.draw(ctx);
-		});
+		var it = this.childs.iterator();
+		var child;
+		while(child = it.next()) {
+			child.data.draw(ctx);
+		}
 	},
+	
 	collide: function($super) {
-		this.childs.each(function(item) {
-			return item.collide();
-		});
+		var it = this.childs.iterator();
+		var child;
+		while(child = it.next()) {
+			child.data.collide();
+		}
 	}
 });
