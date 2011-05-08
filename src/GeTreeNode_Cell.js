@@ -162,7 +162,6 @@ var GeGx_Cell = Class.create({
 			this.cache.height = 512;
 			var lctx = this.cache.getContext('2d');
 			lctx.save();
-			
 			for(var r = 0; r < 32; r ++) {
 				for(var c = 0; c < 32; c ++) {
 					lctx.save();
@@ -175,11 +174,12 @@ var GeGx_Cell = Class.create({
 					lctx.restore();
 				}	
 			}
-	
+			lctx.restore();
 		}
-		
+		//ctx.save();
 		ctx.translate(this.parent.x * 512, this.parent.y * 512);
 		ctx.drawImage(this.cache, 0,0);
+		//ctx.restore();
 		//if (!ShoGE.Core.Images.get("tile-on.png").loaded && !ShoGE.Core.Images.get("tile-on.png").loaded) {
 		//this.cache = null;
 		//}

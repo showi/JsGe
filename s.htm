@@ -58,10 +58,6 @@
 <body onLoad="ShoGE.Core.init(512,512);" style="background-color: black; color:white;">  
 	<div style="float: left;">
 		<canvas style="position: relative;" id="GameScreen"  width="512" height="512" ></canvas>
-
-		<div>
-			Update:&nbsp;<span id="GameUpdate"></span>
-		</div>
 	</div>
 	<div style="float: left;">
 		<canvas style="" id="GameScreen3" width="320" height="240"></canvas>
@@ -71,19 +67,23 @@
 			FPS Screen1:&nbsp;<span id="GameFPS">0</span>
 		</div>
 		<div>
-		FPS:&nbsp;<span id="GameFPS3">0</span>
+			FPS Screen2:&nbsp;<span id="GameFPS3">0</span>
 		</div>
 	</div>
-	<!--<div>GameStep:<span id="GameStep">0</span></div>-->
-	<!--<div>ElapsedTime:<span id="GameElapsedTime">0</span></div>-->
-
-	<!--<div>Accumulator:<span id="GameAccumulator">0</span></div>-->
 	<div>
-		Click at(<span id="clickatX">0</span>,&nbsp;<span id="clickatY">0</span>)
+		Mouse(<span id="clickatX">0</span>,&nbsp;<span id="clickatY">0</span>)
 	</div>
-	<!--<div style="background-color: black; color: white;">
-		<div>Log:</div><div id="GameLog" style="height: 200; overflow: scroll;"></div>
-	</div>-->
-	
+	<div>
+		Click up(<span id="clickUpX">0</span>,&nbsp;<span id="clickUpY">0</span>)
+	</div>
+	<div>
+		Click down(<span id="clickDownX">0</span>,&nbsp;<span id="clickDownY">0</span>)
+	</div>
+	<div>
+		Mouse status:&nbsp;<span id="MouseStatus">0</span>
+	</div>	
+	<div>
+		Area:&nbsp;<span id="MouseArea">0</span>
+	</div>	
 </body>
 </html>

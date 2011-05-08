@@ -24,12 +24,12 @@ var GeCore = Class.create(GeObject, {
 		this.Screen.clear(this.bgcolor);
 		this.Screen2 = new GeScreen(this,"GameScreen3", width/2,height/2);
 		this.Screen2.clear(this.bgcolor);
-		this.Mouse = new GeMouse();
+		this.Mouse = new GeMouse('GameScreen');
 		this.Images = new GeMediaPool();
 		this.SG = new GeTreeNode_Collection(null, "World");
 	
 		this.Renderer = new GeRenderer(this, this.Screen, null, width, height);
-		
+		this.Renderer.mouse = this.Mouse;
 		this.Level = new GeLevel(this, 'darks');
 		this.Level.load(0);
 		this.Grid = new GeTreeNode_Grid(this, 2,2, 512);
@@ -49,7 +49,7 @@ var GeCore = Class.create(GeObject, {
 
 	load_ressources: function() {
 		var m = null;
-		for(var i = 0; i < 1; i++) {
+		for(var i = 0; i < 10; i++) {
 			m = new GeTreeNode_Monster(null);
 			this.Grid.add(m);
 		}
@@ -95,23 +95,25 @@ var GeCore = Class.create(GeObject, {
 		$('GameFPS3').innerHTML = Math.round(this.Renderer2.FPS);
 		$('clickatX').innerHTML = this.Mouse.pos.x;
 		$('clickatY').innerHTML = this.Mouse.pos.y;
-		var click;
-		if (click = this.Mouse.get_click()) {
-			//alert("Click");
-			this.togglePause();
+		$('MouseStatus').innerHTML = this.Mouse.status;
+		if (this.Mouse.status) {
+			if (this.Mouse.status == 'down') {
+				$('clickDownX').innerHTML = this.Mouse.down.x;
+				$('clickDownY').innerHTML = this.Mouse.down.y;
+			}
+		} else {
+			$('clickDownX').innerHTML = 0;
+			$('clickDownY').innerHTML = 0;
 		}
 	},
 	
 	start_loop: function() {
-		// Our Game engine loop
 		var that = this;
 		this.MainLoop = new PeriodicalExecuter(function(pe) {	
-			//console.time("Main Loop");
 			that.loop();
-			//console.timeEnd("Main Loop");
 		}, 0.00001);
 	},
-	/* -[meth]- */
+
 	loop: function() {	
 		var newTime = Date.now();
 		var frameTime = newTime - this.currentTime;

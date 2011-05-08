@@ -22,14 +22,17 @@ var GeRenderer = Class.create(GeObject, {
 			//ctx.rotate(o);
 			//alert(this.camera.object.phys.pos.x + ", " +   this.camera.object.phys.pos.y);
 			//ctx.save();
-			ctx.translate(512 - this.camera.object.phys.pos.x,   512 - this.camera.object.phys.pos.y);
+			ctx.translate(this.camera.object.phys.pos.x,   this.camera.object.phys.pos.y);
 			//ctx.translate(, );
 			//ctx.scale(2, 2);
 		} else {
-			ctx.scale(0.5, 0.5);
+			//ctx.scale(0.5, 0.5);
 		}
 		//ctx.restore();
 		this.parent.SG.draw(ctx);
+		if (this.mouse) {
+			this.mouse.draw(ctx);
+		}
 		ctx.restore();
 		var date = new Date();
 		var ctime = date.getTime();
