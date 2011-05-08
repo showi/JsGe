@@ -9,9 +9,10 @@ var GeCore = Class.create(GeObject, {
 		this.t = 0;
 		this.startTime = null;
 		this.currentTime = date.getTime();
-		this.dt = 12;
+		this.dt = 66;
 		this.accumulator = 0;
 		this.lastDraw = this.currentTime;
+		this.pause = false;
 	},
 	
 	init: function(width, height) {
@@ -79,16 +80,35 @@ var GeCore = Class.create(GeObject, {
 		}, 0.1);
 		
 	},
+	togglePause: function() {
+		if (this.pause) {
+			this.pause = false;
+			this.currentTime = Date.now();
+			this.start_loop();
+		} else {
+			this.pause = true;
+			this.MainLoop.stop();
+		}
+	},
 	html_update: function(){
 		$('GameFPS').innerHTML = Math.round(this.Renderer.FPS);
 		$('GameFPS3').innerHTML = Math.round(this.Renderer2.FPS);
+		$('clickatX').innerHTML = this.Mouse.pos.x;
+		$('clickatY').innerHTML = this.Mouse.pos.y;
+		var click;
+		if (click = this.Mouse.get_click()) {
+			//alert("Click");
+			this.togglePause();
+		}
 	},
 	
 	start_loop: function() {
 		// Our Game engine loop
 		var that = this;
-		new PeriodicalExecuter(function(pe) {	
+		this.MainLoop = new PeriodicalExecuter(function(pe) {	
+			//console.time("Main Loop");
 			that.loop();
+			//console.timeEnd("Main Loop");
 		}, 0.00001);
 	},
 	/* -[meth]- */
@@ -98,11 +118,13 @@ var GeCore = Class.create(GeObject, {
 		
 		this.currentTime = newTime;
 		this.accumulator  += frameTime;
+		//console.time("Phys Update");
 		while(this.accumulator >= this.dt) {
 			this.accumulator -= this.dt;
 			this.t += this.dt;
 			this.SG.update(this.dt);
 		}
+		//console.timeEnd("Phys Update");
 		this.Renderer.draw();
 		this.Renderer2.draw();
 	},
