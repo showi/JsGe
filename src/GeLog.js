@@ -18,6 +18,3 @@ var GeLog = Class.create(GeObject, {
 		this.count++;
 	}
 });
-
-//var Log;
-//var log;

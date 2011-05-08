@@ -97,7 +97,7 @@ var GeBound_Shadow = Class.create({
 	    	    //	frame.data[i * 4 + 3] = 0;
 				//}
 			}
-			Log.w("avg: " + avgRow + ", " + avgCol);*/
+			ShoGE.w("avg: " + avgRow + ", " + avgCol);*/
 			
 			
 			var c2 = document.createElement('canvas');

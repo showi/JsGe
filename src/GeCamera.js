@@ -19,5 +19,4 @@ var GeCamera = Class.create(GeTreeNode, {
 	untrack: function() {
 		this.tracked = null;
 	},
-	
 });

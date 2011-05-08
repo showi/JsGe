@@ -1,13 +1,12 @@
-/*# > Object < #*/
 var GeMedia_Image = Class.create(GeObject, {
-	/*# > Method < #*/
+
 	initialize: function($super, parent, src) {
 		$super(parent);
 		if (src) {
 			this.set(src);
 		}
 	},
-	/*# > Method < #*/
+
 	set: function(src) {
 		this.img = new Image();
 		this.img.src = src;
@@ -15,20 +14,19 @@ var GeMedia_Image = Class.create(GeObject, {
 		var that = this;//this.onload.bind(this);
 		this.img.onload = function() {
 			that.loaded = true;
-			Log.w("Image '" + that.img.src + " loaded");
+			ShoGE.w("Image '" + that.img.src + " loaded");
 			that.parent.total_loaded++;
-			//that.img.onload = null;
 		};
 	},
-	/*# > Method < #*/
+	
 	get: function() {
 		return this.img;
 	},
 });
 
-/*# > Object < #*/
+
 var GeMediaPool = Class.create(GeObject, {
-	/*# > Method < #*/
+	
 	initialize: function($super, id) {
 		$super(parent);
 		this.pool = new Array();
@@ -40,10 +38,10 @@ var GeMediaPool = Class.create(GeObject, {
 	
 	add: function(src) {
 		if (this.pool[src]) {
-			Log.w("Image '" + src + " already in pool");
+			ShoGE.w("Image '" + src + " already in pool");
 			return null;
 		}
-		Log.w("Image added: " + src);
+		ShoGE.w("Image added: " + src);
 		this.pool[src] = new GeMedia_Image(this, this.path + src);
 		return this.pool[src];
 	},
@@ -60,4 +58,3 @@ var GeMediaPool = Class.create(GeObject, {
 		return !(this.total - this.total_loaded);
 	}
 });
-

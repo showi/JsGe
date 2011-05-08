@@ -1,5 +1,5 @@
 var GeGx_Vector = Class.create({
-    /*# > Method < #*/
+
     initialize: function(parent) {
         this.parent = parent;
         this.width = 32;
@@ -27,7 +27,7 @@ var GeTreeNode_Vector = Class.create(GeTreeNode, {
 	set_color: function(color) {
 		this.gx.color = color;
 	},
-    /*# > Method < #*/
+
     _init: function(parent) {
 		this.type = "vector";
         this.unfreeze();

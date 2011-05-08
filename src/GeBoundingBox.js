@@ -8,5 +8,4 @@ var GeBoundingBox = Class.create(GeBounding, {
 	collide: function(sg) {	
 		return null;
 	}
-	
 });

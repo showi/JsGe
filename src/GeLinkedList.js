@@ -23,6 +23,7 @@ var GeLinkedList_Iterator = Class.create({
 	}
 	
 });
+
 var GeLinkedList_Element = Class.create({
 	initialize: function(data) {
 		this.prev = null;

@@ -10,7 +10,6 @@ var GeBoundingCircle = Class.create(GeBounding, {
 		if (this.parent == node) {
 			return null;
 		}
-		//alert("blop");
 		var tradius = this.radius + node.bound.circle.radius;
 		var dist = this.parent.phys.pos.dist(node.phys.pos);
 		var delta = dist - tradius;
@@ -19,7 +18,7 @@ var GeBoundingCircle = Class.create(GeBounding, {
 			c.tradius = tradius;
 			c.dist = dist;
 			c.delta = -delta;
-			return c;//Log.w("Collide: dist: " + dist + ", tradius: " + tradius);
+			return c;
 		} else {
 				return null;
 		}
@@ -43,9 +42,9 @@ var GeBoundingCircle = Class.create(GeBounding, {
 		var it = node.childs.iterator();
 		var child;
 		while(child = it.next()) {
-				if (c = this.collide(child.data)) {
-					return c;
-				} 
+			if (c = this.collide(child.data)) {
+				return c;
+			} 
 		}
 		return null;
 	}

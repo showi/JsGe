@@ -139,4 +139,3 @@ var GePhysState = Class.create({
 		
 	}
 });
-

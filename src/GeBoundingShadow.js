@@ -4,8 +4,7 @@ var GeBound_Shadow = Class.create(GeBounding, {
 		this.type = 'shadow';
 		this.shadow = document.createElement('canvas');		
 	},
-	collide: function(map) {//
-			//this.shadow = document.createElement('canvas');	
+	collide: function(map) {
 			var ctx = this.shadow.getContext('2d');		
 			this.shadow.width = this.parent.gx.width;
 			this.shadow.height = this.parent.gx.height;
@@ -14,13 +13,11 @@ var GeBound_Shadow = Class.create(GeBounding, {
 			var cposx =  -this.parent.phys.pos.x + dwi;
 			var cposy =  -this.parent.phys.pos.y + dhe
 			
-			// Saving state 
 			ctx.save();
 			ctx.save();
 			ctx.translate( cposx, cposy);
 			this.parent.gx.draw(ctx);
 			ctx.restore();
-			//ctx.translate(0, 0);
 			ctx.globalCompositeOperation = 'source-in';
 			var posX = this.parent.phys.pos.x - dwi;
 			if (posX < 0) {
@@ -57,20 +54,20 @@ var GeBound_Shadow = Class.create(GeBounding, {
 			var avgRow = 0;
 			var l = 1;
 			for (var i = 0; i < l; i++) {
-	    	  //var r = frame.data[i * 4 + 0];
-	    	  //var g = frame.data[i * 4 + 1];
-	    	  //var b = frame.data[i * 4 + 2];
-			  //var a = buffer.data[i * 4 + 3];
+	    	  var r = frame.data[i * 4 + 0];
+	    	  var g = frame.data[i * 4 + 1];
+	    	  var b = frame.data[i * 4 + 2];
+			  var a = buffer.data[i * 4 + 3];
 			  var a = 0;
 	    	  if (a == 1) {
 				avgCol = (avgCol + col) / 2;
 				avgRow = (avgRow + row) / 2;
 			  }
-				//if (g > 100 && r > 100 && b < 43)
-	    	    //	frame.data[i * 4 + 3] = 0;
-				//}
+				if (g > 100 && r > 100 && b < 43)
+	    	    	frame.data[i * 4 + 3] = 0;
+				}
 			}
-			Log.w("avg: " + avgRow + ", " + avgCol);*/
+			ShoGE.w("avg: " + avgRow + ", " + avgCol);*/
 			
 			
 			var c2 = document.createElement('canvas');

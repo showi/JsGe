@@ -93,5 +93,4 @@ var Vector2D = Class.create({
   invY: function() {
 	this.y = - this.y;
   },
-  
 });

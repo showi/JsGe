@@ -1,11 +1,11 @@
-/*# > Object < #*/
+
 var GeTreeNode_Coordinate = Class.create(GeTreeNode, {
     initialize: function($super, parent, vector) {
         $super(parent);
 		//this.parent  = parent;
 		this.vector = vector;
     },
-    /*# > Method < #*/
+   
     _init: function(parent) {
 		this.type = "coordinate";
         this.unfreeze();

@@ -119,5 +119,4 @@ var GeGx_Cell = Class.create({
 			this.cache = null;
 		}
 	},
-
 });

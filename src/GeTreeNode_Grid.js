@@ -1,4 +1,3 @@
-
 var GeTreeNode_Grid = Class.create(GeTreeNode, {
 	
 	initialize: function($super, parent, width, height, cell_size) {
@@ -49,7 +48,7 @@ var GeTreeNode_Grid = Class.create(GeTreeNode, {
 		}
 		var ccell = node.get_parent('cell');
 		if (!ccell) { 
-			//Log.w("Node " + this.type + "not in cell"); 
+			//ShoGE.w("Node " + this.type + "not in cell"); 
 			return; 
 		}
 		var x = Math.round(node.x / this.cell_size);
@@ -64,6 +63,4 @@ var GeTreeNode_Grid = Class.create(GeTreeNode, {
 			ncell.add_child(node);
 		}
 	},
-	
-
 });

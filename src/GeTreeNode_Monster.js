@@ -51,7 +51,7 @@ var GeTreeNode_Monster = Class.create(GeTreeNode, {
 	},
 
 	preload_ressources: function($super) {
-		Log.w("Loading monster ressources");
+		ShoGE.w("Loading monster ressources");
 		ShoGE.Core.Images.add("ball-blue-32x32.png");
 		ShoGE.Core.Images.add("ball-cover-32x32.png");
 		$super();
@@ -76,5 +76,4 @@ var GeGx_Monster = Class.create({
         ctx.drawImage(ShoGE.Core.Images.get("ball-cover-32x32.png").get(), 0, 0);
       //  ctx.drawImage(Core.Images.get("ball-infected-32x32.png").get(), 0, 0);
     },
-
 });

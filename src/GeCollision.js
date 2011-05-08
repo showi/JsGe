@@ -18,7 +18,7 @@ var GeCollision = Class.create({
 		}
 	},
 	correct_cc: function() {
-		//Log.w("Correct cc");
+		//ShoGE.w("Correct cc");
 		var wN = this.wallNormal.clone();
 		wN.mul(this.delta);
 		this.A.phys.pos.sub(wN);
@@ -52,7 +52,7 @@ var GeCollision = Class.create({
 		//this.B.phys.velocity.add(impulse.clone().mul(this.B.phys.invmass));
 		
 		/*
-		//Log.w("res cc");
+		//ShoGE.w("res cc");
 		var wn = this.wallNormal.inv();
 		var l = this.A.phys.velocity.mag();
 		var pU = this.A.phys.velocity.proj(wn).inv();

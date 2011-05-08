@@ -7,7 +7,7 @@ var GeTime = Class.create(GeObject, {
 	start: function() {
 		if (this.bRunning) {
 			var msg = "[" + this.core_id + "] Cannot start already started timer";
-			Log.w(msg);
+			ShoGE.w(msg);
 			return false;
 		}
 		this.bRunning = true;
@@ -19,7 +19,7 @@ var GeTime = Class.create(GeObject, {
 	stop: function() {
 		if (!this.bRunning) {
 			var msg = "[" + this.core_id + "] Cannot stop non running timer";
-			Log.w(msg);
+			ShoGE.w(msg);
 			return false;
 		}
 		this.bRunning = false;

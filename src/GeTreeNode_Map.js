@@ -25,5 +25,4 @@ var GeTreeNode_Map = Class.create(GeTreeNode, {
         this.gx = new GeGx_Map(this);
         this.unhide();
     },
-
 });

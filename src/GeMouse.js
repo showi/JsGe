@@ -11,7 +11,7 @@ var GeMouse = Class.create({
 			that.pos.y = Event.pointerY(event);
 			//$('clickatX').innerHTML = that.pos.x;
 			//$('clickatY').innerHTML = that.pos.y;
-			//Log.w("Clicked at: " +  that.pos.x + ", "  + that.pos.y);
+			//ShoGE.w("Clicked at: " +  that.pos.x + ", "  + that.pos.y);
 		});
 	},
 });

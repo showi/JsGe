@@ -4,4 +4,3 @@ var GeBounding = Class.create({
 		this.parent = parent;
 	},
 });
-
