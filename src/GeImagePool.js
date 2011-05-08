@@ -38,7 +38,7 @@ var GeMediaPool = Class.create(GeObject, {
 	
 	add: function(src) {
 		if (this.pool[src]) {
-			ShoGE.w("Image '" + src + " already in pool");
+			//ShoGE.w("Image '" + src + " already in pool");
 			return null;
 		}
 		ShoGE.w("Image added: " + src);

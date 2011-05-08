@@ -18,14 +18,18 @@ var GeRenderer = Class.create(GeObject, {
 		var ctx = this.screen.buffer.getContext('2d');	
 		ctx.save();
 		if (this.camera) {
-			var o = new Vector2D(1, 0).angle(this.camera.object.phys.velocity);
+			//var o = new Vector2D(1, 0).angle(this.camera.object.phys.velocity);
 			//ctx.rotate(o);
-			ctx.translate(this.screen.width / 2, this.screen.height / 2);
-			ctx.translate(-this.camera.object.phys.pos.x, -this.camera.object.phys.pos.y);
+			//alert(this.camera.object.phys.pos.x + ", " +   this.camera.object.phys.pos.y);
+			//ctx.save();
+			ctx.translate(512 - this.camera.object.phys.pos.x,   512 - this.camera.object.phys.pos.y);
+			//ctx.translate(, );
+			//ctx.scale(2, 2);
+		} else {
+			ctx.scale(0.5, 0.5);
 		}
-		ctx.scale(0.5, 0.5);
+		//ctx.restore();
 		this.parent.SG.draw(ctx);
-		
 		ctx.restore();
 		var date = new Date();
 		var ctime = date.getTime();

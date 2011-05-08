@@ -6,10 +6,12 @@ var GeLog = Class.create(GeObject, {
 		
 	},
 	w: function(msg) {
+		if (console) { console.log(msg);}
+		return;
 		if(!this.elm) {
 			return;
 		}
-		if (this.count >100) {
+		if (this.count > 1000) {
 			this.count = 1;
 			this.elm.innerHTML = "";
 		}

@@ -30,6 +30,7 @@ var GeCore = Class.create(GeObject, {
 		this.Renderer = new GeRenderer(this, this.Screen, null, width, height);
 		
 		this.Level = new GeLevel(this, 'darks');
+		this.Level.load(0);
 		this.Grid = new GeTreeNode_Grid(this, 2,2, 512);
 		this.SG.add_child(this.Grid);
 		this.load_ressources();
@@ -40,13 +41,14 @@ var GeCore = Class.create(GeObject, {
 	},
 	
 	init_global_variables: function() {
-		Log = new GeLog("GameLog");
-		ShoGE.w = Log.w;
+		ShoGE.Log = new GeLog("GameLog");
+		ShoGE.w = function(msg) { ShoGE.Log.w(msg) };
+		
 	},
 
 	load_ressources: function() {
 		var m = null;
-		for(var i = 0; i < 10; i++) {
+		for(var i = 0; i < 1; i++) {
 			m = new GeTreeNode_Monster(null);
 			this.Grid.add(m);
 		}
@@ -87,7 +89,7 @@ var GeCore = Class.create(GeObject, {
 		var that = this;
 		new PeriodicalExecuter(function(pe) {	
 			that.loop();
-		}, 0.0001);
+		}, 0.00001);
 	},
 	/* -[meth]- */
 	loop: function() {	

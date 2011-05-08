@@ -5,7 +5,7 @@ var GeTreeNode = Class.create(GeObject, {
         this.childs = new GeLinkedList();
 		this.iterator = this.childs.iterator();
         this._init(parent);
-        ShoGE.w("[" + this.core_id + "] Creating node tree: " + this.type);
+        //ShoGE.w("[" + this.core_id + "] Creating node tree: " + this.type);
     },
 
   
