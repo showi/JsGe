@@ -309,7 +309,7 @@ this.accumulator -= this.dt;
 this.t += this.dt;
 that.update(this.dt);
 }
-this.alpha = this.accumulator / this.dt;
+this.alpha += (this.accumulator / this.dt);
 }
 });
 //----- ---[src/GeScreen.js]--- -----
@@ -761,13 +761,18 @@ c.pos = this.pos.clone();
 return c;
 },
 interpolate: function() {
+if (!this.lastState) {
+return this.pos;
+}
 var pos = this.pos.clone().mul(
 ShoGE.Core.DiscreteTime.alpha
 ).add(this.lastState.pos.clone().mul(1.0 - ShoGE.Core.DiscreteTime.alpha));
 return pos;
 },
 update: function(dt) {
+if (!this.lastState) {
 this.lastState = this.copy_state();
+}
 if (this.force) {
 this.force.set(0,0);
 var m = this.force.clone();
@@ -949,6 +954,18 @@ while(child = this.iterator.next()) {
 child.data.update(dt);
 }
 },
+post_rendering: function () {
+if (this.phys) {
+if (this.phys.lastState) {
+this.phys.lastState = null;
+}
+}
+var iterator =  this.childs.iterator()
+var child;
+while(child = iterator.next()) {
+child.data.post_rendering();
+}
+},
 collide: function() {
 if (this.frozen()) {
 return null;
@@ -978,7 +995,7 @@ ctx.save();
 this.gx.draw(ctx);
 ctx.restore();
 }
-this.iterator.reset_head();
+this.iterator.reset_head(); 
 var child;
 while(child = this.iterator.next()) {
 child.data.draw(ctx);
@@ -1030,12 +1047,12 @@ var minus = 1;
 if (Math.random() > 0.5) {
 minus = -1
 }
-this.phys.velocity.x = Math.random() * minus *10 ;
+this.phys.velocity.x = Math.random() * minus *5 ;
 minus = 1;
 if (Math.random() > 0.5) {
 minus = -1
 }
-this.phys.velocity.y = Math.random()* minus * 10;
+this.phys.velocity.y = Math.random()* minus * 5;
 this.gx = new GeGx_Monster(this);
 this.bound = new GeBound(this);
 this.bound.add(new GeBoundingCircle(this, this.gx.width/2));
@@ -1482,7 +1499,6 @@ draw: function() {
 this.Screen.init_buffer();
 var ctx = this.Screen.buffer.getContext('2d');	
 ctx.save();
-ctx.scale(0.5, 0.5);
 if (this.Camera) {
 ctx.translate(this.Camera.object.phys.pos.x,   this.Camera.object.phys.pos.y);
 }
@@ -1661,16 +1677,20 @@ start_loop: function()
 var that = this;
 this.MainLoop = new PeriodicalExecuter(function(pe) {	
 that.loop();
-}, 0.001);
+}, 0.000001);
+this.RenderingLoop = new PeriodicalExecuter(function(pe) {	
+that.Renderers.each(function(pair) {
+pair.value.draw();
+});
+that.DiscreteTime.alpha = 0;
+that.SG.post_rendering();
+}, 0.000001);
 },
 loop: function() 
 {	
 
 this.DiscreteTime.consume(this.SG);
 
-this.Renderers.each(function(pair) {
-pair.value.draw();
-});
 },
 
 add_screen: function (id, width, height, bgcolor) 
