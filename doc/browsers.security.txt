@@ -1,2 +1,0 @@
-Chrome:
---allow-file-access-from-files
