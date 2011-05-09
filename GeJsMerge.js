@@ -372,7 +372,6 @@ if (v2.y < minY) {
 minY = v2.y;
 maxY = v1.y;
 }
-ShoGE.w("(" + minX + ", " + minY + "), (" + maxX + ", " + maxY + ")");
 this.start = new Vector2D(minX, minY);
 this.stop = new Vector2D(maxX, maxY);
 }
@@ -415,7 +414,6 @@ this.up = new Vector2D(x,y);
 this.status = 'up';
 var lX = Math.abs(this.up.x - this.down.x);
 var lY = Math.abs(this.up.y - this.down.y);
-ShoGE.w("lX: " + lX + ", lY: " + lY);
 if (lX > 1 || lY > 1) {
 this.area = new GeArea(this.down, this.up);
 } else {
@@ -764,6 +762,10 @@ interpolate: function() {
 if (!this.lastState) {
 return this.pos;
 }
+if (!ShoGE.Core.DiscreteTime.alpha) { 
+return this.pos;
+}
+var goom = this.plop;
 var pos = this.pos.clone().mul(
 ShoGE.Core.DiscreteTime.alpha
 ).add(this.lastState.pos.clone().mul(1.0 - ShoGE.Core.DiscreteTime.alpha));
@@ -1607,13 +1609,8 @@ this.Grid.add(m);
 }
 this.camera = new GeCamera(parent, m);
 this.SG.add_child(this.camera);
-this.add_renderer(
-'GameScreen3',
-this.Screens.get("GameScreen3"), 
-this.camera, 
-this.width/2, 
-this.height/2
-);
+
+
 var map = new GeTreeNode_Map(null);
 
 var sprite_set = new GeSpriteSet("sprites/charsets12", 16, 16);
@@ -1632,7 +1629,7 @@ this.lastFrameTime = Date.now();
 ShoGE.w("--- Starting Game Engine");
 this.timer = new PeriodicalExecuter(function(pe) {	
 that.html_update();
-}, 0.1);
+}, 0.5);
 new PeriodicalExecuter(function(pe) {			
 if (that.ImageReady.is_loading()) {
 that.ImageReady.draw();
@@ -1677,20 +1674,19 @@ start_loop: function()
 var that = this;
 this.MainLoop = new PeriodicalExecuter(function(pe) {	
 that.loop();
-}, 0.000001);
+}, 1/100);
 this.RenderingLoop = new PeriodicalExecuter(function(pe) {	
 that.Renderers.each(function(pair) {
 pair.value.draw();
 });
 that.DiscreteTime.alpha = 0;
 that.SG.post_rendering();
-}, 0.000001);
+}, 1/60);
 },
 loop: function() 
 {	
 
 this.DiscreteTime.consume(this.SG);
-
 },
 
 add_screen: function (id, width, height, bgcolor) 
