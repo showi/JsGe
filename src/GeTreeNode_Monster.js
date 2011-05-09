@@ -15,12 +15,12 @@ var GeTreeNode_Monster = Class.create(GeTreeNode, {
 		if (Math.random() > 0.5) {
 			minus = -1
 		}
-        this.phys.velocity.x = Math.random()*10 * minus ;
+        this.phys.velocity.x = Math.random() * minus *10 ;
 		minus = 1;
 		if (Math.random() > 0.5) {
 			minus = -1
 		}
-        this.phys.velocity.y = Math.random()*10 * minus;
+        this.phys.velocity.y = Math.random()* minus * 10;
 		
         this.gx = new GeGx_Monster(this);
         this.bound = new GeBound(this);
@@ -36,7 +36,7 @@ var GeTreeNode_Monster = Class.create(GeTreeNode, {
 		drawForce = new GeTreeNode_Vector(this, this.phys.velocity); //this.phys.force);
 		drawForce.phys.pos = this.phys.pos;
 		drawForce.set_color("#FF0000");
-		this.add_child(drawForce);
+		//this.add_child(drawForce);
 		
 		drawForce = new GeTreeNode_Vector(this, this.phys.velocity.normal()); //this.phys.force);
 		drawForce.phys.pos = this.phys.pos;
@@ -44,17 +44,18 @@ var GeTreeNode_Monster = Class.create(GeTreeNode, {
 		drawForce.postupdate = function(dt) {
 			that.vector = that.phys.velocity.normal();
 		}
-		drawForce.set_color("#0000AA");
+		//drawForce.set_color("#0000AA");
 		//drawForce.unfreeze();
 		//drawForce.unhide();
-		this.add_child(drawForce);
+		//this.add_child(drawForce);
 	},
 
 	preload_ressources: function($super) {
 		ShoGE.w("Loading monster ressources");
 		ShoGE.Core.Images.add("ball-blue-32x32.png");
 		ShoGE.Core.Images.add("ball-cover-32x32.png");
-		$super();
+		ShoGE.Core.Images.add("ball-infected-32x32.png");
+		//$super();
 	},
 	
 });
@@ -71,9 +72,10 @@ var GeGx_Monster = Class.create({
     /*# > Method < #*/
     draw: function(ctx) {
         var phys = this.parent.phys;
-        ctx.translate(phys.pos.x - 16, phys.pos.y - 16);
+		var pos = phys.interpolate();
+        ctx.translate(pos.x - 16, pos.y - 16);
         ctx.drawImage(ShoGE.Core.Images.get("ball-blue-32x32.png").get(), 0, 0);
         ctx.drawImage(ShoGE.Core.Images.get("ball-cover-32x32.png").get(), 0, 0);
-      //  ctx.drawImage(Core.Images.get("ball-infected-32x32.png").get(), 0, 0);
+		ctx.drawImage(ShoGE.Core.Images.get("ball-infected-32x32.png").get(), 0, 0);
     },
 });

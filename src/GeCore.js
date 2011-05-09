@@ -13,7 +13,7 @@ var GeCore = Class.create(GeObject, {
 		this.init_global_variables();
 		
 		/* Discrete Time */
-		this.DiscreteTime = new GeDiscreteTime(20);
+		this.DiscreteTime = new GeDiscreteTime(15);
 		
 		/* Create Screen object */
 		this.Screens = new Hash();
@@ -59,7 +59,7 @@ var GeCore = Class.create(GeObject, {
 	load_ressources: function() 
 	{
 		var m = null;
-		for(var i = 0; i < 10; i++) {
+		for(var i = 0; i < 50; i++) {
 			m = new GeTreeNode_Monster(null);
 			this.Grid.add(m);
 		}
@@ -95,7 +95,7 @@ var GeCore = Class.create(GeObject, {
 		// Render HTML Elemet (Updating html element is an heavy process)
 		this.timer = new PeriodicalExecuter(function(pe) {	
 			that.html_update();
-		}, 0.01);
+		}, 0.1);
 		
 		new PeriodicalExecuter(function(pe) {			
 			if (that.ImageReady.is_loading()) {
@@ -124,7 +124,8 @@ var GeCore = Class.create(GeObject, {
 	html_update: function()
 	{
 		$('GameFPS').innerHTML = Math.round(this.Renderers.get('GameScreen').get_fps());
-		$('GameElapsedTime').innerHTML = Math.round(this.DiscreteTime.t/10)/100 + "&nbsp;";
+		$('GameElapsedTime').innerHTML = Math.round(this.DiscreteTime.t/10)/100 + "&nbsp;s";
+		$('GameAlpha').innerHTML = this.DiscreteTime.alpha;
 		$('clickatX').innerHTML = this.Mouse.pos.x;
 		$('clickatY').innerHTML = this.Mouse.pos.y;
 		$('MouseStatus').innerHTML = this.Mouse.status;

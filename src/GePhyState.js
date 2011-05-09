@@ -23,7 +23,7 @@ var GePhysState = Class.create({
 		this.set_mass(10.0);
 		this.width = 32;
 		this.height = 32;
-		this.minval = 0.00001;
+		this.minval = 0.000001;
 	},
 	get_force: function() {
 		return this.force();
@@ -62,7 +62,22 @@ var GePhysState = Class.create({
 	}
 	this.force.add(force);
   },
+  
+  copy_state: function() {
+	var c = new Object();
+	c.pos = this.pos.clone();
+	return c;
+  },
+  
+  interpolate: function() {
+		var pos = this.pos.clone().mul(
+			ShoGE.Core.DiscreteTime.alpha
+		).add(this.lastState.pos.clone().mul(1.0 - ShoGE.Core.DiscreteTime.alpha));
+		return pos;
+  },
+  
   update: function(dt) {
+	this.lastState = this.copy_state();
 
 	if (this.force) {
 		this.force.set(0,0);
@@ -86,13 +101,13 @@ var GePhysState = Class.create({
 		
 	}
 	if (Math.abs(this.velocity.x) < this.minval) {
-		this.velocity.x = 0;
+		//this.velocity.x = 0;
 	}
 	if (Math.abs(this.velocity.y) < this.minval) {
-		this.velocity.y = 0;
+		//this.velocity.y = 0;
 	}
 	if (this.velocity.x == 0 && this.velocity.y == 0) {
-		this.parent.freeze();
+		//this.parent.freeze();
 	}
 	this.pos.add(this.velocity);
 	

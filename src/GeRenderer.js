@@ -16,6 +16,7 @@ var GeRenderer = Class.create(GeObject, {
 		this.Screen.init_buffer();
 		var ctx = this.Screen.buffer.getContext('2d');	
 		ctx.save();
+		ctx.scale(0.5, 0.5);
 		if (this.Camera) {
 			ctx.translate(this.Camera.object.phys.pos.x,   this.Camera.object.phys.pos.y);
 		}
@@ -25,6 +26,7 @@ var GeRenderer = Class.create(GeObject, {
 		if (this.Mouse) {
 			this.Mouse.draw(ctx);
 		}
+
 		ctx.restore();
 		var ctime = Date.now();
 		var d = ctime - this.lastFrameTime;			
