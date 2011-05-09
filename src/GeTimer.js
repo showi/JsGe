@@ -1,4 +1,4 @@
-var GeTime = Class.create(GeObject, {
+var GeTimer = Class.create(GeObject, {
 	initialize: function($super) {
 		$super();
 		var date = new Date();
@@ -27,6 +27,7 @@ var GeTime = Class.create(GeObject, {
 		this.endtime = date.getTime();
 		return true;
 	},
+	
 	delta: function() {
 		var endtime;
 		if (this.endtime == null) {

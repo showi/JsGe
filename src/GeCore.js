@@ -1,53 +1,63 @@
 var GeCore = Class.create(GeObject, {
 	
 	initialize: function($super, parent) {
-		this.set_parent(parent);
-		var date = new Date();
-		this.bgcolor = "rgb(0,0,0)";
-		this.step = 0;
-		this.timer = null;
-		this.t = 0;
-		this.startTime = null;
-		this.currentTime = date.getTime();
-		this.dt = 66;
-		this.accumulator = 0;
+		$super(parent);
+		
 		this.lastDraw = this.currentTime;
 		this.pause = false;
 	},
 	
-	init: function(width, height) {
-		var date = new Date();
-		
+	init: function(width, height) 
+	{
+		/* Init Global Variables */
 		this.init_global_variables();
 		
-		this.Screen = new GeScreen(this,"GameScreen", width,height);
-		this.Screen.clear(this.bgcolor);
-		this.Screen2 = new GeScreen(this,"GameScreen3", width/2,height/2);
-		this.Screen2.clear(this.bgcolor);
+		/* Discrete Time */
+		this.DiscreteTime = new GeDiscreteTime(20);
+		
+		/* Create Screen object */
+		this.Screens = new Hash();
+		this.add_screen("GameScreen", width, height);
+		this.add_screen("GameScreen3", width / 2, height / 2);
+		
+		/* Create our mouse */
 		this.Mouse = new GeMouse('GameScreen');
+		
+		/* Create our image pool */
 		this.Images = new GeMediaPool();
+		
+		/* Create our scene graph */
 		this.SG = new GeTreeNode_Collection(null, "World");
 	
-		this.Renderer = new GeRenderer(this, this.Screen, null, width, height);
-		this.Renderer.mouse = this.Mouse;
+		/* Create our renderers */
+		this.Renderers = new Hash();
+		this.add_renderer('GameScreen', this.Screens.get('GameScreen'), null, width, height);
+		this.Renderers.get("GameScreen").set_mouse(this.Mouse);
+		
 		this.Level = new GeLevel(this, 'darks');
 		this.Level.load(0);
+		
 		this.Grid = new GeTreeNode_Grid(this, 2,2, 512);
 		this.SG.add_child(this.Grid);
+		
 		this.load_ressources();
+		
 		this.ImageReady = new GeWaitLoading(parent, this.Screen, this.Images);
 
 		this.SG.preload_ressources();
+		
 		this.start();
 	},
 	
-	init_global_variables: function() {
+	init_global_variables: function() 
+	{
 		ShoGE.Log = new GeLog("GameLog");
 		ShoGE.w = function(msg) { ShoGE.Log.w(msg) };
 		
 	},
 
-	load_ressources: function() {
+	load_ressources: function() 
+	{
 		var m = null;
 		for(var i = 0; i < 10; i++) {
 			m = new GeTreeNode_Monster(null);
@@ -55,11 +65,18 @@ var GeCore = Class.create(GeObject, {
 		}
 		this.camera = new GeCamera(parent, m);
 		this.SG.add_child(this.camera);
-		this.Renderer2 = new GeRenderer(this, this.Screen2, this.camera, this.width/2, this.height/2);
+		this.add_renderer(
+			'GameScreen3',
+			this.Screens.get("GameScreen3"), 
+			this.camera, 
+			this.width/2, 
+			this.height/2
+		);
 		var map = new GeTreeNode_Map(null);
 	},
 
-	start: function() {
+	start: function()
+	{
 		var that = this;
 		this.startTime = Date.now();
 		this.lastFrameTime = Date.now();
@@ -80,7 +97,9 @@ var GeCore = Class.create(GeObject, {
 		}, 0.1);
 		
 	},
-	togglePause: function() {
+	
+	togglePause: function() 
+	{
 		if (this.pause) {
 			this.pause = false;
 			this.currentTime = Date.now();
@@ -90,9 +109,12 @@ var GeCore = Class.create(GeObject, {
 			this.MainLoop.stop();
 		}
 	},
-	html_update: function(){
-		$('GameFPS').innerHTML = Math.round(this.Renderer.FPS);
-		$('GameFPS3').innerHTML = Math.round(this.Renderer2.FPS);
+	
+	/* HTML update: Running in separate thread.*/
+	html_update: function()
+	{
+		$('GameFPS').innerHTML = Math.round(this.Renderers.get('GameScreen').get_fps());
+		$('GameElapsedTime').innerHTML = Math.round(this.DiscreteTime.t/10)/100 + "&nbsp;";
 		$('clickatX').innerHTML = this.Mouse.pos.x;
 		$('clickatY').innerHTML = this.Mouse.pos.y;
 		$('MouseStatus').innerHTML = this.Mouse.status;
@@ -107,27 +129,36 @@ var GeCore = Class.create(GeObject, {
 		}
 	},
 	
-	start_loop: function() {
+	start_loop: function() 
+	{
 		var that = this;
 		this.MainLoop = new PeriodicalExecuter(function(pe) {	
 			that.loop();
-		}, 0.00001);
+		}, 0.001);
 	},
 
-	loop: function() {	
-		var newTime = Date.now();
-		var frameTime = newTime - this.currentTime;
-		
-		this.currentTime = newTime;
-		this.accumulator  += frameTime;
-		//console.time("Phys Update");
-		while(this.accumulator >= this.dt) {
-			this.accumulator -= this.dt;
-			this.t += this.dt;
-			this.SG.update(this.dt);
-		}
-		//console.timeEnd("Phys Update");
-		this.Renderer.draw();
-		this.Renderer2.draw();
+	loop: function() 
+	{	
+		/* Update our scene graph with discrete time */
+		this.DiscreteTime.consume(this.SG);
+		/* Draw our scene */
+		this.Renderers.each(function(pair) {
+			pair.value.draw();
+		});
 	},
+	
+	/* Helpers */
+	add_screen: function (id, width, height, bgcolor) 
+	{
+		this.Screens.set(id, 
+			new GeScreen(this, id, width, height)
+		);
+		if (bgcolor) this.Screens.get(id).set_bgcolor(bgcolor);
+	},
+	
+	add_renderer: function(id, screen, camera, width, height) {
+			this.Renderers.set(id,
+				new GeRenderer(this, screen, camera, width, height)
+			);
+		},
 });	
