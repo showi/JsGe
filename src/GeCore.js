@@ -73,6 +73,16 @@ var GeCore = Class.create(GeObject, {
 			this.height/2
 		);
 		var map = new GeTreeNode_Map(null);
+		
+		/* Testing sprite */
+		var sprite_set = new GeSpriteSet("sprites/charsets12", 16, 16);
+		sprite_set.preload_ressources(this.Images);
+		var s = sprite_set.set_sprite("warrior", 16, 180);
+		s.set_animation("walk_up"    , 0, 3);
+		s.set_animation("walk_right" , 1, 3);
+		s.set_animation("walk_down", 2, 3)
+		s.set_animation("walk_left"   , 3, 3)
+		
 	},
 
 	start: function()
