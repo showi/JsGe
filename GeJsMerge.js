@@ -181,10 +181,12 @@ this.elm = document.getElementById(id);
 this.count = 0;
 },
 w: function(msg) {
+if (console) { console.log(msg);}
+return;
 if(!this.elm) {
 return;
 }
-if (this.count >100) {
+if (this.count > 1000) {
 this.count = 1;
 this.elm.innerHTML = "";
 }
@@ -287,13 +289,37 @@ invY: function() {
 this.y = - this.y;
 },
 });
+//----- ---[src/GeDiscreteTime.js]--- -----
+var GeDiscreteTime = Class.create(GeObject, {
+initialize: function($super, dt) {
+$super();
+this.dt = dt;
+this.t = 0;
+this.accumulator = 0;
+this.currentTime = Date.now();
+this.startTime = this.currentTime;
+},
+consume: function(that) {
+var newTime = Date.now();
+var frameTime = newTime - this.currentTime;
+this.currentTime = newTime;
+this.accumulator += frameTime;
+while(this.accumulator > this.dt) {
+this.accumulator -= this.dt;
+this.t += this.dt;
+that.update(this.dt);
+}
+this.alpha += (this.accumulator / this.dt);
+}
+});
 //----- ---[src/GeScreen.js]--- -----
 var GeScreen = Class.create(GeObject, {
-initialize: function(parent, id, width, height) {
+initialize: function($super, parent, id, width, height) {
+$super(parent);
 this.id = id;
-this.parent = parent;
 this.width = width;
 this.height = height;
+this.bgcolor = "rgb(0,0,0)";
 this.canvas = document.getElementById(id);
 if (!this.canvas.getContext || !this.canvas.getContext('2d')){
 alert("HTML 5 canvas may be not supported on your system");
@@ -302,18 +328,11 @@ exit(1);
 this.ctx = this.canvas.getContext('2d');
 this.init_buffer(); 
 },
-get_layer: function(id) {
-if (id < 0) {
-id = 0;
-}
-if (id > 10) {
-id = 10;
-}
-if (this.layers[id]) {
-return this.layers[id];
-}
-var c = document.createElement('canvas');
-this.layers[id] = c.getContext('2d');
+set_bgcolor: function(bgcolor) {
+this.bgcolor = bgcolor;
+},
+get_bgcolor: function(bgcolor) {
+return this.bgcolor;
 },
 init_buffer: function() {
 this.layers = new Array();
@@ -322,33 +341,113 @@ b.width = this.width;
 b.height = this.height;
 this.buffer = b;
 var ctx = b.getContext('2d');
-this.clear("rgb(50,50,50");
-
-
+this.clear(this.bgcolor);
 },
 swap: function() {
 this.ctx.drawImage(this.buffer, 0, 0);
 },
 clear: function(color) {
+var bgcolor = color || this.bgcolor;
 this.ctx.save();
-this.ctx.fillStyle = color;
+this.ctx.fillStyle = bgcolor;
 this.ctx.fillRect (0, 0, this.width, this.height);
 this.ctx.restore();
 }
 });
 //----- ---[src/GeMouse.js]--- -----
+var GeArea = Class.create({
+initialize: function(vS, vE) {
+this.set(vS, vE);
+},
+set: function(v1, v2) {
+var minX = v1.x;
+var maxX = v2.x;
+if (v2.x < minX) {
+minX = v2.x;
+maxX = v1.x;
+}
+var minY = v1.y;
+var maxY = v2.y;
+if (v2.y < minY) {
+minY = v2.y;
+maxY = v1.y;
+}
+ShoGE.w("(" + minX + ", " + minY + "), (" + maxX + ", " + maxY + ")");
+this.start = new Vector2D(minX, minY);
+this.stop = new Vector2D(maxX, maxY);
+}
+});
 var GeMouse = Class.create({
 initialize: function(id) {
+this.elmID = id;
 this.pos = new Vector2D(0 , 0);
+this.click = new Array();
+this.area = null;
+this.status = null;
 this._init();
 },
 _init: function() {
 var that = this;
-Event.observe('GameScreen', 'click', function(event) {
-var gs = $('GameScreen');
-that.pos.x = Event.pointerX(event);
-that.pos.y = Event.pointerY(event);
+Event.observe(this.elmID, 'mousemove', function(e) {
+that.pos.x =  Event.pointerX(e) - e.element().offsetLeft;
+that.pos.y =  Event.pointerY(e) - e.element().offsetTop;
 });
+Event.observe(this.elmID, 'mousedown', function(e) {
+that.mouseDown(
+Event.pointerX(e) - e.element().offsetLeft,
+Event.pointerY(e) - e.element().offsetTop
+);
+});
+Event.observe(this.elmID, 'mouseup', function(e) {
+that.mouseUp(
+Event.pointerX(e) - e.element().offsetLeft,
+Event.pointerY(e) - e.element().offsetTop
+);
+});
+},
+mouseDown: function(x, y) {
+this.down = new Vector2D(x,y);
+this.status = 'down';
+$('GameScreen').style.cursor = "crosshair";
+},
+mouseUp: function(x, y) {
+this.up = new Vector2D(x,y);
+this.status = 'up';
+var lX = Math.abs(this.up.x - this.down.x);
+var lY = Math.abs(this.up.y - this.down.y);
+ShoGE.w("lX: " + lX + ", lY: " + lY);
+if (lX > 1 || lY > 1) {
+this.area = new GeArea(this.down, this.up);
+} else {
+this.click.push(this.down.clone());
+this.area = null;
+}
+this.reset();
+$('GameScreen').style.cursor = "default";
+},
+reset: function() {
+this.down = null;
+this.up = null;
+this.status = null;
+},
+draw_area: function(ctx) {
+if (this.status == 'down') {
+var lX = this.pos.x - this.down.x;
+var lY = this.pos.y - this.down.y;
+if (Math.abs(lX) < 1 && Math.abs(lY) < 1) {
+return;
+}
+var a = new GeArea(this.down, this.pos);
+ctx.save();
+ctx.fillStyle = "rgba(200,0,0, 0.1)";
+ctx.fillRect (this.down.x, this.down.y, lX, lY);
+ctx.strokeStyle = "rgba(200,0,0, 0.8)";
+ctx.strokeRect(this.down.x, this.down.y, lX, lY);
+ctx.restore();
+}
+},
+draw: function(ctx) {
+this.draw_area(ctx);
 },
 });
 //----- ---[src/GeImagePool.js]--- -----
@@ -385,7 +484,6 @@ this.total_loaded = 0;
 },
 add: function(src) {
 if (this.pool[src]) {
-ShoGE.w("Image '" + src + " already in pool");
 return null;
 }
 ShoGE.w("Image added: " + src);
@@ -618,7 +716,7 @@ this.solid = false;
 this.set_mass(10.0);
 this.width = 32;
 this.height = 32;
-this.minval = 0.00001;
+this.minval = 0.000001;
 },
 get_force: function() {
 return this.force();
@@ -657,7 +755,24 @@ this.force = new Vector2D(0,0);
 }
 this.force.add(force);
 },
+copy_state: function() {
+var c = new Object();
+c.pos = this.pos.clone();
+return c;
+},
+interpolate: function() {
+if (!this.lastState) {
+return this.pos;
+}
+var pos = this.pos.clone().mul(
+ShoGE.Core.DiscreteTime.alpha
+).add(this.lastState.pos.clone().mul(1.0 - ShoGE.Core.DiscreteTime.alpha));
+return pos;
+},
 update: function(dt) {
+if (!this.lastState) {
+this.lastState = this.copy_state();
+}
 if (this.force) {
 this.force.set(0,0);
 var m = this.force.clone();
@@ -669,13 +784,10 @@ this.velocity.add(m);
 
 }
 if (Math.abs(this.velocity.x) < this.minval) {
-this.velocity.x = 0;
 }
 if (Math.abs(this.velocity.y) < this.minval) {
-this.velocity.y = 0;
 }
 if (this.velocity.x == 0 && this.velocity.y == 0) {
-this.parent.freeze();
 }
 this.pos.add(this.velocity);
 
@@ -706,7 +818,27 @@ initialize: function($super, parent, path) {
 $super(parent);
 this.path = path;
 this.cell_size = 256;
+this.loaded = false;
 },
+load: function(level) {
+ShoGE.w("Loading level info with AJAX");
+var that = this;
+new Ajax.Request('level/' + level + "/levelInfo.json",
+{
+method:'get',
+onSuccess: function(transport){
+var data = transport.responseText; 
+that.data = data.evalJSON(true);
+that.preload_ressources();
+},
+onFailure: function(){ ShoGE.w("Cannot load level info"); }
+});
+},	
+preload_ressources: function() {
+if (!this.data) {throw("Cannot preload leve ressources without data");}
+ShoGE.w("Loading ressources for level " + this.data.name);
+this.loaded = true;
+}
 });
 //----- ---[src/GeTree.js]--- -----
 
@@ -731,7 +863,6 @@ this.set_parent(parent);
 this.childs = new GeLinkedList();
 this.iterator = this.childs.iterator();
 this._init(parent);
-ShoGE.w("[" + this.core_id + "] Creating node tree: " + this.type);
 },
 _init: function(parent) {
 this.type = "basic";
@@ -823,6 +954,18 @@ while(child = this.iterator.next()) {
 child.data.update(dt);
 }
 },
+post_rendering: function () {
+if (this.phys) {
+if (this.phys.lastState) {
+this.phys.lastState = null;
+}
+}
+var iterator =  this.childs.iterator()
+var child;
+while(child = iterator.next()) {
+child.data.post_rendering();
+}
+},
 collide: function() {
 if (this.frozen()) {
 return null;
@@ -852,7 +995,7 @@ ctx.save();
 this.gx.draw(ctx);
 ctx.restore();
 }
-this.iterator.reset_head();
+this.iterator.reset_head(); 
 var child;
 while(child = this.iterator.next()) {
 child.data.draw(ctx);
@@ -904,12 +1047,12 @@ var minus = 1;
 if (Math.random() > 0.5) {
 minus = -1
 }
-this.phys.velocity.x = Math.random()*10 * minus ;
+this.phys.velocity.x = Math.random() * minus *5 ;
 minus = 1;
 if (Math.random() > 0.5) {
 minus = -1
 }
-this.phys.velocity.y = Math.random()*10 * minus;
+this.phys.velocity.y = Math.random()* minus * 5;
 this.gx = new GeGx_Monster(this);
 this.bound = new GeBound(this);
 this.bound.add(new GeBoundingCircle(this, this.gx.width/2));
@@ -921,21 +1064,18 @@ drawForce.set_color("#AA00AA");
 drawForce = new GeTreeNode_Vector(this, this.phys.velocity); 
 drawForce.phys.pos = this.phys.pos;
 drawForce.set_color("#FF0000");
-this.add_child(drawForce);
 drawForce = new GeTreeNode_Vector(this, this.phys.velocity.normal()); 
 drawForce.phys.pos = this.phys.pos;
 var that = this
 drawForce.postupdate = function(dt) {
 that.vector = that.phys.velocity.normal();
 }
-drawForce.set_color("#0000AA");
-this.add_child(drawForce);
 },
 preload_ressources: function($super) {
 ShoGE.w("Loading monster ressources");
 ShoGE.Core.Images.add("ball-blue-32x32.png");
 ShoGE.Core.Images.add("ball-cover-32x32.png");
-$super();
+ShoGE.Core.Images.add("ball-infected-32x32.png");
 },
 });
 
@@ -949,9 +1089,11 @@ this.height = 32;
 
 draw: function(ctx) {
 var phys = this.parent.phys;
-ctx.translate(phys.pos.x - 16, phys.pos.y - 16);
+var pos = phys.interpolate();
+ctx.translate(pos.x - 16, pos.y - 16);
 ctx.drawImage(ShoGE.Core.Images.get("ball-blue-32x32.png").get(), 0, 0);
 ctx.drawImage(ShoGE.Core.Images.get("ball-cover-32x32.png").get(), 0, 0);
+ctx.drawImage(ShoGE.Core.Images.get("ball-infected-32x32.png").get(), 0, 0);
 },
 });
 //----- ---[src/GeTreeNode_Vector.js]--- -----
@@ -1044,6 +1186,13 @@ ncell.add_child(node);
 },
 });
 //----- ---[src/GeTreeNode_Cell.js]--- -----
+var GeTile = Class.create(GeObject, {
+initialize: function($super, parent) {
+$super(parent);
+this.walkable = 0;
+this.name = "";
+}
+});
 var GeTreeNode_Cell = Class.create(GeTreeNode, {
 initialize: function($super, parent, x, y) {
 $super(parent);
@@ -1077,10 +1226,49 @@ var r = id.data[step];
 var g = id.data[step + 1];
 var b = id.data[step + 2];
 var a = id.data[step + 3];
-if (a) {
-this.tiles[row*32+i] = 1;
-}else {
-this.tiles[row*32+i] = 0;
+var tile = new GeTile(parent);
+if (a == 255) {
+tile.walkable = 0;
+tile.name = "tile-" + r + "-" + g + "-" + b + ".png";
+tile.name = "tile-on.png";
+ShoGE.Core.Images.add(tile.name);
+} else {
+tile.walkable = 1;
+tile.name = "tile-off.png";
+ShoGE.Core.Images.add(tile.name);
+}			  
+this.tiles[row*32+i] = tile;
+}
+}
+},
+load_tile_info: function() {
+var canvas = document.createElement('canvas');
+canvas.width = ShoGE.Core.Level.cell_size;
+canvas.height = ShoGE.Core.Level.cell_size;
+var c = canvas.getContext('2d');
+c.width = this.img_tile.width;
+c.height = this.img_tile.height;
+c.drawImage(this.img_tile, 0, 0);
+var id = c.getImageData(0,0,ShoGE.Core.Level.cell_size,ShoGE.Core.Level.cell_size);
+var l = id.data.length / 4;
+var msg = "";
+var c = 0;
+for(var row = 0; row < 32; row++) {
+for (var i = 0; i < 32; i++) {
+var step = (row *(id.width*4)) + (i*4) ;
+var r = id.data[step];
+var g = id.data[step + 1];
+var b = id.data[step + 2];
+var a = id.data[step + 3];
+var tile = new GeTile(parent);
+if (a == 0) {
+
+
+} else {
+tile.walkable = 1;
+tile.name = "tile-" + r + "-" + g + "-" + b + ".png";
+ShoGE.Core.Images.add(tile.name);
+this.tiles[row*32+i] = tile;
 }			  
 }
 }
@@ -1089,6 +1277,9 @@ loaded: function(type) {
 this.is_loaded = true;
 if (type == 'shadow') {
 this.load_shadow_info();
+}
+if (type == 'layer') {
+this.load_tile_info();
 }
 },
 get_level_path: function() {
@@ -1100,11 +1291,16 @@ return "cells/" + x + "-" + y + "-";
 load: function() {
 this.is_loaded = false;
 this.img_shadow = new Image();
+this.img_tile = new Image();
 var that = this;
 var src = this.get_level_path() + this.get_cell_path(this.x, this.y) + "shadow.png";
 ShoGE.Core.Images.add("../../" + src);
 this.img_shadow.onload = function() { that.loaded('shadow'); }	
 this.img_shadow.src = src;
+src = this.get_level_path() + this.get_cell_path(this.x, this.y) + "layer-0.png";
+ShoGE.Core.Images.add("../../" + src);
+this.img_tile.onload = function() { that.loaded('layer'); }	
+this.img_tile.src = src;
 },
 preload_ressources: function($super) {
 ShoGE.Core.Images.add("tile-on.png");
@@ -1130,20 +1326,18 @@ for(var r = 0; r < 32; r ++) {
 for(var c = 0; c < 32; c ++) {
 lctx.save();
 lctx.translate(c*16, r*16);
-if (this.parent.tiles[r*32+c]) {
-lctx.drawImage(ShoGE.Core.Images.get("tile-on.png").get(), 0,0);
+if (this.parent.tiles[r*32+c].walkable) {
+lctx.drawImage(ShoGE.Core.Images.get(this.parent.tiles[r*32+c].name).get(), 0,0);
 } else {
-lctx.drawImage(ShoGE.Core.Images.get("tile-off.png").get(), 0,0);
+lctx.drawImage(ShoGE.Core.Images.get(this.parent.tiles[r*32+c].name).get(), 0,0);
 }
 lctx.restore();
 }	
 }
+lctx.restore();
 }
 ctx.translate(this.parent.x * 512, this.parent.y * 512);
 ctx.drawImage(this.cache, 0,0);
-if (!ShoGE.Core.Images.get("tile-on.png").loaded && !ShoGE.Core.Images.get("tile-on.png").loaded) {
-this.cache = null;
-}
 },
 });
 //----- ---[src/GeTreeNode_Collection.js]--- -----
@@ -1203,6 +1397,72 @@ this.add_child(u);
 this.add_child(v);
 },
 });
+//----- ---[src/GeSprite.js]--- -----
+var GeSpriteAnimation = Class.create({
+initialize: function(parent, name, row, frames) {
+this.parent = parent;
+this.name = name;
+this.row = row;
+this.frames = frames;
+},
+});
+var GeSprite = Class.create(  {
+initialize: function(parent, name, x, y) {
+this.parent = parent;
+this.name = name;
+this.offset = new Vector2D(x, y);
+this.animations = new Hash();
+},
+set_animation: function(name, row, col) {
+this.animations.set(name,
+new GeSpriteAnimation(this, name, row, col, frames)
+);
+}
+});
+var GeSpriteSet = Class.create({
+initialize: function(file, width, height) {
+this.set_file(file);
+this.anims = new Hash();
+this.set_width(width);
+this.set_height(height);
+this.set_interval(1);
+},
+preload_ressources: function(pool) {
+pool.add(this.file);
+},
+
+set_file: function(f) {
+this.file = f;
+},
+get_file: function() {
+return this.file;
+},	
+set_width: function(l) {
+this.width = l;
+},
+get_width: function() {
+return this.width;
+},	
+set_height: function(l) {
+this.height = l;
+},
+get_height: function() {
+return this.height;
+},	
+set_interval: function(l) {
+this.interval = l;
+},
+get_interval: function() {
+return this.interval;
+},			
+
+set_sprite: function (name, posx, posy) {
+this.anims.set(name,
+new GeSprite(this, name, posx, posy)
+);
+return this.anims.get(name);
+},
+});
 //----- ---[src/GeCamera.js]--- -----
 var GeCamera = Class.create(GeTreeNode, {
 initialize: function($super, parent, object) {
@@ -1226,68 +1486,106 @@ this.tracked = null;
 //----- ---[src/GeRenderer.js]--- -----
 var GeRenderer = Class.create(GeObject, {
 initialize: function($super, parent, screen, camera, width, height) {
-$super();
-this.camera = camera;
-this.parent = parent;
-this.screen = screen;
-this.width = width;
-this.height = height;
-this.FPS = 0;
-var date = new Date();
-this.lastFrameTime = date.getTime();
+$super(parent);
+this.set_camera(camera);
+this.set_screen(screen);
+this.set_width(width);
+this.set_height(height);
+this.fps = 0;
+this.lastFrameTime = Date.now();
 this.frameCount = 0;
 },
 draw: function() {
-this.screen.init_buffer();
-var ctx = this.screen.buffer.getContext('2d');	
+this.Screen.init_buffer();
+var ctx = this.Screen.buffer.getContext('2d');	
 ctx.save();
-if (this.camera) {
-var o = new Vector2D(1, 0).angle(this.camera.object.phys.velocity);
-ctx.translate(this.screen.width / 2, this.screen.height / 2);
-ctx.translate(-this.camera.object.phys.pos.x, -this.camera.object.phys.pos.y);
+if (this.Camera) {
+ctx.translate(this.Camera.object.phys.pos.x,   this.Camera.object.phys.pos.y);
 }
-ctx.scale(0.5, 0.5);
 this.parent.SG.draw(ctx);
+if (this.Mouse) {
+this.Mouse.draw(ctx);
+}
 ctx.restore();
-var date = new Date();
-var ctime = date.getTime();
+var ctime = Date.now();
 var d = ctime - this.lastFrameTime;			
 if (d >= 1000.0) {
-this.FPS = (this.frameCount + this.FPS) / 2.0;
+this.fps = (this.frameCount + this.fps) / 2.0;
 this.lastFrameTime = ctime + (d - 1000);
 this.frameCount = 0;
 }
 this.frameCount++;	
-this.screen.swap();	
+this.Screen.swap();	
+},
+
+set_mouse: function(mouse) {
+this.Mouse = mouse;
+},
+get_mouse: function() {
+return this.Mouse;
+},
+
+set_camera: function(camera) {
+this.Camera = camera;
+},
+get_camera: function() {
+return this.Camera;
+},
+
+set_screen: function(screen) {
+this.Screen = screen;
+},
+get_screen: function() {
+return this.Screen;
+},
+
+set_width: function(width) {
+this.width = width;
+},
+get_width: function() {
+return this.width;
+},	
+
+set_height: function(height) {
+this.height = height;
+},
+get_width: function() {
+return this.width;
+},	
+
+get_fps: function() {
+return this.fps;
 }
 });
 //----- ---[src/GeCore.js]--- -----
 var GeCore = Class.create(GeObject, {
 initialize: function($super, parent) {
-this.set_parent(parent);
-var date = new Date();
-this.bgcolor = "rgb(0,0,0)";
-this.step = 0;
-this.timer = null;
-this.t = 0;
-this.startTime = null;
-this.currentTime = date.getTime();
-this.dt = 12;
-this.accumulator = 0;
+$super(parent);
 this.lastDraw = this.currentTime;
+this.pause = false;
 },
-init: function(width, height) {
-var date = new Date();
+init: function(width, height) 
+{
+
 this.init_global_variables();
-this.Screen = new GeScreen(this,"GameScreen", width,height);
-this.Screen.clear(this.bgcolor);
-this.Screen2 = new GeScreen(this,"GameScreen3", width/2,height/2);
-this.Screen2.clear(this.bgcolor);
-this.Mouse = new GeMouse();
+
+this.DiscreteTime = new GeDiscreteTime(15);
+
+this.Screens = new Hash();
+this.add_screen("GameScreen", width, height);
+this.add_screen("GameScreen3", width / 2, height / 2);
+
+this.Mouse = new GeMouse('GameScreen');
+
 this.Images = new GeMediaPool();
+
 this.SG = new GeTreeNode_Collection(null, "World");
-this.Renderer = new GeRenderer(this, this.Screen, null, width, height);
+
+this.Renderers = new Hash();
+this.add_renderer('GameScreen', this.Screens.get('GameScreen'), null, width, height);
+this.Renderers.get("GameScreen").set_mouse(this.Mouse);
 this.Level = new GeLevel(this, 'darks');
+this.Level.load(0);
 this.Grid = new GeTreeNode_Grid(this, 2,2, 512);
 this.SG.add_child(this.Grid);
 this.load_ressources();
@@ -1295,29 +1593,46 @@ this.ImageReady = new GeWaitLoading(parent, this.Screen, this.Images);
 this.SG.preload_ressources();
 this.start();
 },
-init_global_variables: function() {
-Log = new GeLog("GameLog");
-ShoGE.w = Log.w;
+init_global_variables: function() 
+{
+ShoGE.Log = new GeLog("GameLog");
+ShoGE.w = function(msg) { ShoGE.Log.w(msg) };
 },
-load_ressources: function() {
+load_ressources: function() 
+{
 var m = null;
-for(var i = 0; i < 10; i++) {
+for(var i = 0; i < 50; i++) {
 m = new GeTreeNode_Monster(null);
 this.Grid.add(m);
 }
 this.camera = new GeCamera(parent, m);
 this.SG.add_child(this.camera);
-this.Renderer2 = new GeRenderer(this, this.Screen2, this.camera, this.width/2, this.height/2);
+this.add_renderer(
+'GameScreen3',
+this.Screens.get("GameScreen3"), 
+this.camera, 
+this.width/2, 
+this.height/2
+);
 var map = new GeTreeNode_Map(null);
+
+var sprite_set = new GeSpriteSet("sprites/charsets12", 16, 16);
+sprite_set.preload_ressources(this.Images);
+var s = sprite_set.set_sprite("warrior", 16, 180);
+s.set_animation("walk_up"    , 0, 3);
+s.set_animation("walk_right" , 1, 3);
+s.set_animation("walk_down", 2, 3)
+s.set_animation("walk_left"   , 3, 3)
 },
-start: function() {
+start: function()
+{
 var that = this;
 this.startTime = Date.now();
 this.lastFrameTime = Date.now();
 ShoGE.w("--- Starting Game Engine");
 this.timer = new PeriodicalExecuter(function(pe) {	
 that.html_update();
-}, 0.01);
+}, 0.1);
 new PeriodicalExecuter(function(pe) {			
 if (that.ImageReady.is_loading()) {
 that.ImageReady.draw();
@@ -1327,29 +1642,68 @@ that.start_loop();
 }
 }, 0.1);
 },
-html_update: function(){
-$('GameFPS').innerHTML = Math.round(this.Renderer.FPS);
-$('GameFPS3').innerHTML = Math.round(this.Renderer2.FPS);
-},
-start_loop: function() {
-var that = this;
-new PeriodicalExecuter(function(pe) {	
-that.loop();
-}, 0.0001);
+togglePause: function() 
+{
+if (this.pause) {
+this.pause = false;
+this.currentTime = Date.now();
+this.start_loop();
+} else {
+this.pause = true;
+this.MainLoop.stop();
+}
 },
 
-loop: function() {	
-var newTime = Date.now();
-var frameTime = newTime - this.currentTime;
-this.currentTime = newTime;
-this.accumulator  += frameTime;
-while(this.accumulator >= this.dt) {
-this.accumulator -= this.dt;
-this.t += this.dt;
-this.SG.update(this.dt);
+html_update: function()
+{
+$('GameFPS').innerHTML = Math.round(this.Renderers.get('GameScreen').get_fps());
+$('GameElapsedTime').innerHTML = Math.round(this.DiscreteTime.t/10)/100 + "&nbsp;s";
+$('GameAlpha').innerHTML = this.DiscreteTime.alpha;
+$('clickatX').innerHTML = this.Mouse.pos.x;
+$('clickatY').innerHTML = this.Mouse.pos.y;
+$('MouseStatus').innerHTML = this.Mouse.status;
+if (this.Mouse.status) {
+if (this.Mouse.status == 'down') {
+$('clickDownX').innerHTML = this.Mouse.down.x;
+$('clickDownY').innerHTML = this.Mouse.down.y;
 }
-this.Renderer.draw();
-this.Renderer2.draw();
+} else {
+$('clickDownX').innerHTML = 0;
+$('clickDownY').innerHTML = 0;
+}
+},
+start_loop: function() 
+{
+var that = this;
+this.MainLoop = new PeriodicalExecuter(function(pe) {	
+that.loop();
+}, 0.000001);
+this.RenderingLoop = new PeriodicalExecuter(function(pe) {	
+that.Renderers.each(function(pair) {
+pair.value.draw();
+});
+that.DiscreteTime.alpha = 0;
+that.SG.post_rendering();
+}, 0.000001);
+},
+loop: function() 
+{	
+
+this.DiscreteTime.consume(this.SG);
+
+},
+
+add_screen: function (id, width, height, bgcolor) 
+{
+this.Screens.set(id, 
+new GeScreen(this, id, width, height)
+);
+if (bgcolor) this.Screens.get(id).set_bgcolor(bgcolor);
+},
+add_renderer: function(id, screen, camera, width, height) {
+this.Renderers.set(id,
+new GeRenderer(this, screen, camera, width, height)
+);
 },
 });	
 //----- ---[src/GeInitGlobals.js]--- -----

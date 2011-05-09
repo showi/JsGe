@@ -15,12 +15,12 @@ var GeTreeNode_Monster = Class.create(GeTreeNode, {
 		if (Math.random() > 0.5) {
 			minus = -1
 		}
-        this.phys.velocity.x = Math.random() * minus *10 ;
+        this.phys.velocity.x = Math.random() * minus *5 ;
 		minus = 1;
 		if (Math.random() > 0.5) {
 			minus = -1
 		}
-        this.phys.velocity.y = Math.random()* minus * 10;
+        this.phys.velocity.y = Math.random()* minus * 5;
 		
         this.gx = new GeGx_Monster(this);
         this.bound = new GeBound(this);

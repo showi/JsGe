@@ -41,44 +41,45 @@ var GePhysState = Class.create({
 	getPosX: function() {
 		return this.pos.x;
 	},
-  getPosY: function() {
+	getPosY: function() {
 	return this.pos.y;
   },
-  isSolid: function() {
+	isSolid: function() {
 	return this.solid;
   },
-  setSolid: function(bSolid) {
+	setSolid: function(bSolid) {
 	this.solid = bSolid;
   },
-  isMovable: function() {
+	isMovable: function() {
 	return this.movable;
   },
-  setMovable: function(bMovable) {
+	setMovable: function(bMovable) {
 	this.movable = bMovable;
   },
-  applyForce: function(force) {
+	applyForce: function(force) {
 	if (!this.force) {
 		this.force = new Vector2D(0,0);
 	}
 	this.force.add(force);
   },
-  
-  copy_state: function() {
+	copy_state: function() {
 	var c = new Object();
 	c.pos = this.pos.clone();
 	return c;
   },
-  
-  interpolate: function() {
+	interpolate: function() {
+		if (!this.lastState) {
+			return this.pos;
+		}
 		var pos = this.pos.clone().mul(
 			ShoGE.Core.DiscreteTime.alpha
 		).add(this.lastState.pos.clone().mul(1.0 - ShoGE.Core.DiscreteTime.alpha));
 		return pos;
   },
-  
-  update: function(dt) {
-	this.lastState = this.copy_state();
-
+	update: function(dt) {
+	if (!this.lastState) {
+		this.lastState = this.copy_state();
+	}
 	if (this.force) {
 		this.force.set(0,0);
 			// Gravity
@@ -134,7 +135,6 @@ var GePhysState = Class.create({
 		this.pos.x = Math.round(this.pos.x);
 		this.pos.y = Math.round(this.pos.y);
 	},
-	
 	grid_bounding: function() {
 		if (!this.parent.bound || !this.parent.bound.grid) {
 			

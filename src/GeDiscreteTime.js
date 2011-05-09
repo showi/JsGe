@@ -18,6 +18,6 @@ var GeDiscreteTime = Class.create(GeObject, {
 			this.t += this.dt;
 			that.update(this.dt);
 		}
-		this.alpha = this.accumulator / this.dt;
+		this.alpha += (this.accumulator / this.dt);
 	}
 });

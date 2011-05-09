@@ -131,8 +131,21 @@ var GeTreeNode = Class.create(GeObject, {
 			child.data.update(dt);
 		}
     },
-
-    collide: function() {
+	
+	post_rendering: function () {
+		if (this.phys) {
+			if (this.phys.lastState) {
+				this.phys.lastState = null;
+			}
+		}
+		var iterator =  this.childs.iterator()
+		var child;
+		while(child = iterator.next()) {
+			child.data.post_rendering();
+        }
+	},
+    
+	collide: function() {
         if (this.frozen()) {
             return null;
         }
@@ -163,7 +176,7 @@ var GeTreeNode = Class.create(GeObject, {
             this.gx.draw(ctx);
 			ctx.restore();
         }
-		this.iterator.reset_head();
+		this.iterator.reset_head(); // Not a good idea since we use two different thread
 		var child;
 		while(child = this.iterator.next()) {
 			child.data.draw(ctx);

@@ -145,17 +145,23 @@ var GeCore = Class.create(GeObject, {
 		var that = this;
 		this.MainLoop = new PeriodicalExecuter(function(pe) {	
 			that.loop();
-		}, 0.001);
+		}, 0.000001);
+		this.RenderingLoop = new PeriodicalExecuter(function(pe) {	
+			that.Renderers.each(function(pair) {
+				pair.value.draw();
+			});
+			that.DiscreteTime.alpha = 0;
+			that.SG.post_rendering();
+			
+		}, 0.000001);
 	},
-
+	
 	loop: function() 
 	{	
 		/* Update our scene graph with discrete time */
 		this.DiscreteTime.consume(this.SG);
 		/* Draw our scene */
-		this.Renderers.each(function(pair) {
-			pair.value.draw();
-		});
+	
 	},
 	
 	/* Helpers */
