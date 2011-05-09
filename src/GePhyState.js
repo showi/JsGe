@@ -71,6 +71,11 @@ var GePhysState = Class.create({
 		if (!this.lastState) {
 			return this.pos;
 		}
+		if (!ShoGE.Core.DiscreteTime.alpha) { // NAN
+			return this.pos;
+		}
+		//console.debug("Alpha: " + ShoGE.Core.DiscreteTime.alpha);
+		var goom = this.plop;
 		var pos = this.pos.clone().mul(
 			ShoGE.Core.DiscreteTime.alpha
 		).add(this.lastState.pos.clone().mul(1.0 - ShoGE.Core.DiscreteTime.alpha));

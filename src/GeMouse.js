@@ -15,7 +15,7 @@ var GeArea = Class.create({
 			minY = v2.y;
 			maxY = v1.y;
 		}
-		ShoGE.w("(" + minX + ", " + minY + "), (" + maxX + ", " + maxY + ")");
+		//ShoGE.w("(" + minX + ", " + minY + "), (" + maxX + ", " + maxY + ")");
 		this.start = new Vector2D(minX, minY);
 		this.stop = new Vector2D(maxX, maxY);
 	}
@@ -63,7 +63,7 @@ var GeMouse = Class.create({
 		this.status = 'up';
 		var lX = Math.abs(this.up.x - this.down.x);
 		var lY = Math.abs(this.up.y - this.down.y);
-		ShoGE.w("lX: " + lX + ", lY: " + lY);
+		//ShoGE.w("lX: " + lX + ", lY: " + lY);
 		if (lX > 1 || lY > 1) {
 			this.area = new GeArea(this.down, this.up);
 		} else {

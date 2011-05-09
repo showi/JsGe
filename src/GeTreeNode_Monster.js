@@ -73,6 +73,7 @@ var GeGx_Monster = Class.create({
     draw: function(ctx) {
         var phys = this.parent.phys;
 		var pos = phys.interpolate();
+		//console.debug(pos.x + ", " + pos.y);
         ctx.translate(pos.x - 16, pos.y - 16);
         ctx.drawImage(ShoGE.Core.Images.get("ball-blue-32x32.png").get(), 0, 0);
         ctx.drawImage(ShoGE.Core.Images.get("ball-cover-32x32.png").get(), 0, 0);

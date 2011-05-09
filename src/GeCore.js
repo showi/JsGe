@@ -65,13 +65,13 @@ var GeCore = Class.create(GeObject, {
 		}
 		this.camera = new GeCamera(parent, m);
 		this.SG.add_child(this.camera);
-		this.add_renderer(
+		/*this.add_renderer(
 			'GameScreen3',
 			this.Screens.get("GameScreen3"), 
 			this.camera, 
 			this.width/2, 
 			this.height/2
-		);
+		);*/
 		var map = new GeTreeNode_Map(null);
 		
 		/* Testing sprite */
@@ -95,7 +95,7 @@ var GeCore = Class.create(GeObject, {
 		// Render HTML Elemet (Updating html element is an heavy process)
 		this.timer = new PeriodicalExecuter(function(pe) {	
 			that.html_update();
-		}, 0.1);
+		}, 0.5);
 		
 		new PeriodicalExecuter(function(pe) {			
 			if (that.ImageReady.is_loading()) {
@@ -145,23 +145,21 @@ var GeCore = Class.create(GeObject, {
 		var that = this;
 		this.MainLoop = new PeriodicalExecuter(function(pe) {	
 			that.loop();
-		}, 0.000001);
+		}, 1/100);
 		this.RenderingLoop = new PeriodicalExecuter(function(pe) {	
 			that.Renderers.each(function(pair) {
 				pair.value.draw();
 			});
 			that.DiscreteTime.alpha = 0;
 			that.SG.post_rendering();
-			
-		}, 0.000001);
+	
+		}, 1/60);
 	},
 	
 	loop: function() 
 	{	
 		/* Update our scene graph with discrete time */
 		this.DiscreteTime.consume(this.SG);
-		/* Draw our scene */
-	
 	},
 	
 	/* Helpers */
