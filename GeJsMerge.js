@@ -1,1 +1,3316 @@
-eval((function(x){var d="";var p=0;while(p<x.length){if(x.charAt(p)!="`")d+=x.charAt(p++);else{var l=x.charCodeAt(p+3)-28;if(l>4)d+=d.substr(d.length-x.charCodeAt(p+1)*96-x.charCodeAt(p+2)+3104-l,l);else d+="`";p+=4}}return d})("var GeArray2D = Class.create({initialize:function (width, height) {if (!` 0!) {throw \"` j%: Cannot calcul array index without` -#` ]!\";}this.` (! =` /\";` .!`!*\" =`!2#` /\"data = new `!,!;}, get`!c'x, y) {return ` L%[x *` (\"`!%\"+` '\"y];}, s` Q-, data`\";!` A< =` G!;}});`#X\"LinkedList_Iterator`#DBll`!*$ll = ll`\"O\"current` -!.head;}, nex`!i(`$0$` E(`\"]&null;}var elm =`!u\"` ?#` t,` #(.next;` ^#elm;}, prev` 7~prev`!*+reset_head`!1*` S0`\"~'` Q\"tail` 2Atail`$V2Elem` F\"`$H?`%s(prev =`\"f\"` ,!next` $)`'P#`%o5` nB`!($head` r)tail` )$}, i`&n#` M*`$J$ew`'-2(this);}, ad`#v(`\"C#`$z&` Q-`#2#` D\";`%d&`!c!&& ` (\"tai`'v%`!{#elm`!t)`%D! else` A#tail`#F$elm;elm`#f$` 7%` P.`&',mov`#;(remElm`\",#i`$D!`\"U;`\"U#;while ((`\"b\"i`(Y\"())`(=#` 2!= ` w%` )'`\"M%`\"P.`)>\"}` =,`##(`\"3&`(R\"` E$` )!) {` #$`# '` h*` )!` B#nex`)9\"` e)`#O'`&\"!` B$` ($`#I'` $#1;}`#b$0`'L%ShoGE`#K#Object`'e#Va`-=Cvalue, dl, u`\"X%ulim`$E!u`(i$` )$d` *#flag = 0` (\"set` c\"`'K!set_` \\\"`.`(imit` o-` #!` ^\"` L#` B#` `$`!3\"` P4`!N%` \\(` /\"` Z*`\"A,` Y$` (! = ` #!`(f!`!T(!`$'\"` E$`!Z$` 8')`%-\"`!A(` E,`!H#` 8');}`3V-`3T+`!J\"}, `#/6`!/%`!~\">`\"^\"`!/$`$9#1`\"n\"`\"?$`#!\"`*F)`$`%}}, `#U6` +<` y1-` `Kinc`! 'inc` h$se`#*#` d\"+ inc`$f!de` F(de` :4-` K#`/s%GenID`/IJid`!c\"`$,;id++`!$!`)G!.`!!$`,~\"` )!`!<#`)Z\"` ~Bparen`#V%core_`!J!` y'.get()`#k\"` I\" = ` #\"`(U$` (\"` ^5` C/get_roo`\"@+`%4%` W%`\"U(` /\".` S$()`%)%` ;';}`3}'og`\"V,`\"v$, `\"Z2$super, id) {` '\"`\"T$`07\"docum`!@#`2y#ById(id` @#cou`\"G!`$l!w` p'msg`\"<#console) {` ##.log` ;!`2<$`3b'e`1.!` 0#`*[&`!!\"> 1000`$U&`!5\"`(7#elm.innerHTML = \"\";}var date`%r#Date` 90+= \"[\" +` G!.getTime() + \"] \" + msg + \"<br>\"`\"M'`&{#var Vector2`'eCx, y`(w(` +!`1J$`$r\", is_v` q!`.:(`#M#v instanceof`!3%`%v'rue`#U$ fals`-0!`/#*`!8(x = x`\"3\"y = y;}, clon`)q+` j#new`!+%`$9\"x,`'.\"y`+I!equals`!c/`!%#!= v.x ||` N#` +\"y` w&`!k#`\" ), mag`!:1Math.sqr`,C#x *` r\"x +` y$` +#`!Y\"add` ]'b`\"Z&+= b.`\"^%` )!y`$%,sub` G2-` P)` )!` L-inv`->/x = -`!l#`#z&` +#` S-mul`!+2*= b` W$` '!` J+dis`%3(b) {`(:!ist =`#:'` %!pow(b.x`!O%, 2) +` @\"` 6\"y`!Y%, 2)`'4%dis`--!d`- )b`,m+x * b`$3*b.`&Q!angl`&J(v`$y+PI / 180 *` *\"acos`%2\"dot(v)`$|\"ngle`$y(` V,` A1norm`1b/var m =`!d\"mag()`,J!m != `,#%x /= m`#w$` '!`'6%`#y#link` o'A, B`%6(B`#i!A`%7(B`#`!A`%2.`!d\"`!U.v`-!#`)T%0, 0);v`&7(y;v` x!`&I#` s#v;}, proj`%N0p` G$dot(b`-*\"p` u2p`!&!dp / `%{!`$$b`$|$)` -\";p`!@!` (=`\"R%p`(Y#X`(A<` A\"Y` 4/`(i)`3-&DiscreteTime`2hTdt`3/-dt = dt` '\"`2|\"` &!accumulator` +&curren`12! =`1b!.now` c$star` 4$` ?,`/%!onsum`!L(that`$W#new` e.var fram`\"M$` =$`\"x#` t(`!M/` G#`!~.+=` l&;while`/m#` 9(>`&%#t`$0$` 1(-`&B$`#0%+` &(at.update`)v#t);}` ^\"lpha` C%` f(/` V%`%)&Screen`$UTparent, id, width, heigh`%9'` =\"`$X#id = id` '\"` L! =` S\"` -\"` W\" =` _#` /\"bgcol`%^!\"rgb(0,0,0)\"`$'#anvas = document.getElementById(id`,>\"!` D'.getContext || ` $3(\"2d\")) {alert(\"HTML 5 `!+#may be not supported on your system\");exit(1`$2$ctx`'.%` x2`\"#nit_buff`(^!}, set_`\"_#`,)(` ,\"`%t$`\"}&` ##;}, g` ;;`1>(` L'`!7'`++/layers`-/#Array`&(!b`#{(`&#\"`$##(\"`\"J\"\");b`%.%`%:&;b`%/&`%<'`%7#`!A! = b`! !`#>\"b`##3clear`(+\"`\"<$`#;!wap`!u/ctx.drawImag`(`#`!(\", `/=\"}, ` m!` Q'`#1$`\"L!`#i%` \"\"||`#;*` |%save`,Z$ctx.fillStyle`$B'` 0)Rect`0b!,`\"|'` %#`(z#` G&restore()`*,'Area`*%,`)u2vS, vE`\"k$set` *$`&R#` ?(1, v2`\"V#minX = v1.x`!/!max` +!2.x`),!v2.x <` B!) {` F$2.x;` B$1.x;}` d#Y` +\"`&#\"max` +!2.y` c$y` e\"Y` e\"` 5%` B$1.y`(}#`0<!`4!,minX,` Z\"`0_$o`4E-maxX,`!7!`#=(Mous`2[-`#42id`#>$elmID`,'po`(F$`!%%`&;\"`'.#ick`(a)`/4\"`$]\"null`2S%tu` d!` *%_init`*~\"` &!`'W*var tha`(o$;Event.observ`'i#`!e!, \"mousemove\", ` Z&e`\",!at.pos.x = ` \\\"pointerX(e) - e.e`*?#).offsetLef`1[#pos.y` H,Y` @4Top;})`!F=down`!Q2` :!Down(`!?F,`!3F)`!:@up`!A7Up` _w}, `\"X%`%>'x, y`&q$down`&Z,` ;!`&3+\"`#_!;$(\"GameScreen\").style.curs`4)\"crosshair\"`!4%U`.=(`!/(u`) -`!$1up\"`)5!lX = Math.abs`#a\"up.x -`-?\"down.x`)_\"lY` 70y` >)y)`+E!lX > 1 || lY > 1`!U$`)$$ew`-u#` a\"down`.O#up);} else`0U$lick.push` B&.clone()`\"/#`)v(`,8\"reset()`#8=default`#R!` O!`1k/`$d$`*d%`#\\\"`*x3}, draw_area`2#(tx) {if `!\"` L$`%:$`+>#`$(!`,b$`#u,`#z&` 9%`#m+`#v!`$8%lX) < 1 &&`$K&lY` /!) {return`02\"`#t;pos);`3T'`3J,\"rgba(200,0,0, 0.1)\"` <%`3]!`!{'` m#`!k\", lX, lY` x#troke` ]58` o#` A\"` MG`4L(`$8\"`$(-` V\"`$P$` 0!`1P(edia_Imag`1Q-GeObject, `1V2$super, parent, src) {` 0\"(` /\"`(L\"` 3\"`%W\"et` *!`!j!`&f*` ;'img`$P#`!T!`&f\"img.src = src` -\"loaded = false`\"-!`1`(` N%onloa` C!`'t*at` Y&true;ShoGE.w(\"`\"k\"'\" +` m!`!4%+ \" ` M\"\")`1X#`\"D!.total_` 5\"++;};}, g`)$,`&s\"`$h\"img`#w,Pool`#MTid`#j.`'[#` p!new Array` /#ath`&d!es/img/\"` 1\"nothin`#u$`%Q)`&l!`(N$ath + \"` H#.png`\"j!is`\"b\" = 0` $'`\"p#` 1!}, add`%&-`+5%pool[src]`#%&`+v\"`$,+added: \" +`&S!`\"B&` X!`!ZC` U!`$)(` X%`$M.`!^&!`!X-throw \"Ge`!$!Pool: Trying to get invalid image`!n%;}` ]/`&l#`%`+`#d#;}`!V5is`#c!ing`&@1!`#Z\"`$:\"`.4#`$2(`*i(WaitL` f\"`*4]`1Z!, pool`*Z'_` :\"`&}*` F\" =` N#`'3)poo`1<!`\"';` J%.` ?&()`1r$`2O/`!%\".init_buffer(`\"`\"ctx`1G$` =#` 9\".getContext(\"2d\"`0J1T` 9!`#;$`%0!s...\", 10, 10`/-,` {(swap`/K!`$&$Collision`#|,`#l2`#r$type, objA, objB`\"J$` :\" =`$<#`)a#ype =` O!` +\"A =` W!` (\"B` (\"B` (\"calcNormal`#U\"` &&`#S*`*,%` x\"= \"cc\") {var wall` N\" = (new Vector2D(0, 0)).link` Y\"A.phy`4G!`)x#B` (%`#4#` a)` #&.n` \"!iz`2y$correc`.g+`!O4` F'_cc` F*`!~!N`%Y$`!''clone();wN.mul`4_#elta`!c#`\"\"&.sub(wN`#=!respons`$[(`!>7` /!` K$_cc`\"6#` ''`'V/`!2#velocity.inv`&Q$`#H#` ,+`(l\"`&_!`!|!`\"E$`!w'`#|C` ^! =` a\".mag`(|#mt` ,&`#1#`#0!`#/#ist - d) / d` K\"v`!5+`!i%` V$sub` W\"`\"$+` X#n = v.dot(mtd` L%`%Z');if (vn > 0`+L%;}var ConstantRestitu`#X!= 0.5` v!i = - (1 +` 50) * vn /`$h#`!w#invmass +`#%)` /#`!l\"impulse = mtd`\"w!i`*n(Boun`.q0`*]8`%H$`*K#\"base\"`.D#`*k+` z+_Shadow`0 .`!?$`/nB) {` +\"`/o*`!H$s`! !`!K#` '\" = document`!.#Element(\"canvas\"`,!\"ollid`!-(map`)e#`/B(` o!`/5.` 1(width` I$`!a\".gx` 1\"` <)height` 8.` 2\"`'t\"wi`!,+` x\"/ 2` :\"h`.U!` c.` 9$cposx`&;!` y(`)<%x + dwi` B%y` 16y + dhe`1b,`1r'translate(`!1!,` l\"`\"v#`\"5&draw(ctx`1x,ctx.globalCompositeOpera`(G#\"source-in\"`!j!posX`#-+`\",'-`\"2!if (` C!<`)N!` L#0;} else ` 6%>`#Q.` E&` *-`*.\"posY`!(4y -`#'!` z#Y`!6&Y`!-/Y`!1+`$]\"` F&` *.;}`!p'640`$L$`!k2` *3` \\%Y > 48` 4,`!6,` *4;}ct`$o\"Image(Core.` &!s.get(\"lvl-test-` P#png\")` 6!),`$a!,`#G!`/u#`!V(` %*`!)\", 0, 0` &C`&3,`'b!2`*O@ctx2 = c2`*:.c2`)k+`\"a*c2`*T*`#f)ctx2.fillStyl`,N!rgba(250,250,250, 0)\"` >&Rect(`\"L\"32, 32`!U\"`#e'` z'`\"v\"`\"@#s`\";(get`\"=#ById(\"GameScreen2`$&\"`\"4+s`!N3`!\\$1)\"` =$`!N0s`!U'c2`!O$`1*.Circ` }!`/XY, radius`/~;c`!(!`06#` L\" =` T#`/~!heck_cc` }'node) {if`3v#`2=$= ` 3#return null`*p\"t` p%` {(+` K!.bound.`!B\"` 4#`/@\"is`/w,`+B%dist`!C!` *%`#?\"delta =` V\"-`!0$`+m!` 5\"< 1`1x$ = new GeCollision`\"{#, \"cc\"`(S#` +$`\"6!;c.`\" '` v#c`!I!`!.#;c.`!<$-`!H\";`\"g#c`,x$`\"q*`\")`3^0`#M#`!j%ull`\"+!`#2&`$%#`#<-` 1#c`#=$`$c$` m\"`$>&c;}`.P'` \\'box) {}`$^!it `$z\".childs.iterator`+9$hild;while ((` )! = it.next())`!<-`\"C\"` D\".data`!C+`\"l)`(3-Box`'_^u, v`( ;box`(5#u = u` %\"v = v`$82sg`'p,`!r%Posi`4O#`!k)Vector2D`!V<x, y, orientation`!q&x, y)`%Q!` 1*`!i!` (' =` T(`&h%` 4/new `!Q$(`,v!;}`\" 'hysStat`,4-`!l2`#S#`!\"#`+'$`$ #`#M\"pos`)G%`#!$`-y#null`$/#velocity`!N/0` <#force` %7movab`.9!false` /\"solid` $+et_mass(1` R$`1x$32` *\"`2F%` )$minval = 0.000001;}, get_`!O!`\"e'`%Y&`!i&();}, `!.$` B'mass`#3$mass = mass`!-\"inv` -#1 /` 2\"` `\"PosX` Z'x`#t%os.x = x` >&Y` ='y` <(y = y`!}#` a+`!s+` q!` @&` f(` 7/` o!isSolid` 06`$/!`!_#` ;,b` ,!`!d$`$V$` 0\"` w\"M`%!\"` e6`%A#` z#` =.b` ,#`#r%`%o%` 2$;}, applyF`$p+`$k!`-)#!`$x&` b$`&g7}` 7&.add` c#`+d\"py_stat`\"$+`1~(Object;c`(f#`#g%clone()`1>', interpol` `-`!k&last`*@!`$Q.;}` B!ShoGE.Core.DiscreteTime.alpha` B0var goom`!U%lop`+N!`!\\2.mul(` g:`#\"!`!a*` Q-1 - ` H:`\"s%`!a!, upd`\"k*dt`\"b5` #*`25&`$H$()`#(\"`%23.set`%7#var `\"r%` 7\"`$S$m`\"$!`*G(`\"5\"dt`/q\"Math.abs(m.x) <`'\\#`,+!) {m`*N!0`!B\"` @'y` 70y` E\"`.C)`#a!m`\"\"#` X%` 5*`!%/` 38`!)/`\"}&` k& == 0 &&` E\"` T&` 3!) {`!b\"pos`%?&` =$`/0#grid_bounding(` .#`-?$`!X!roun` U#` 3!` 9'y` -3y`)P!` n)`(O4`2@\".` B! || ` $.`!^!`(F%`(@\"ccell`(*%` G\"get_` %\"(\"cell\"`%6\"!` G!` Q+maxcellX =` e\".x *` ##` g#cell_size +` \"3`&k\"` c\"Y` `%y` 6O`$p%`#r\"< 0 ||`0P' >`!h%`(5$`%\"%invX`(W)`$2\"` T,y` Z&Y` P0Y();}}}`) \"GeLevel = Class.create(Ge`-}\", {initializ`*Z($super, `\":\", path) {` 1\"(` 0\"`%u$ath =` =!` +\"`\"|&= 256` /\"loaded = fals`0l!loa`2=(level) {`,Y\"w(\"Loading ` 4! info with AJAX\"`\"7\"that`%s#;new Ajax.Request(\"` T!/\" +` \\#+ \"/` %!Info.json\", {method:\"get\", onSuccess`!O'transport`1>#data = ` .%.responseText;that.` <#data.evalJSON(true)` :\"preload_ressources(`)\"!onFailur`1[+`\"k%Cannot`#6!`\"m'\");}}` [!` f.`)T4data`%x!row ` p$` X#` v! ` Z&`#s!out`\"+!\";}`$2-` @'for`!S#\" +`'.\"`\"a!nam`\"X!`%?(true`!u!`'#\"B`+3!`&LY`&y&`&t%rent`&z!rent;}, ad`&K(`,2!`(_#[`,>\"type] = ` )!`-8!et`%C(ype`+z%`\"=![` M!`!'TreeNode`!Ed`)#)s`-R&` +)childs = new GeLinkedList` 9\"iterator`4N%` J!` .%`#)$_ini` o&}, ` ,!`!Y'`!S%` J!type = \"basic\"` ]\"bPhysUpdate`*G%` 3\"Redraw`*Y(`\"#&` j5`$P/` Q!` |%`$a)ol` P$`!9*bool` S$r`!B!` ?4`!\\%` K$hid`)A+`#%` d\"(`\"*!`#:#`#I$.reset_head(`%R\"`#m!;while ((` )!`$%$` L%next())) {` ;!`(V\"hide`/O!, un`!,>`+`$` Wr`!<\"`!H#hidden`!A*`(2#`+a\"`#G#;}, free`'a)`!o(`$d&`\"M|`!A\"`#F%`!.D`\"U|`!J)froz`#9:`'R&`,:#`(T.`,6*`(`#` F$`*X\"` 46` :\"`-h#` H\"` B'node) {node`)U&`4!!`+O(add` D\"`!J5`.$#`1L&`*Q%`!E#null;}if (` 4'`+n#= `.X.`\"=%` \"..`!8&`!2\";}, enable`%#!ic`2s5phys`,%%hy`.:&PhysSt`%Z!his`&,#`,$,dt` f#` V&&&`$a#`%#\"()` r(.` \\\"(dt`&.#`/)%oll`)5\"if (c) {c.correct();c.respons`%\"`!'&ost` l\"` |%` )%` !}`&\\u` y'}, post_rendering`#Z.`#_(` #).last`#b!`\"z)` -% =`%a#}var `2&>`!{6`!r:`!s*`)d#`$.#`!x3`$u'`'A-`*##ound`'X5` 9!.shadow`1X%` )'`%K%ShoGE.Core.SG)` Q-circl`(<,` /(` P5`!K), preload_ressource`(F+`%4t`!&.`#y#`4[+ctx) {ctx.sav`(C$` {!gx`)-&`1q\"`$2!` @'` @#.`3@!ctx);ctx.restor`(p!`!Et`!'&}`!#+}` t\"GeGx_Map = Class.create({initiali`1u)`-|%`-3' = `/w&`\"{5drawImag`%:)` ,!s.get(\"map_green01.png\")` 2!), 0, 0`!d(TreeNode`!b0` 4&, `!l2$super,`!l#) {` +\"(`//!_ini`0Y(`\"A*`06\" \"monster\"`$n$`/+%`#D\"`/*#` 8!unh`.1\"`!k0` a\"`!9f` )#`!QTunfreez`'&%`!s%` )!`2!*` .$`-i!pos.x = Math.round(` %\"andom() * 512` B,y` /?var minus = 1`)+!` 9*> 0.5) {` <$-1`(c#`!!!velocity`!R'` v&` M\"* 5;` >_`\"\"&` m0`%S0`#t\"`%_(`-n!` ;%B`\"p!` /,.add(` 6'ingC`.?!` E!,`*k\"gx.width / 2)` Q)grid`\"D!var`)e!Forc`2?!` n!`&q%Vecto`!W\"` m#`\"J!force);` P%`$c%`,#$` ($` 8'set_color(\"#AA00AA\"` W'` rE`#b$` cWFF0000` aY.normal()`!\"Avar that` 2#` G(ostupdate = `)[&d`)[\"at.v`!C!` T!at`!-3;}`2t=`*r\") {`.M\"w(\"Loading `*S# ` M&\");`.g.add(\"ball-blue-32x32`.w\"` 09cover` %Einfected` D)`1Q*`-T2`1/P` 0!`(9\"= 32` *\"height` +\"`1l4var phy`$}&` k!`$7!`!d!`%<\"`$F!interpolate();ctx.trans` +!`-f\"- 16, `-@\"- 16` @\"`2b=`#u1`2y*` >F`$4-` 1T`$L0`4D4Gx`(}#`#j~` )$`*[! = `*Y%`$JUB`$y$pos.clone()`'C!` B(`)u\"` 6%mul(4)`#I\"moveTo(`3*&,` e&y` =\"lineTo(B.x, B` -$strokeStyle`!S$`\"0!` 2'(`#Y(`,`+`#[,` 7&, `#a2`+2\",`#a#, `\".\") {` 3\"`$/$`#Z\"`,C%` #\";}, `.N%`#W(ol` ^!`1[$`$/$`\"$\"}, _init`%#5type = \"` \"\"`!5\"unfreeze(`!D#unhid` %%enable_physics` .$`3z*`/f'`#-1G`3,\"`\"a[`&!, `&u\", cell_size`\"5$`'<$` #!`'8+` #\"`'D#` Q$ =` [&;`$&+`#\"Egrid`#B#g`\"A\"`\"q\"Array2D`'P\"`!t#`!I'`#A#load(`*9\"` &&1`*J!` 3)1` 1+1`!]!ge`!T(x, y) {return`!&\"grid`+@!` 7!`&.#` D+`#D\") {cell.x = x;` &!y = y`\"0&.s` a#` J#` 4\"add_child(` /\"}, load`!E.var` S!`\"x%`%U%Cell`#\"!, `!a\"` t!` ~,}, ad` l(node` q#x = Math.round` 5!`+k!`*z\" /`*G#`%h%`&{!y` 98y` >3`!{#`\"o\"`#O%`#*!`\"`&`!U!;}, replac`'H(`!n#if (!`!-!bound || ` $'`#j!`$a%;}`!4!`#4$ode.get_`&h\"(\"cell\");` m!` @!` J+`\"h0`\"GH`\"Q5`!.?` ?!.x == x &&` N\".y ==`&'`!a\"ncell` P!` %!`#S-) {` X\"`#^!s.remove`#d#` N!`#o.`+'i`/p!`+r+Object`+YB`/ 3walkab` x!0` ,\"nam`*s!\"`-50C`\"5\"`,j[`(k#`!<0`)y\"` &!`)t'is_loaded = false`+B'`,`G`$u!`/l0`)y%`0R,`*g#_shadow_info` {'`*n$anvas = document`\"s#Elem`&,\"` <!\");` #\"`/`%ShoGE.Core.Level`&y&` B$`/w%` 07`!>! =`!@#.getContext(\"2d\");c`!'%`#F\"mg`\"(#` 2\";c` |&` 1,`1/#c.drawImage`0)\"` 9&, `/w\"var `0X!c.get` F!Data`06!,`!c7,`!7` p\"l = id.data.length / 4` 6!msg`'$\"`% \"iles`$o#`1x!`\"q%0;for (var row` ,!` $!< 32` %!++) {` ;%i` <\"i` 9#i` 9!var step =` V!* (id`#R#* 4) + i *`!Q#r`!i&[step]` 1!g` '+ + 1` 4\"b` (.2` 4\"a` (.3` 4\"t`*l\"`1D#ile`(_%if (a == 255) {tile`*8+ile`*>%tile-\" + r + \"` %!g ` \"$b + \".png\"` B/on` 4\"`$V'`%3!`3O!(` G%);} else`!8.1` a0ff` ND`%+&[`$,\"32 + i] =`\"x!;}}`)v$tile`(z~`(z~`)3!`#@\"`)a5` :!`)\\8tile`(t~`)R@`(]~`(]~`)$W0) {`'oH`)B?`(4=`(1?`(N#ed`(B'type`3E$`4 (true`\",!`3\\\"= \"`00\"\"` E$`3-,();}` C)layer` A*`)e%();}}, get_level_path`)u*return \"` ;!/\" +`&g.path + \"/\";` f#`'&!` ]+x, y` e'cells` k!x`#_%y` $\";`\"z#`!;*`\"j-false`#j\"`3$&`%K#`$7!` 2&`%a'` 4\"`%|!ha`*0$` +!src`*?$`\"c*() +` .&`\"3%`*K\"x,` 5\"y) +`$5$`%O8\"../..`\"T!src`%i#`!v&.onloa`\":!`\"O*at`$W!ed(`%9%;}` M-`!~\"src;`!J``%v!-0`!ZQ`(.!`!j?`&x#`\" (` V!`\" &}, pre`'4!ressources`%Q'$super) {`!K3`3?()`!o4`2n));` n\"`(:!`.H\"GeGx_Cell = Class`1#({initialize`!I'`,$#`'/#` (\" = ` #\";}, draw` E'ctx) {if (!` G'`+B\"`(L%`*3\"` ;\"cach`+(%` (!`3>@` D&`2M%512` +(`2F%512`1!\"ctx`&!$` =\"`32-lctx.save()`0}'`0#`0|$`0t*`1O\" c` 7#c` 9!` \\(` '!translate(c * 16, r` #!`/]\"`\"x-[r`.G$c]`/b%` p$`4>&`%0.get` O;`/W!` C!)`4T!0);`0q$` 's` r!restore`&c!`!#!` &'`\"s*` u(x * 512`*$#` .#y` /\");`!a*`$n&`!1%`'i%TreeNode_Colle`'$\"`'o+` ;&, `'t2`(d\",`'t#, `\"G! {`(z#`4K$`!B!name;}, _init`(T5`23\" \"c`!L%`0L!updat`!%0dt) {var i`/f$.childs.iterator(`\"K\"` 1!;while ((` )! = it.next())) {` 0!.data.`!*\"(dt`3=\"collid`!..` Gq`!&#`%R!`$<.Block`#g^pos, u, v`$73`$A!(` <&`$E1` Y'`$P)block\"` c\"phys`46#GePhysSt`'J$`!$#phys.pos = pos` .\"bound` N%Bound` G(` :!`/V!` 6'ingBox` B!`!P#`'X3ordinate`\"d^vector`#,3` 7\" =` ?#`'PH`!Z$`#=#unfreeze(` s#unh`%[\"` )!enable_physics`&L#u`#4%`\"P%V`!B!`\"y#new ` +\"2D(1, 0));u.set_color(\"#FF0000\"` i\"v` CH0, 1));v` b)0000FF`1^$add_`'n!(u`!#` (&v`$K(SpriteAnima`,.0`4$8`,(\", row, fram`3h!`4>1`,8% =` P!` +\"row = row` )\"` ]\" =` e#`!T-`!(Px, y`!'Joffset`$(#`#j%` c!`#B#`#$$`)/$Hash;}, set_` 4%`!G'`\"{'col`!F$` ]&.set` >#`%=\"`$%+`%;$` Z)`#i%`$[.S`!z!`\"h?file, width, heigh`(B%set_file` ?!`\"N'`\"G)` A%` ^!(` d!` E#set_` l\"(` r#` .&interval(1`-1!preload_ressources`-6)`#-!pool`,*!`%c\"`!O!`#k#fil`\"')`!z$file = f;}, g` 6.) {return`0r\"fil`38!`\"%%` @'`$J%` 4! = l` l$` :,` f+` :!` n$`\"a\"` c0` 4\"` l(` ;-` j+` :\"` r$`#H$` h0` 4$` r(` =/` q+` :$` z$s`&3!`'B-posx`2E!`(z%`%^!`'93`':)` P');`!/(` \\\"g` [#`'Q(Camera`02^object`0b.if (` 3%`*e\"` )! =` L#;} else` -,`3s#osition;}`0}F`\",!\";}, track`#T(ode` F%racke`4H!od`' !un` @,` 9/ull`#2'Renderer`#-.O`\"#!`\"uDscreen, `!v\"`++.`440`1a!` K!(` Q\"` -'` j\"(` q\"` -'`+(Ffps = 0` '\"lastFrameTi`/R!Date.now`4c$`-o!Cou`0\"!0;}, draw`#6/S`!L!.init_buffer(`#E\"ctx =`'%\"` =#` 9\".getContext(\"2d\");ctx.save(`&5\"` N!`'>\") {ctx.transla`(3#` 5#`&1#.phys.pos.x,`!(\"` (3y);}`23'.SG.draw(ctx`!-'Mous`&(%` (!` ;'}ctx.restore`\"=%`#/-var d =` 4#-`!O\"`#c)`!*!d >= 1000`._%`$;!`/2#`#u&+`.Q#ps) / 2`$I2`!&\"+ (d -` o\"`$Q2` &+++` A\"`$:#swap(`0G%mous`'V(` +!`\"n) = ` 0!`-h$` B,`-^+` O!` v$`'[\"` B'`'k#` y#`,[%` 1\"` z$` E-` t+` Q\"`.e%`\"2!` C'`(W#`'.) =`)e#` |$` E-` u+` Q\"`2L4`)D\"`2Y+`27%`2+]`+7%`2c*`2>&` VHget_fps` 06fps`0l(ore`,yZ`-!3lastDraw`+($current`(F!`)l#`&H\"fal`%|\"`0H+`.-,`45#it_global_variables`,x$Discret`(X$`1U\"` )((15` D#`%*\"s` ?#Hash` 2\"add`.n$\"Game` B\"\"`/[,` 183` F$ / 2` J$ / 2` O#`(~$`!Y\"` )!` )` @#Image`!Y$GeMediaPool`!y#G` 1%TreeNode_Colle`#8!(null, \"World` i$`2]$`\"?2r` 7#`\"H+`#!(.get`!\\*,`3d!`\"g2`!&%` E.`2)!`+S!`.t(` Q\"Level`\"3%` )!` @!, \"darks`\"&$` 5!.load(`-P$Grid`\"d.Grid` [#2, 2, 51`$\"$SG`\"V!chil` =\"` ^!`'8$oad_ressourc`&:&`$2!Ready`!\"%WaitLoading`'|#`#+)` &#`$j\"`!0&pre` l3start`/-\"`'Z1`*-*ShoGE.Log`#+&og`#j\"Log\");` ;\"w = `/l'sg` O(.w` -!;};}, `!G+`! *var m =`%3!;for (var i`1D! i < 50; i++) {` B!`#~*Monster`&z!`$J'.add(m`4c$`0)\"` T%`/x\"`#P%m`$C5`1%#`,s!map`!+/ap`!3#var sprite_set` A%S` .!Set(\"` 8\"s/charsets12\", 16, 16);` Q&`$R0`%!)`!%! =`!#'`'x!` )\"(\"warrior` t$80);s` <!anima`*&!\"walk_up\", 0, 3` )4right\", 1` )7down\"`'!` *5left\", 3` >!}, `&g!`%1.that`/R#`')'`.Q#Date.now`'H$lastFram`.p$` 5'`&u#(\"--- Starting Game Engine`*G$timer`$B#PeriodicalExecuter(`!W&pe`0F!at.html_update`(g\"0.5);` ;Bif (` `!`*E&.is_l`*?#)` |$` 4'draw();} else {pe.stop`\"_!at`\"z\"_lo` -!}`!H!1`!P!togglePaus`3V(`!:%`3 $`2X$`3'*`3I,`#j/`!+*`!V#` ^)tru` c#MainLoop`!r$}}, `#;'`!R*$`+^\"FPS\").innerHTML = Math.roun`)Q#`/m8get_fps());` i#ElapsedTime` Y;Discret`&1!.t / 10) / 100 + \"&nbsp;s\"` p$Alpha` c+` U.alpha;$(\"clickatX` >0`1j!.pos.x` @'Y` -:y;$(\"` *!Status` 46s` ;!;`%7%` *(`%L(` ,( == \"`*:!`$4\"`!O!Down`!f7down`!w'Down`!i7` I!y;}`%{$` i80` X90`&3!`&n&`+;?`&q$`*3J`'m$, 0.01`()#`&h\"ing` >N`'?&each` 7(air) {pair.value`*d%`*W#`&2.`\"c!` 7!SG.post_r`!Q$`!i&666666666` \"#` 4!`#!.`'5.consume`%b\"SG` S!add_s`)3!` S'id, width, height, bgcolor` p$`)e\"`0H!` I!`3##` 1!` {!, ` T-))`'9!` S3g` e!)`1:!` <#` B%`%V!add`\"g#er`!]+`!{\", camera`!',`!\"#`$>&`!g*` 0$`!p#` N:);}}`1X$Core`%d#GeCore(null);"))
+var GeArray2D = Class.create({
+
+initialize: function(width, height) {
+
+if (!width) { throw("GeArray2D: Cannot calcul array index without array width");}
+
+this.width = width;
+
+this.height = height;
+
+this.data = new Array();
+
+},
+
+get: function(x,y) {
+
+return this.data[x*this.width + this.y];
+
+},
+
+set: function(x,y, data) {
+
+this.data[x*this.width + this.y] = data;
+
+},
+
+});
+
+var GeLinkedList_Iterator = Class.create({
+
+initialize: function(ll) {
+
+this.ll = ll;
+
+this.current = ll.head;
+
+},
+
+next: function() {
+
+if (!this.current) return null;
+
+var elm = this.current;
+
+this.current = this.current.next;
+
+return elm;
+
+},
+
+prev: function() {
+
+if (!this.current) return null;
+
+var elm = this.current;
+
+this.current = this.current.prev;
+
+return elm;
+
+},
+
+reset_head: function() {
+
+this.current = this.ll.head;
+
+},
+
+reset_tail: function() {
+
+this.current = this.ll.tail;
+
+}
+
+});
+
+var GeLinkedList_Element = Class.create({
+
+initialize: function(data) {
+
+this.prev = null;
+
+this.next = null;
+
+this.data = data;
+
+},
+
+});
+
+var GeLinkedList = Class.create({
+
+initialize: function() {
+
+this.head = null;
+
+this.tail = null;
+
+},
+
+iterator: function() {
+
+return new GeLinkedList_Iterator(this);
+
+},
+
+add: function(data) {
+
+var elm = new GeLinkedList_Element(data);
+
+if (!this.head && !this.tail) {
+
+this.head = elm;
+
+this.tail = elm;
+
+} else {
+
+this.tail.next = elm;
+
+elm.prev = this.tail;
+
+this.tail = elm;
+
+} 
+
+return elm;
+
+},
+
+
+
+remove: function(remElm) {
+
+var it = new GeLinkedList_Iterator(this);
+
+var elm;
+
+while(elm = it.next()) {
+
+if (elm == remElm) {
+
+if (elm == this.head) {
+
+this.head = elm.next;
+
+}
+
+if (elm == this.tail) {
+
+this.tail = elm.prev;
+
+}
+
+if (elm.prev) {
+
+elm.prev.next = elm.next;	
+
+}
+
+if (elm.next) {
+
+elm.next.prev = elm.prev;
+
+}
+
+elm.prev = null;
+
+elm.next = null;
+
+return elm;
+
+return 1;
+
+}
+
+}
+
+return 0;
+
+},
+
+});
+
+var ShoGE = new Object();
+
+var GeVar = Class.create({
+
+initialize: function(value, dl, ul) {
+
+this.ulimit = ul;
+
+this.dlimit = dl;
+
+this.flag = 0;
+
+this.set(value);
+
+},
+
+set_ulimit: function(limit) {
+
+this.ulimit = limit;
+
+this._ulimit(limit);
+
+},
+
+set_dlimit: function(limit) {
+
+this.dlimit = limit;
+
+this._dlimit(limit);
+
+},
+
+set: function(value) {
+
+this.value = value;
+
+if (this.ulimit != null) {
+
+this._ulimit(this.ulimit);	
+
+}
+
+if (this.dlimit != null) {
+
+this._dlimit(this.dlimit);
+
+}
+
+},
+
+get: function() {
+
+return this.value;
+
+},
+
+_ulimit: function (limit) {
+
+if(this.value > limit) {
+
+this.flag = 1;
+
+this.value = limit;
+
+} else {
+
+this.flag = 0;
+
+}
+
+},
+
+_dlimit: function (limit) {
+
+if(this.value < limit) {
+
+this.flag = -1;
+
+this.value = limit;
+
+} else {
+
+this.flag = 0;
+
+}
+
+},
+
+inc: function(inc) {
+
+this.set(this.value + inc);
+
+},
+
+dec: function(dec) {
+
+this.set(this.value - inc);
+
+}
+
+});
+
+var GeGenID = Class.create({
+
+initialize: function() {
+
+this.id = 0;
+
+},
+
+get: function() {
+
+return this.id++;
+
+}
+
+});
+
+ShoGE.GenID = new GeGenID();
+
+var GeObject = Class.create({
+
+initialize: function(parent) {
+
+this.core_id = ShoGE.GenID.get();
+
+this.parent = parent;
+
+},
+
+set_parent: function(parent) {
+
+this.parent = parent;
+
+},
+
+get_root: function() {
+
+if (this.parent) {
+
+return this.parent.get_root();
+
+} else {
+
+return this;
+
+}
+
+}
+
+});
+
+var GeLog = Class.create(GeObject, {
+
+initialize: function($super, id) {
+
+$super();
+
+this.elm = document.getElementById(id);
+
+this.count = 0;
+
+},
+
+w: function(msg) {
+
+if (console) { console.log(msg);}
+
+return;
+
+if(!this.elm) {
+
+return;
+
+}
+
+if (this.count > 1000) {
+
+this.count = 1;
+
+this.elm.innerHTML = "";
+
+}
+
+var date = new Date();
+
+this.elm.innerHTML += "[" + date.getTime() + "] " + msg + "<br>";
+
+this.count++;
+
+}
+
+});
+
+var Vector2D = Class.create({
+
+initialize: function(x, y) {
+
+this.set(x, y);
+
+return this;
+
+},
+
+is_vector: function(v) {
+
+if (v instanceof Vector2D) {
+
+return true;
+
+}
+
+return false;
+
+},
+
+set: function(x, y) {
+
+this.x = x;
+
+this.y = y;
+
+},
+
+clone: function() {
+
+return new Vector2D(this.x, this.y);
+
+},
+
+equals: function(v) {
+
+if (this.x != v.x || this.y != v.y) {
+
+return false;
+
+}
+
+return true;
+
+},
+
+mag: function() {
+
+return Math.sqrt(this.x * this.x + this.y * this.y);
+
+},
+
+add: function(b) {
+
+this.x += b.x;
+
+this.y += b.y;
+
+return this;
+
+},
+
+sub: function(b) {
+
+this.x -= b.x;
+
+this.y -= b.y;
+
+return this;
+
+},
+
+inv: function() {
+
+this.x = - this.x;
+
+this.y = - this.y;
+
+return this;
+
+},
+
+mul: function(b) {
+
+this.x *= b;
+
+this.y *= b;
+
+return this;
+
+},
+
+dist: function (b) {
+
+var dist = Math.sqrt(Math.pow(b.x - this.x, 2) + Math.pow(b.y - this.y, 2));
+
+return dist;
+
+},
+
+dot: function(b) {
+
+return this.x * b.x + this.y * b.y;
+
+},
+
+angle: function(v) {
+
+return Math.PI/180 * Math.acos(this.dot(v));
+
+},
+
+angled: function(v) {
+
+return Math.acos(this.dot(v));  
+
+},
+
+normalize: function() {
+
+var m = this.mag();
+
+if (m != 0) {
+
+this.x /= m;
+
+this.y /= m;
+
+}
+
+return this;
+
+},
+
+link: function(A, B) {
+
+this.x = B.x - A.x;
+
+this.y = B.y - A.y;
+
+return this;
+
+},
+
+normal: function() {
+
+var v = new Vector2D(0,0);
+
+v.x = - this.y;
+
+v.y =  this.x;
+
+return v;
+
+},
+
+proj: function(b) {
+
+var dp = this.dot(b);
+
+var p = new Vector2D(0,0);
+
+p.x = (dp / (b.x * b.x + b.y * b.y)) * b.x;
+
+p.y = (dp / (b.x * b.x + b.y * b.y)) * b.y;
+
+return p;
+
+},
+
+invX: function() {
+
+this.x = - this.x;
+
+},
+
+invY: function() {
+
+this.y = - this.y;
+
+},
+
+});
+
+var GeDiscreteTime = Class.create(GeObject, {
+
+initialize: function($super, dt) {
+
+$super();
+
+this.dt = dt;
+
+this.t = 0;
+
+this.accumulator = 0;
+
+this.currentTime = Date.now();
+
+this.startTime = this.currentTime;
+
+},
+
+consume: function(that) {
+
+var newTime = Date.now();
+
+var frameTime = newTime - this.currentTime;
+
+this.currentTime = newTime;
+
+this.accumulator += frameTime;
+
+while(this.accumulator > this.dt) {
+
+this.accumulator -= this.dt;
+
+this.t += this.dt;
+
+that.update(this.dt);
+
+}
+
+this.alpha += (this.accumulator / this.dt);
+
+}
+
+});
+var GeScreen = Class.create(GeObject, {
+
+initialize: function($super, parent, id, width, height) {
+
+$super(parent);
+
+this.id = id;
+
+this.width = width;
+
+this.height = height;
+
+this.bgcolor = "rgb(0,0,0)";
+
+this.canvas = document.getElementById(id);
+
+if (!this.canvas.getContext || !this.canvas.getContext('2d')){
+
+alert("HTML 5 canvas may be not supported on your system");
+
+exit(1);
+
+}
+
+this.ctx = this.canvas.getContext('2d');
+
+this.init_buffer(); 
+
+},
+
+set_bgcolor: function(bgcolor) {
+
+this.bgcolor = bgcolor;
+
+},
+
+get_bgcolor: function(bgcolor) {
+
+return this.bgcolor;
+
+},
+
+init_buffer: function() {
+
+this.layers = new Array();
+
+var b = document.createElement('canvas');
+
+b.width = this.width;
+
+b.height = this.height;
+
+this.buffer = b;
+
+var ctx = b.getContext('2d');
+
+this.clear(this.bgcolor);
+
+},
+
+swap: function() {
+
+this.ctx.drawImage(this.buffer, 0, 0);
+
+},
+
+clear: function(color) {
+
+var bgcolor = color || this.bgcolor;
+
+this.ctx.save();
+
+this.ctx.fillStyle = bgcolor;
+
+this.ctx.fillRect (0, 0, this.width, this.height);
+
+this.ctx.restore();
+
+}
+
+});
+
+var GeArea = Class.create({
+
+initialize: function(vS, vE) {
+
+this.set(vS, vE);
+
+},
+
+set: function(v1, v2) {
+
+var minX = v1.x;
+
+var maxX = v2.x;
+
+if (v2.x < minX) {
+
+minX = v2.x;
+
+maxX = v1.x;
+
+}
+
+var minY = v1.y;
+
+var maxY = v2.y;
+
+if (v2.y < minY) {
+
+minY = v2.y;
+
+maxY = v1.y;
+
+}
+
+this.start = new Vector2D(minX, minY);
+
+this.stop = new Vector2D(maxX, maxY);
+
+}
+
+});
+
+var GeMouse = Class.create(GeObject, {
+
+initialize: function($super, parent, id) {
+
+$super(parent);
+
+this.elmID = id;
+
+this.pos = new Vector2D(0 , 0);
+
+this.clicks = new Array();
+
+this.area = null;
+
+this.status = null;
+
+this._init();
+
+},
+
+_init: function() {
+
+var that = this;
+
+Event.observe(this.elmID, 'mousemove', function(e) {
+
+that.pos.x =  Event.pointerX(e) - e.element().offsetLeft;
+
+that.pos.y =  Event.pointerY(e) - e.element().offsetTop;
+
+});
+
+Event.observe(this.elmID, 'mousedown', function(e) {
+
+that.mouseDown(
+
+Event.pointerX(e) - e.element().offsetLeft,
+
+Event.pointerY(e) - e.element().offsetTop
+
+);
+
+e.stop();
+
+});
+
+Event.observe(this.elmID, 'mouseup', function(e) {
+
+that.mouseUp(
+
+Event.pointerX(e) - e.element().offsetLeft,
+
+Event.pointerY(e) - e.element().offsetTop
+
+);
+
+e.stop();
+
+});
+
+},
+
+mouseDown: function(x, y) {
+
+this.down = new Vector2D(x,y);
+
+this.status = 'down';
+
+$(this.elmID).style.cursor = "crosshair";
+
+},
+
+mouseUp: function(x, y) {
+
+this.up = new Vector2D(x,y);
+
+this.status = 'up';
+
+var lX = Math.abs(this.up.x - this.down.x);
+
+var lY = Math.abs(this.up.y - this.down.y);
+
+if (lX > 1 || lY > 1) {
+
+this.area = new GeArea(this.down, this.up);
+
+} else {
+
+this.clicks.push(this.down.clone());
+
+this.area = null;
+
+}
+
+this.reset();
+
+$(this.elmID).style.cursor = "default";
+
+},
+
+reset_click: function() {
+
+this.clicks = new Array();
+
+},
+
+reset: function() {
+
+this.down = null;
+
+this.up = null;
+
+this.status = null;
+
+},
+
+draw_area: function(ctx) {
+
+if (this.status == 'down') {
+
+var lX = this.pos.x - this.down.x;
+
+var lY = this.pos.y - this.down.y;
+
+if (Math.abs(lX) < 1 && Math.abs(lY) < 1) {
+
+return;
+
+}
+
+var a = new GeArea(this.down, this.pos);
+
+ctx.save();
+
+ctx.fillStyle = "rgba(200,0,0, 0.1)";
+
+ctx.fillRect (this.down.x, this.down.y, lX, lY);
+
+ctx.strokeStyle = "rgba(200,0,0, 0.8)";
+
+ctx.strokeRect(this.down.x, this.down.y, lX, lY);
+
+ctx.restore();
+
+}
+
+},
+
+draw: function(ctx) {
+
+this.draw_area(ctx);
+
+},
+
+});
+
+var GeKeys = new Object();
+
+GeKeys.LEFT     = 37,
+
+GeKeys.UP        = 38,
+
+GeKeys.RIGHT  = 39,
+
+GeKeys.DOWN  = 40;
+
+GeKeys.ESC     = 27;
+
+GeKeys.ENTER  = 13,
+
+GeKeys.SPACE = 32;
+
+var GeKeyboard_Key = Class.create(GeObject, {
+
+initialize: function($super, parent, keycode) {
+
+$super(parent);
+
+this.keyCode = keycode;
+
+this.down = 0;
+
+this.up = false;
+
+},
+
+keyUp: function() {
+
+this.up = true;
+
+},
+
+keyDown: function() {
+
+this.down++;
+
+},
+
+is_active: function() {
+
+if (this.down && !this.up) {
+
+return true;
+
+} 
+
+return false;
+
+},
+
+is_complete: function() {
+
+if (this.down && this.up) {
+
+return true;
+
+}
+
+},
+
+reset: function() {
+
+this.down = 0;
+
+this.up = false;
+
+},
+
+get_string: function() {
+
+return "Key["+ this.keyCode  + "] Down: " + this.down + ", Up: " + this.up;
+
+},
+
+is: function(keyMap) {
+
+if (this.keyCode == keyMap) {
+
+return true;
+
+}
+
+return false;
+
+}
+
+});
+
+var GeKeyboard = Class.create(GeObject, {
+
+initialize: function($super, parent, id) {
+
+$super(parent);
+
+this.elmID = id;
+
+this.keys = new Hash();
+
+var k = GeKeys;
+
+this.keyFilter = new Array(k.LEFT, k.UP, k.RIGHT, k.DOWN, k.ESC, k.ENTER, k.SPACE);
+
+this._init();
+
+},
+
+_init: function() {
+
+var i, l;
+
+
+for (i = 0, l = this.keyFilter.length; i < l; i++) {
+
+this.newKeyCode(this.keyFilter[i]);
+
+}
+
+var that = this;
+
+
+document.observe("keydown", function(e) {
+
+var key = that.keys.get(e.keyCode);
+
+if (!key) return;
+
+e.stop();
+
+key.keyDown();
+
+});
+
+
+document.observe("keyup", function(e) {
+
+var key = that.keys.get(e.keyCode);
+
+if (!key) return;
+
+e.stop();
+
+key.keyUp();
+
+});
+
+},
+
+newKeyCode: function(num) {
+
+if (!this.keys.get(num)) {
+
+ShoGE.w("Adding key: " + num);
+
+this.keys.set(num,
+
+new GeKeyboard_Key(this, num)
+
+);
+
+}
+
+},
+
+scan: function(func) {
+
+for (i = 0, l = this.keyFilter.length; i < l; i++) {
+
+func(this.keys.get(this.keyFilter[i]));
+
+}
+
+},
+
+reset: function() {
+
+for (i = 0, l = this.keyFilter.length; i < l; i++) {
+
+this.keys.get(this.keyFilter[i]).reset();
+
+}
+
+}
+
+});
+var GeMedia_Image = Class.create(GeObject, {
+
+initialize: function($super, parent, src) {
+
+$super(parent);
+
+if (src) {
+
+this.set(src);
+
+}
+
+},
+
+set: function(src) {
+
+this.img = new Image();
+
+this.img.src = src;
+
+this.loaded = false;
+
+var that = this;
+this.img.onload = function() {
+
+that.loaded = true;
+
+ShoGE.w("Image '" + that.img.src + " loaded");
+
+that.parent.total_loaded++;
+
+};
+
+},
+
+get: function() {
+
+return this.img;
+
+},
+
+});
+
+var GeMediaPool = Class.create(GeObject, {
+
+initialize: function($super, id) {
+
+$super(parent);
+
+this.pool = new Array();
+
+this.path = "res/img/";
+
+this.nothing = new GeMedia_Image(this, this.path + "nothing.png");
+
+this.total = 0;
+
+this.total_loaded = 0;
+
+},
+
+add: function(src) {
+
+if (this.pool[src]) {
+
+return null;
+
+}
+
+ShoGE.w("Image added: " + src);
+
+this.pool[src] = new GeMedia_Image(this, this.path + src);
+
+return this.pool[src];
+
+},
+
+get: function(src) {
+
+if (!this.pool[src]) { throw("GeImagePool: Trying to get invalid image: " + src); }
+
+if (!this.pool[src].loaded) {
+
+return this.nothing;
+
+}
+
+return this.pool[src];
+
+},
+
+is_loading: function() {
+
+return !(this.total - this.total_loaded);
+
+}
+
+});
+
+var GeWaitLoading = Class.create(GeObject, {
+
+initialize: function($super, parent, screen, pool) {
+
+this.set_parent(parent);
+
+this.screen = screen;
+
+this.pool = pool;
+
+},
+
+is_loading: function() {
+
+return this.pool.is_loading();
+
+},
+
+draw: function() {
+
+this.screen.init_buffer();
+
+var ctx = this.screen.buffer.getContext('2d');	
+
+ctx.save();
+
+ctx.fillText("Loading images...", 10, 10);
+
+ctx.restore();
+
+this.screen.swap();
+
+}
+
+});
+
+var GeCollision = Class.create({
+
+initialize: function(parent, type, objA, objB) {
+
+this.parent = parent;
+
+this.type = type;
+
+this.A = objA;
+
+this.B = objB;
+
+this.calcNormal()
+
+},
+
+calcNormal: function() {
+
+if (this.type == 'cc') {
+
+var wallNormal = new Vector2D(0,0).link(this.A.phys.pos, this.B.phys.pos);
+
+this.wallNormal = wallNormal.normalize();
+
+}
+
+},
+
+correct: function() {
+
+if (this.type == 'cc') {
+
+}
+
+},
+
+correct_cc: function() {
+
+var wN = this.wallNormal.clone();
+
+wN.mul(this.delta);
+
+this.A.phys.pos.sub(wN);
+
+},
+
+response: function() {
+
+if (this.type == 'cc') {
+
+this.response_cc();
+
+}
+
+},
+
+response_cc: function() {
+
+this.A.phys.velocity.inv();
+
+this.B.phys.velocity.inv();
+
+return;
+
+var delta = this.A.phys.pos.link(this.A.phys.pos, this.B.phys.pos);
+
+var d = delta.mag();
+
+var mtd = delta.clone().mul((this.dist - d )/ d);
+
+var v = this.A.phys.velocity.clone().sub(this.B.phys.velocity);
+
+var vn = v.dot(mtd.clone().normalize());
+
+if (vn > 0.0) return;
+
+var ConstantRestitution = 0.5; 
+
+var i = (-(1.0 + ConstantRestitution) * vn) / (this.A.phys.invmass + this.B.phys.invmass);
+
+var impulse = mtd.mul(i);
+
+
+
+},
+
+});
+
+var GeBounding = Class.create({
+
+initialize: function(parent) {
+
+this.type = 'base';
+
+this.parent = parent;
+
+},
+
+});
+
+var GeBound_Shadow = Class.create(GeBounding, {
+initialize: function($super, parent) {
+$super(parent);
+this.type = 'shadow';
+this.shadow = document.createElement('canvas');		
+},
+collide: function(map) {
+var ctx = this.shadow.getContext('2d');		
+this.shadow.width = this.parent.gx.width;
+this.shadow.height = this.parent.gx.height;
+var dwi = this.shadow.width / 2;
+var dhe = this.shadow.height / 2;
+var cposx =  -this.parent.phys.pos.x + dwi;
+var cposy =  -this.parent.phys.pos.y + dhe
+ctx.save();
+ctx.save();
+ctx.translate( cposx, cposy);
+this.parent.gx.draw(ctx);
+ctx.restore();
+ctx.globalCompositeOperation = 'source-in';
+var posX = this.parent.phys.pos.x - dwi;
+if (posX < 0) {
+posX = 0;
+} else if (posX > this.shadow.width) {
+posX = this.shadow.width;
+}			
+var posY = this.parent.phys.pos.y - dhe;
+if (posY < 0) {
+posY = 0;
+} else if (posY > this.shadow.height) {
+posY = this.shadow.height;
+}
+if (posX > 640 - this.shadow.width) {
+posX = 640 - this.shadow.width;
+}
+if (posY > 480 - this.shadow.height) {
+posY = 480 - this.shadow.height;
+}
+ctx.drawImage(Core.Images.get("lvl-test-shadow.png").get(), 
+posX, posY,
+this.shadow.width, this.shadow.height,
+0, 0, this.shadow.width, this.shadow.height);
+ctx.restore();
+
+
+var c2 = document.createElement('canvas');
+ctx2 = c2.getContext('2d');
+c2.height = this.shadow.height;
+c2.width = this.shadow.width;
+ctx2.fillStyle = "rgba(250,250,250, 0)";
+ctx2.fillRect (0, 0, 32, 32);
+ctx2.drawImage(this.shadow, 0, 0);
+var cs = document.getElementById('GameScreen2').getContext('2d')
+cs.fillStyle = "rgba(250,50,250, 1)";
+cs.fillRect (0, 0, 32, 32);
+cs.drawImage(c2, 0, 0);
+},
+});
+var GeBoundingCircle = Class.create(GeBounding, {
+
+initialize: function($super, parent, radius) {
+
+$super(parent);
+
+this.type = 'circle';
+
+this.radius = radius;
+
+},
+
+check_cc: function(node) {
+
+if (this.parent == node) {
+
+return null;
+
+}
+
+var tradius = this.radius + node.bound.circle.radius;
+
+var dist = this.parent.phys.pos.dist(node.phys.pos);
+
+var delta = dist - tradius;
+
+if (delta < 1) {
+
+var c = new GeCollision(parent, 'cc', this.parent, node);
+
+c.tradius = tradius;
+
+c.dist = dist;
+
+c.delta = -delta;
+
+return c;
+
+} else {
+
+return null;
+
+}
+
+return null;
+
+},
+
+collide: function(node) {	
+
+var c = null;
+
+if (node.bound) {
+
+if (node.bound.circle) {
+
+if (c = this.check_cc(node)) {
+
+return c;
+
+}
+
+} else if (node.bound.box) {
+
+
+
+}
+
+}
+
+var it = node.childs.iterator();
+
+var child;
+
+while(child = it.next()) {
+
+if (c = this.collide(child.data)) {
+
+return c;
+
+} 
+
+}
+
+return null;
+
+}
+
+});
+
+var GeBoundingBox = Class.create(GeBounding, {
+
+initialize: function($super, parent, u, v) {
+
+$super(parent);
+
+this.type = 'box';
+
+this.u = u;
+
+this.v = v
+
+},
+
+collide: function(sg) {	
+
+return null;
+
+}
+
+});
+
+var GePosition = Class.create(Vector2D, {
+
+initialize: function($super, x, y, orientation) {
+
+$super(x, y);
+
+if (orientation) {
+
+this.orientation = orientation;
+
+} else {
+
+this.orientation = new Vector2D(0, 1);
+
+}
+
+},
+
+});
+
+
+
+var GePhysState = Class.create({
+
+initialize: function(parent) {
+
+this.parent = parent;
+
+this.pos = new GePosition(0.0, 0.0, null);
+
+this.velocity = new Vector2D(0.0,0.0);
+
+this.force = new Vector2D(0.0, 0.0);
+
+this.movable = false;
+
+this.solid = false;
+
+this.set_mass(10.0);
+
+this.width = 32;
+
+this.height = 32;
+
+this.minval = 0.000001;
+
+},
+
+get_force: function() {
+
+return this.force();
+
+},
+
+set_mass: function(mass) {
+
+this.mass = mass;
+
+this.invmass = 1.0 / mass;
+
+},
+
+setPosX: function(x) {
+
+this.pos.x = x;
+
+},
+
+setPosY: function(y) {
+
+this.pos.y = y;
+
+},
+
+getPosX: function() {
+
+return this.pos.x;
+
+},
+
+getPosY: function() {
+
+return this.pos.y;
+
+},
+
+isSolid: function() {
+
+return this.solid;
+
+},
+
+setSolid: function(bSolid) {
+
+this.solid = bSolid;
+
+},
+
+isMovable: function() {
+
+return this.movable;
+
+},
+
+setMovable: function(bMovable) {
+
+this.movable = bMovable;
+
+},
+
+applyForce: function(force) {
+
+if (!this.force) {
+
+this.force = new Vector2D(0,0);
+
+}
+
+this.force.add(force);
+
+},
+
+copy_state: function() {
+
+var c = new Object();
+
+c.pos = this.pos.clone();
+
+return c;
+
+},
+
+interpolate: function() {
+
+if (!this.lastState) {
+
+return this.pos;
+
+}
+
+if (!ShoGE.Core.DiscreteTime.alpha) { 
+return this.pos;
+
+}
+
+var goom = this.plop;
+
+var pos = this.pos.clone().mul(
+
+ShoGE.Core.DiscreteTime.alpha
+
+).add(this.lastState.pos.clone().mul(1.0 - ShoGE.Core.DiscreteTime.alpha));
+
+return pos;
+
+},
+
+update: function(dt) {
+
+if (!this.lastState) {
+
+this.lastState = this.copy_state();
+
+}
+
+if (this.force) {
+
+this.force.set(0,0);
+
+var m = this.force.clone();
+
+m.mul(this.invmass).mul(dt);
+
+if (Math.abs(m.x) < this.minval) m.x = 0;
+
+if (Math.abs(m.y) < this.minval) m.y = 0;
+
+this.velocity.add(m);
+
+
+
+}
+
+if (Math.abs(this.velocity.x) < this.minval) {
+
+}
+
+if (Math.abs(this.velocity.y) < this.minval) {
+
+}
+
+if (this.velocity.x == 0 && this.velocity.y == 0) {
+
+}
+
+this.pos.add(this.velocity);
+
+
+
+this.grid_bounding();
+
+this.pos.x = Math.round(this.pos.x);
+
+this.pos.y = Math.round(this.pos.y);
+
+},
+
+grid_bounding: function() {
+
+if (!this.parent.bound || !this.parent.bound.grid) {
+
+return;
+
+}
+
+var ccell = this.parent.get_parent('cell');
+
+if (!ccell) { return; }
+
+var maxcellX = ccell.x * ccell.parent.cell_size + ccell.parent.cell_size;
+
+var maxcellY = ccell.y * ccell.parent.cell_size + ccell.parent.cell_size;
+
+if (this.pos.x < 0 || this.pos.x > maxcellX) {
+
+this.velocity.invX();
+
+}
+
+if (this.pos.y < 0 || this.pos.y > maxcellY) {
+
+this.velocity.invY();
+
+}
+
+}
+
+});
+
+var GeLevel = Class.create(GeObject, {
+
+initialize: function($super, parent, path) {
+
+$super(parent);
+
+this.path = path;
+
+this.cell_size = 256;
+
+this.loaded = false;
+
+},
+
+load: function(level) {
+
+ShoGE.w("Loading level info with AJAX");
+
+var that = this;
+
+new Ajax.Request('level/' + level + "/levelInfo.json",
+
+{
+
+method:'get',
+
+onSuccess: function(transport){
+
+var data = transport.responseText; 
+that.data = data.evalJSON(true);
+
+that.preload_ressources();
+
+},
+
+onFailure: function(){ ShoGE.w("Cannot load level info"); }
+
+});
+
+},	
+
+preload_ressources: function() {
+
+if (!this.data) {throw("Cannot preload leve ressources without data");}
+
+ShoGE.w("Loading ressources for level " + this.data.name);
+
+this.loaded = true;
+
+}
+
+});
+
+
+var GeBound = Class.create(GeObject, {
+
+
+initialize: function($super, parent) {
+
+$super();
+
+this.parent = parent;
+
+},
+
+add: function(bound) {
+
+this[bound.type] = bound;
+
+},
+
+get: function(type) {
+
+return this[type];
+
+}
+
+});
+
+var GeTreeNode = Class.create(GeObject, {
+initialize: function($super, parent) {
+$super(parent);
+this.set_parent(parent);
+this.childs = new GeLinkedList();
+this.iterator = this.childs.iterator();
+this._init(parent);
+},
+_init: function(parent) {
+this.type = "basic";
+this.bPhysUpdate = false;
+this.bRedraw = false;
+},
+set_parent: function(parent) {
+this.parent = parent;
+},
+set_physUpdate: function(bool) {
+this.bPhysUpdate = bool;
+},
+set_redraw: function(bool) {
+this.bRedraw = bool;
+},
+hide: function() {
+this.set_redraw(false);
+this.iterator.reset_head();
+var child;
+while(child = this.iterator.next()) {
+child.data.hide();
+}
+},
+unhide: function() {
+this.set_redraw(true);
+this.iterator.reset_head();
+var child;
+while(child = this.iterator.next()) {
+child.data.unhide();
+}
+},
+hidden: function() {
+return !this.bRedraw;
+},
+freeze: function() {
+this.set_physUpdate(false);
+this.iterator.reset_head();
+var child;
+while(child = this.iterator.next()) {
+child.data.freeze();
+}
+},
+unfreeze: function() {
+this.set_physUpdate(true);
+this.iterator.reset_head();
+var child;
+while(child = this.iterator.next()) {
+child.data.unfreeze();
+}
+},
+frozen: function() {
+return !this.bPhysUpdate;
+},
+get_parent: function() {
+return this.parent;
+},
+get_childs: function() {
+return this.childs;
+},
+add_child: function(node) {
+node.parent = this;
+this.childs.add(node);
+},
+get_parent: function(type) {
+if (!this.parent) {
+return null;
+}
+if (this.parent.type == type) {
+return this.parent;
+}
+return this.parent.get_parent(type);
+},
+enable_physics: function() {
+if (!this.phys) {
+this.phys = new GePhysState(this);
+}
+},
+update: function(dt) {
+if (this.phys && !this.frozen()) {
+this.phys.update(dt);
+var c = this.collide();
+if (c) {  c.correct(); 
+c.response(); }
+}
+if (this.postupdate) { this.postupdate(dt) };
+this.iterator.reset_head();
+var child;
+while(child = this.iterator.next()) {
+child.data.update(dt);
+}
+},
+post_rendering: function () {
+if (this.phys) {
+if (this.phys.lastState) {
+this.phys.lastState = null;
+}
+}
+var iterator =  this.childs.iterator()
+var child;
+while(child = iterator.next()) {
+child.data.post_rendering();
+}
+},
+collide: function() {
+if (this.frozen()) {
+return null;
+}
+if (!this.bound) {
+return null;
+}
+if (this.bound.shadow) {
+this.bound.shadow.collide(ShoGE.Core.SG);
+}
+if (this.bound.circle) {
+return this.bound.circle.collide(ShoGE.Core.SG);
+}
+return null;
+},
+preload_ressources: function() {
+this.iterator.reset_head();
+var child;
+while(child = this.iterator.next()) {
+child.data.preload_ressources();
+}
+},
+draw: function(ctx) {
+ctx.save();
+if (this.gx && !this.hidden()) {
+ctx.save();
+this.gx.draw(ctx);
+ctx.restore();
+}
+this.iterator.reset_head(); 
+var child;
+while(child = this.iterator.next()) {
+child.data.draw(ctx);
+}
+ctx.restore();
+}
+});
+
+
+
+var GeGx_Map = Class.create({
+
+
+initialize: function(parent) {
+
+this.parent = parent;
+
+},
+
+
+draw: function(ctx) {
+
+ctx.drawImage(ShoGE.Core.Images.get("map_green01.png").get(), 0, 0);
+
+},
+
+});
+
+
+var GeTreeNode_Map = Class.create(GeTreeNode, {
+
+initialize: function($super, parent) {
+
+$super();
+
+},
+
+
+_init: function(parent) {
+
+this.type = "monster";
+
+this.gx = new GeGx_Map(this);
+
+this.unhide();
+
+},
+
+});
+
+var GeTreeNode_Monster = Class.create(GeTreeNode, {
+
+initialize: function($super, parent) {
+
+$super(parent);
+
+},
+
+_init: function(parent) {
+
+this.type = "monster";
+
+this.unfreeze();
+
+this.unhide();
+
+this.enable_physics();
+
+this.phys.pos.x = Math.round(Math.random()*512);
+
+this.phys.pos.y = Math.round(Math.random()*512);
+
+var minus = 1;
+
+if (Math.random() > 0.5) {
+
+minus = -1
+
+}
+
+this.phys.velocity.x = Math.random() * minus *5 ;
+
+minus = 1;
+
+if (Math.random() > 0.5) {
+
+minus = -1
+
+}
+
+this.phys.velocity.y = Math.random()* minus * 5;
+
+this.gx = new GeGx_Monster(this);
+
+this.bound = new GeBound(this);
+
+this.bound.add(new GeBoundingCircle(this, this.gx.width/2));
+
+this.bound.grid = 1;
+
+
+var drawForce = new GeTreeNode_Vector(this, this.phys.force); 
+drawForce.phys.pos = this.phys.pos;
+
+drawForce.set_color("#AA00AA");
+
+drawForce = new GeTreeNode_Vector(this, this.phys.velocity); 
+drawForce.phys.pos = this.phys.pos;
+
+drawForce.set_color("#FF0000");
+
+drawForce = new GeTreeNode_Vector(this, this.phys.velocity.normal()); 
+drawForce.phys.pos = this.phys.pos;
+
+var that = this
+
+drawForce.postupdate = function(dt) {
+
+that.vector = that.phys.velocity.normal();
+
+}
+
+},
+
+preload_ressources: function($super) {
+
+ShoGE.w("Loading monster ressources");
+
+ShoGE.Core.Images.add("ball-blue-32x32.png");
+
+ShoGE.Core.Images.add("ball-cover-32x32.png");
+
+ShoGE.Core.Images.add("ball-infected-32x32.png");
+
+},
+
+});
+
+var GeGx_Monster = Class.create({
+
+initialize: function(parent) {
+
+this.parent = parent;
+
+this.width = 32;
+
+this.height = 32;
+
+},
+
+draw: function(ctx) {
+
+var phys = this.parent.phys;
+
+var pos = phys.interpolate();
+
+ctx.translate(pos.x - 16, pos.y - 16);
+
+ctx.drawImage(ShoGE.Core.Images.get("ball-blue-32x32.png").get(), 0, 0);
+
+ctx.drawImage(ShoGE.Core.Images.get("ball-cover-32x32.png").get(), 0, 0);
+
+ctx.drawImage(ShoGE.Core.Images.get("ball-infected-32x32.png").get(), 0, 0);
+
+},
+
+});
+
+var GeGx_Vector = Class.create({
+
+initialize: function(parent) {
+
+this.parent = parent;
+
+this.width = 32;
+
+this.height = 32;
+
+this.color = "#FF0000";
+
+},
+
+draw: function(ctx) {
+
+var phys = this.parent.phys;
+
+var B = phys.pos.clone().add(this.parent.vector.clone().mul(4));
+
+ctx.moveTo(phys.pos.x, phys.pos.y);
+
+ctx.lineTo(B.x, B.y);
+
+ctx.strokeStyle = this.color;
+
+ctx.stroke();
+
+},
+
+});
+
+var GeTreeNode_Vector = Class.create(GeTreeNode, {
+
+initialize: function($super, parent, vector) {
+
+$super(parent);
+
+this.vector = vector;
+
+},
+
+set_color: function(color) {
+
+this.gx.color = color;
+
+},
+
+_init: function(parent) {
+
+this.type = "vector";
+
+this.unfreeze();
+
+this.unhide();
+
+this.enable_physics();
+
+this.gx = new GeGx_Vector(this);
+
+},
+
+});
+
+var GeTreeNode_Grid = Class.create(GeTreeNode, {
+
+initialize: function($super, parent, width, height, cell_size) {
+
+this.width = width;
+
+this.height = height;
+
+this.cell_size = cell_size;
+
+$super(parent);
+
+},
+
+_init: function(parent) {
+
+this.type = "grid";
+
+this.grid = new GeArray2D(this.width, this.height);
+
+this.load(0,0);
+
+this.load(1,0);
+
+this.load(0,1);
+
+this.load(1,1);
+
+},
+
+get: function(x, y) {
+
+return this.grid.get(x, y);
+
+},
+
+set: function(x, y, cell) {
+
+cell.x = x;
+
+cell.y = y;
+
+this.grid.set(x, y, cell);
+
+this.add_child(cell);
+
+},
+
+load: function(x, y) {
+
+var cell = new GeTreeNode_Cell(this, x, y);
+
+this.set(x, y, cell);
+
+},
+
+add: function(node) {
+
+var x = Math.round(node.phys.pos.x / this.cell_size);
+
+var y = Math.round(node.phys.pos.y / this.cell_size);
+
+var cell = this.get(x, y)
+
+cell.add_child(node);
+
+},
+
+replace: function(node) {
+
+if (!node.bound || !node.bound.grid) {
+
+return;
+
+}
+
+var ccell = node.get_parent('cell');
+
+if (!ccell) { 
+
+return; 
+
+}
+
+var x = Math.round(node.x / this.cell_size);
+
+var y = Math.round(node.y / this.cell_size);
+
+var ccell = node.get_parent('cell');
+
+if (ccell.x == x && ccell.y == y) {
+
+return;
+
+}
+
+var ncell;
+
+if (ncell = this.get(x, y)) {
+
+ccell.childs.remove(node);
+
+ncell.add_child(node);
+
+}
+
+},
+
+});
+
+var GeTile = Class.create(GeObject, {
+
+initialize: function($super, parent) {
+
+$super(parent);
+
+this.walkable = 0;
+
+this.name = "";
+
+}
+
+});
+
+var GeTreeNode_Cell = Class.create(GeTreeNode, {
+
+initialize: function($super, parent, x, y) {
+
+$super(parent);
+
+this.x = x;
+
+this.y = y;
+
+this.is_loaded = false;
+
+this.load();
+
+},
+
+_init: function(parent) {
+
+this.type = "cell";
+
+this.gx = new GeGx_Cell(this);
+
+this.unhide();
+
+},
+
+load_shadow_info: function() {
+
+var canvas = document.createElement('canvas');
+
+canvas.width = ShoGE.Core.Level.cell_size;
+
+canvas.height = ShoGE.Core.Level.cell_size;
+
+var c = canvas.getContext('2d');
+
+c.width = this.img_shadow.width;
+
+c.height = this.img_shadow.height;
+
+c.drawImage(this.img_shadow, 0, 0);
+
+var id = c.getImageData(0,0,ShoGE.Core.Level.cell_size,ShoGE.Core.Level.cell_size);
+
+var l = id.data.length / 4;
+
+var msg = "";
+
+this.tiles = new Array();
+
+var c = 0;
+
+for(var row = 0; row < 32; row++) {
+
+for (var i = 0; i < 32; i++) {
+
+var step = (row *(id.width*4)) + (i*4) ;
+
+var r = id.data[step];
+
+var g = id.data[step + 1];
+
+var b = id.data[step + 2];
+
+var a = id.data[step + 3];
+
+var tile = new GeTile(parent);
+
+if (a == 255) {
+
+tile.walkable = 0;
+
+tile.name = "tile-" + r + "-" + g + "-" + b + ".png";
+
+tile.name = "tile-on.png";
+
+ShoGE.Core.Images.add(tile.name);
+
+} else {
+
+tile.walkable = 1;
+
+tile.name = "tile-off.png";
+
+ShoGE.Core.Images.add(tile.name);
+
+}			  
+
+this.tiles[row*32+i] = tile;
+
+}
+
+}
+
+},
+
+load_tile_info: function() {
+
+var canvas = document.createElement('canvas');
+
+canvas.width = ShoGE.Core.Level.cell_size;
+
+canvas.height = ShoGE.Core.Level.cell_size;
+
+var c = canvas.getContext('2d');
+
+c.width = this.img_tile.width;
+
+c.height = this.img_tile.height;
+
+c.drawImage(this.img_tile, 0, 0);
+
+var id = c.getImageData(0,0,ShoGE.Core.Level.cell_size,ShoGE.Core.Level.cell_size);
+
+var l = id.data.length / 4;
+
+var msg = "";
+
+var c = 0;
+
+for(var row = 0; row < 32; row++) {
+
+for (var i = 0; i < 32; i++) {
+
+var step = (row *(id.width*4)) + (i*4) ;
+
+var r = id.data[step];
+
+var g = id.data[step + 1];
+
+var b = id.data[step + 2];
+
+var a = id.data[step + 3];
+
+var tile = new GeTile(parent);
+
+if (a == 0) {
+
+
+
+} else {
+
+tile.walkable = 1;
+
+tile.name = "tile-" + r + "-" + g + "-" + b + ".png";
+
+ShoGE.Core.Images.add(tile.name);
+
+this.tiles[row*32+i] = tile;
+
+}			  
+
+}
+
+}
+
+},
+
+loaded: function(type) {
+
+this.is_loaded = true;
+
+if (type == 'shadow') {
+
+this.load_shadow_info();
+
+}
+
+if (type == 'layer') {
+
+this.load_tile_info();
+
+}
+
+},
+
+get_level_path: function() {
+
+return "level/" + ShoGE.Core.Level.path + "/";
+
+},
+
+get_cell_path: function(x, y) {
+
+return "cells/" + x + "-" + y + "-";
+
+},
+
+load: function() {
+
+this.is_loaded = false;
+
+this.img_shadow = new Image();
+
+this.img_tile = new Image();
+
+var that = this;
+
+var src = this.get_level_path() + this.get_cell_path(this.x, this.y) + "shadow.png";
+
+ShoGE.Core.Images.add("../../" + src);
+
+this.img_shadow.onload = function() { that.loaded('shadow'); }	
+
+this.img_shadow.src = src;
+
+src = this.get_level_path() + this.get_cell_path(this.x, this.y) + "layer-0.png";
+
+ShoGE.Core.Images.add("../../" + src);
+
+this.img_tile.onload = function() { that.loaded('layer'); }	
+
+this.img_tile.src = src;
+
+},
+
+preload_ressources: function($super) {
+
+ShoGE.Core.Images.add("tile-on.png");
+
+ShoGE.Core.Images.add("tile-off.png");
+
+$super();
+
+},
+
+});
+
+var GeGx_Cell = Class.create({
+
+initialize: function(parent) {
+
+this.parent = parent;
+
+},
+
+draw: function(ctx) {
+
+if (!this.parent.tiles) {
+
+return;
+
+}
+
+if (!this.cache) {
+
+this.cache = document.createElement('canvas');
+
+this.cache.width = 512;
+
+this.cache.height = 512;
+
+var lctx = this.cache.getContext('2d');
+
+lctx.save();
+
+for(var r = 0; r < 32; r ++) {
+
+for(var c = 0; c < 32; c ++) {
+
+lctx.save();
+
+lctx.translate(c*16, r*16);
+
+if (this.parent.tiles[r*32+c].walkable) {
+
+lctx.drawImage(ShoGE.Core.Images.get(this.parent.tiles[r*32+c].name).get(), 0,0);
+
+} else {
+
+lctx.drawImage(ShoGE.Core.Images.get(this.parent.tiles[r*32+c].name).get(), 0,0);
+
+}
+
+lctx.restore();
+
+}	
+
+}
+
+lctx.restore();
+
+}
+
+ctx.translate(this.parent.x * 512, this.parent.y * 512);
+
+ctx.drawImage(this.cache, 0,0);
+
+},
+
+});
+
+var GeTreeNode_Collection = Class.create(GeTreeNode, {
+
+initialize: function($super, parent, name) {
+
+$super(parent);
+
+this.name;
+
+},
+
+_init: function(parent) {
+
+this.type = "collection";
+
+},
+
+update: function($super, dt) {
+
+var it = this.childs.iterator();
+
+var child;
+
+while(child = it.next()) {
+
+child.data.update(dt);
+
+}
+
+},
+
+collide: function($super) {
+
+var it = this.childs.iterator();
+
+var child;
+
+while(child = it.next()) {
+
+child.data.collide();
+
+}
+
+}
+
+});
+
+var GeTreeNode_Block = Class.create(GeTreeNode, {
+
+initialize: function($super, parent, pos, u, v) {
+
+$super(parent);
+
+this._init(pos, u, v);
+
+},
+
+_init: function(pos, u, v) {
+
+this.type = "block";
+
+this.phys = new GePhysState(this);
+
+this.phys.pos = pos;
+
+this.bound = new GeBound(this);
+
+this.bound.add(new GeBoundingBox(this, u, v));
+
+},
+
+});
+
+var GeTreeNode_Coordinate = Class.create(GeTreeNode, {
+
+initialize: function($super, parent, vector) {
+
+$super(parent);
+
+this.vector = vector;
+
+},
+
+_init: function(parent) {
+
+this.type = "coordinate";
+
+this.unfreeze();
+
+this.unhide();
+
+this.enable_physics();
+
+var u = new GeTreeNode_Vector(this, new Vector2D(1,0));
+
+u.set_color("#FF0000");
+
+var v = new GeTreeNode_Vector(this, new Vector2D(0,1));
+
+v.set_color("#0000FF");
+
+this.add_child(u);
+
+this.add_child(v);
+
+},
+
+});
+
+var GeSpriteAnimation = Class.create({
+
+initialize: function(parent, name, row, frames) {
+
+this.parent = parent;
+
+this.name = name;
+
+this.row = row;
+
+this.frames = frames;
+
+},
+
+});
+
+var GeSprite = Class.create(  {
+
+initialize: function(parent, name, x, y) {
+
+this.parent = parent;
+
+this.name = name;
+
+this.offset = new Vector2D(x, y);
+
+this.animations = new Hash();
+
+},
+
+set_animation: function(name, row, col) {
+
+this.animations.set(name,
+
+new GeSpriteAnimation(this, name, row, col, frames)
+
+);
+
+}
+
+});
+
+var GeSpriteSet = Class.create({
+
+initialize: function(file, width, height) {
+
+this.set_file(file);
+
+this.anims = new Hash();
+
+this.set_width(width);
+
+this.set_height(height);
+
+this.set_interval(1);
+
+},
+
+preload_ressources: function(pool) {
+
+pool.add(this.file);
+
+},
+
+
+set_file: function(f) {
+
+this.file = f;
+
+},
+
+get_file: function() {
+
+return this.file;
+
+},	
+
+set_width: function(l) {
+
+this.width = l;
+
+},
+
+get_width: function() {
+
+return this.width;
+
+},	
+
+set_height: function(l) {
+
+this.height = l;
+
+},
+
+get_height: function() {
+
+return this.height;
+
+},	
+
+set_interval: function(l) {
+
+this.interval = l;
+
+},
+
+get_interval: function() {
+
+return this.interval;
+
+},			
+
+
+set_sprite: function (name, posx, posy) {
+
+this.anims.set(name,
+
+new GeSprite(this, name, posx, posy)
+
+);
+
+return this.anims.get(name);
+
+},
+
+});
+var GeCamera = Class.create(GeTreeNode, {
+
+initialize: function($super, parent, object) {
+
+$super(parent);
+
+if (object) {
+
+this.object = object;
+
+} else {
+
+this.object = new GePosition(); 
+}
+
+},
+
+_init: function(parent) {
+
+this.type = "camera";
+
+},
+
+track: function(node) {
+
+this.tracked = node;
+
+},
+
+untrack: function() {
+
+this.tracked = null;
+
+},
+
+});
+
+var GeRenderer = Class.create(GeObject, {
+
+initialize: function($super, parent, screen, camera, width, height) {
+
+$super(parent);
+
+this.set_camera(camera);
+
+this.set_screen(screen);
+
+this.set_width(width);
+
+this.set_height(height);
+
+this.fps = 0;
+
+this.lastFrameTime = Date.now();
+
+this.frameCount = 0;
+
+},
+
+draw: function() {
+
+this.Screen.init_buffer();
+
+var ctx = this.Screen.buffer.getContext('2d');	
+
+ctx.save();
+
+if (this.Camera) {
+
+ctx.translate(this.Camera.object.phys.pos.x,   this.Camera.object.phys.pos.y);
+
+}
+
+this.parent.SG.draw(ctx);
+
+if (this.Mouse) {
+
+this.Mouse.draw(ctx);
+
+}
+
+ctx.restore();
+
+var ctime = Date.now();
+
+var d = ctime - this.lastFrameTime;			
+
+if (d >= 1000.0) {
+
+this.fps = (this.frameCount + this.fps) / 2.0;
+
+this.lastFrameTime = ctime + (d - 1000);
+
+this.frameCount = 0;
+
+}
+
+this.frameCount++;	
+
+this.Screen.swap();	
+
+},
+
+
+set_mouse: function(mouse) {
+
+this.Mouse = mouse;
+
+},
+
+get_mouse: function() {
+
+return this.Mouse;
+
+},
+
+
+set_camera: function(camera) {
+
+this.Camera = camera;
+
+},
+
+get_camera: function() {
+
+return this.Camera;
+
+},
+
+
+set_screen: function(screen) {
+
+this.Screen = screen;
+
+},
+
+get_screen: function() {
+
+return this.Screen;
+
+},
+
+
+set_width: function(width) {
+
+this.width = width;
+
+},
+
+get_width: function() {
+
+return this.width;
+
+},	
+
+
+set_height: function(height) {
+
+this.height = height;
+
+},
+
+get_width: function() {
+
+return this.width;
+
+},	
+
+
+get_fps: function() {
+
+return this.fps;
+
+}
+
+});
+
+var GeCore = Class.create(GeObject, {
+
+initialize: function($super, parent) {
+
+$super(parent);
+
+this.lastDraw = this.currentTime;
+
+this.pause = false;
+
+},
+
+init: function(width, height) 
+
+{
+
+
+this.init_global_variables();
+
+
+this.DiscreteTime = new GeDiscreteTime(15);
+
+
+this.Screens = new Hash();
+
+this.add_screen("GameScreen", width, height);
+
+this.add_screen("GameScreen3", width / 2, height / 2);
+
+
+this.Mouse = new GeMouse(this, 'GameScreen');
+
+
+this.Keyboard = new GeKeyboard(this, 'GameScreen');
+
+
+this.Images = new GeMediaPool();
+
+
+this.SG = new GeTreeNode_Collection(null, "World");
+
+
+this.Renderers = new Hash();
+
+this.add_renderer('GameScreen', this.Screens.get('GameScreen'), null, width, height);
+
+this.Renderers.get("GameScreen").set_mouse(this.Mouse);
+
+this.Level = new GeLevel(this, 'darks');
+
+this.Level.load(0);
+
+this.Grid = new GeTreeNode_Grid(this, 2,2, 512);
+
+this.SG.add_child(this.Grid);
+
+this.load_ressources();
+
+this.ImageReady = new GeWaitLoading(parent, this.Screens.get('GameScreen'), this.Images);
+
+this.SG.preload_ressources();
+
+this.start();
+
+},
+
+init_global_variables: function() 
+
+{
+
+ShoGE.Log = new GeLog("GameLog");
+
+ShoGE.w = function(msg) { ShoGE.Log.w(msg) };
+
+},
+
+load_ressources: function() 
+
+{
+
+var m = null;
+
+this.numMonster = 0;
+
+for(var i = 0; i < 1; i++) {
+
+m = new GeTreeNode_Monster(null);
+
+this.Grid.add(m);
+
+this.numMonster++;
+
+}
+
+this.camera = new GeCamera(parent, m);
+
+this.SG.add_child(this.camera);
+
+
+
+var map = new GeTreeNode_Map(null);
+
+
+var sprite_set = new GeSpriteSet("sprites/charsets12", 16, 16);
+
+sprite_set.preload_ressources(this.Images);
+
+var s = sprite_set.set_sprite("warrior", 16, 180);
+
+s.set_animation("walk_up"    , 0, 3);
+
+s.set_animation("walk_right" , 1, 3);
+
+s.set_animation("walk_down", 2, 3)
+
+s.set_animation("walk_left"   , 3, 3)
+
+},
+
+start: function()
+
+{
+
+var that = this;
+
+this.startTime = Date.now();
+
+this.lastFrameTime = Date.now();
+
+ShoGE.w("--- Starting Game Engine");
+
+this.timer = new PeriodicalExecuter(function(pe) {	
+
+that.html_update();
+
+}, 0.5);
+
+new PeriodicalExecuter(function(pe) {			
+
+if (that.ImageReady.is_loading()) {
+
+that.ImageReady.draw();
+
+} else {
+
+pe.stop();
+
+that.start_loop();
+
+}
+
+}, 0.1);
+
+},
+
+togglePause: function() 
+
+{
+
+if (this.pause) {
+
+this.pause = false;
+
+this.currentTime = Date.now();
+
+this.start_loop();
+
+} else {
+
+this.pause = true;
+
+this.MainLoop.stop();
+
+}
+
+},
+
+
+html_update: function()
+
+{
+
+$('GameFPS').innerHTML = Math.round(this.Renderers.get('GameScreen').get_fps());
+
+$('GameElapsedTime').innerHTML = Math.round(this.DiscreteTime.t/10)/100 + "&nbsp;s";
+
+$('GameAlpha').innerHTML = this.DiscreteTime.alpha;
+
+$('clickatX').innerHTML = this.Mouse.pos.x;
+
+$('clickatY').innerHTML = this.Mouse.pos.y;
+
+$('MouseStatus').innerHTML = this.Mouse.status;
+
+if (this.Mouse.status) {
+
+if (this.Mouse.status == 'down') {
+
+$('clickDownX').innerHTML = this.Mouse.down.x;
+
+$('clickDownY').innerHTML = this.Mouse.down.y;
+
+}
+
+} else {
+
+$('clickDownX').innerHTML = 0;
+
+$('clickDownY').innerHTML = 0;
+
+$('GameNumMonster').innerHTML = this.numMonster;
+
+}
+
+},
+
+start_loop: function() 
+
+{
+
+var that = this;
+
+this.MainLoop = new PeriodicalExecuter(function(pe) {	
+
+that.loop();
+
+}, 1/100);
+
+this.RenderingLoop = new PeriodicalExecuter(function(pe) {	
+
+that.Renderers.each(function(pair) {
+
+pair.value.draw();
+
+});
+
+that.DiscreteTime.alpha = 0;
+
+that.SG.post_rendering();
+
+}, 1/60);
+
+},
+
+loop: function() 
+
+{	
+
+this.Msg = "Keyscan<br>-----&nbsp;---&nbsp;-----<br>";
+
+var that = this;
+
+this.Keyboard.scan(function(key) {
+
+if (key.is(GeKeys.ENTER) && key.is_complete()) {
+
+key.reset();
+
+var m = new GeTreeNode_Monster(null);
+
+that.Grid.add(m);
+
+that.numMonster++;
+
+}
+
+});
+
+this.Mouse.clicks.each(function(c) {
+
+var m = new GeTreeNode_Monster(null);
+
+m.phys.pos = c;
+
+that.Grid.add(m);	
+
+that.numMonster++;
+
+});
+
+this.Mouse.reset_click();
+
+
+this.DiscreteTime.consume(this.SG);
+
+},
+
+
+add_screen: function (id, width, height, bgcolor) 
+
+{
+
+this.Screens.set(id, 
+
+new GeScreen(this, id, width, height)
+
+);
+
+if (bgcolor) this.Screens.get(id).set_bgcolor(bgcolor);
+
+},
+
+add_renderer: function(id, screen, camera, width, height) {
+
+this.Renderers.set(id,
+
+new GeRenderer(this, screen, camera, width, height)
+
+);
+
+},
+
+});	
+
+
+
+ShoGE.Core = new GeCore(null);
+

@@ -14,13 +14,13 @@ var GeCollision = Class.create({
 	},
 	correct: function() {
 		if (this.type == 'cc') {
-			//this.correct_cc();
+			this.correct_cc();
 		}
 	},
 	correct_cc: function() {
 		//ShoGE.w("Correct cc");
 		var wN = this.wallNormal.clone();
-		wN.mul(this.delta);
+		wN.mul(this.delta+1);
 		this.A.phys.pos.sub(wN);
 	},
 	
@@ -31,12 +31,12 @@ var GeCollision = Class.create({
 	},
 	
 	response_cc: function() {
-		this.A.phys.velocity.inv();
-		this.B.phys.velocity.inv();
+		this.A.phys.force.inv();
+		this.B.phys.force.inv();
 	return;
-		var delta = this.A.phys.pos.link(this.A.phys.pos, this.B.phys.pos);
-		var d = delta.mag();
-		var mtd = delta.clone().mul((this.dist - d )/ d);
+		var delta = new Vector2D(0,0).link(this.A.phys.pos, this.B.phys.pos);
+		var d = Math.abs(delta.mag());
+		var mtd = delta.clone().normalize().mul((this.dist - d ) / d);
 		
 		// impact speed
 		var v = this.A.phys.velocity.clone().sub(this.B.phys.velocity);
@@ -48,8 +48,8 @@ var GeCollision = Class.create({
 		var i = (-(1.0 + ConstantRestitution) * vn) / (this.A.phys.invmass + this.B.phys.invmass);
 		var impulse = mtd.mul(i);
 		
-		//this.A.phys.velocity.add(impulse.clone().mul(this.A.phys.invmass));
-		//this.B.phys.velocity.add(impulse.clone().mul(this.B.phys.invmass));
+		this.A.phys.velocity.add(impulse.clone().mul(this.A.phys.invmass));
+		this.B.phys.velocity.add(impulse.clone().mul(this.B.phys.invmass));
 		
 		/*
 		//ShoGE.w("res cc");

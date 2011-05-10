@@ -11,9 +11,9 @@ var GeTreeNode_Grid = Class.create(GeTreeNode, {
 		this.type = "grid";
 		this.grid = new GeArray2D(this.width, this.height);
 		this.load(0,0);
-		this.load(1,0);
-		this.load(0,1);
-		this.load(1,1);
+		//this.load(1,0);
+		//this.load(0,1);
+		//this.load(1,1);
 	},
 	
 	get: function(x, y) {

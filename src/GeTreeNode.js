@@ -172,9 +172,9 @@ var GeTreeNode = Class.create(GeObject, {
     draw: function(ctx) {
 		ctx.save();
         if (this.gx && !this.hidden()) {
-			ctx.save();
+			//ctx.save();
             this.gx.draw(ctx);
-			ctx.restore();
+			//ctx.restore();
         }
 		this.iterator.reset_head(); // Not a good idea since we use two different thread
 		var child;

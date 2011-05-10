@@ -93,4 +93,8 @@ var Vector2D = Class.create({
   invY: function() {
 	this.y = - this.y;
   },
+  round: function() {
+	this.x = Math.round(this.x);
+	this.y = Math.round(this.y);
+  },
 });

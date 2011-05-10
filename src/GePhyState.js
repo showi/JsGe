@@ -24,6 +24,7 @@ var GePhysState = Class.create({
 		this.width = 32;
 		this.height = 32;
 		this.minval = 0.000001;
+		this.recalculate_momentum();
 	},
 	get_force: function() {
 		return this.force();
@@ -74,72 +75,28 @@ var GePhysState = Class.create({
 		if (!ShoGE.Core.DiscreteTime.alpha) { // NAN
 			return this.pos;
 		}
-		//console.debug("Alpha: " + ShoGE.Core.DiscreteTime.alpha);
-		var goom = this.plop;
 		var pos = this.pos.clone().mul(
 			ShoGE.Core.DiscreteTime.alpha
 		).add(this.lastState.pos.clone().mul(1.0 - ShoGE.Core.DiscreteTime.alpha));
+		//pos.round();
 		return pos;
   },
+   recalculate_momentum: function() {
+		this.momentum = this.velocity.clone().mul(this.mass);	
+   },
+   /* Physic update */
 	update: function(dt) {
-	if (!this.lastState) {
-		this.lastState = this.copy_state();
-	}
-	if (this.force) {
-		this.force.set(0,0);
-			// Gravity
-	//this.applyForce(new Vector2D(0.0, 9.81/1000).mul(dt));
-	// Friction (Loss Of energy)
-	//this.applyForce(
-	//	this.velocity.clone().normalize().inv().mul(this.minval).mul(dt)
-	//);
-		var m = this.force.clone();
-		m.mul(this.invmass).mul(dt);
-		if (Math.abs(m.x) < this.minval) m.x = 0;
-		if (Math.abs(m.y) < this.minval) m.y = 0;
-		this.velocity.add(m);
-		/*var s = new RK4State();
-		s.pos = this.pos.clone();
-		s.force = this.force.clone();
-		var i = new RK4Integrator();
-		i.integrate(s, ShoGE.Core.t, ShoGE.Core.dt);
-		this.pos = i.pos;*/
-		
-	}
-	if (Math.abs(this.velocity.x) < this.minval) {
-		//this.velocity.x = 0;
-	}
-	if (Math.abs(this.velocity.y) < this.minval) {
-		//this.velocity.y = 0;
-	}
-	if (this.velocity.x == 0 && this.velocity.y == 0) {
-		//this.parent.freeze();
-	}
-	this.pos.add(this.velocity);
-	
-	
-	/*if (this.pos.x < 16 || this.pos.x > 640 - 16) {
-			if (this.pos.x < 16) {
-				this.pos.x = 16;
-			} else {
-				this.pos.x = 640 - 16;
-			}
-			//this.force.x -= 0.002;
-			this.velocity.x = - this.velocity.x ;
-	}
-	if (this.pos.y < 17 || this.pos.y > 480 - 17) {
-		//this.force.y -= 0.002;
-		if (this.pos.y < 17) {
-			this.pos.y = 17;
-		} else {
-			this.pos.y = 480 - 17;
+		if (!this.lastState) {
+			this.lastState = this.copy_state();
 		}
-		this.velocity.y = - this.velocity.y ;
-		}*/
+		var v2 = this.force.clone().mul(dt);
+		this.velocity = v2;
+		this.recalculate_momentum();
+		this.pos.add(v2.clone());
 		this.grid_bounding();
-		this.pos.x = Math.round(this.pos.x);
-		this.pos.y = Math.round(this.pos.y);
+		return;
 	},
+	
 	grid_bounding: function() {
 		if (!this.parent.bound || !this.parent.bound.grid) {
 			
@@ -150,12 +107,20 @@ var GePhysState = Class.create({
 		//alert("plop");
 		var maxcellX = ccell.x * ccell.parent.cell_size + ccell.parent.cell_size;
 		var maxcellY = ccell.y * ccell.parent.cell_size + ccell.parent.cell_size;
+		var x = Math.round(this.pos.x);
+		var y = Math.round(this.pos.y);
+		if (ccell.tiles[y*32+x]  && ccell.tiles[y*32+x].walkable) {
+			console.debug("Walkable");
+			this.force.inv();
+			return;
+		}
 		if (this.pos.x < 0 || this.pos.x > maxcellX) {
-			this.velocity.invX();
+			this.force.invX();
 		}
 		if (this.pos.y < 0 || this.pos.y > maxcellY) {
-			this.velocity.invY();
+			this.force.invY();
 		}
+		
 		
 	}
 });

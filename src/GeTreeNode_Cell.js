@@ -40,22 +40,22 @@ var GeTreeNode_Cell = Class.create(GeTreeNode, {
 		var c = 0;
 		
 		for(var row = 0; row < 32; row++) {
-	    	for (var i = 0; i < 32; i++) {
-			  var step = (row *(id.width*4)) + (i*4) ;
-	    	  var r = id.data[step];
-	    	  var g = id.data[step + 1];
-	    	  var b = id.data[step + 2];
-			  var a = id.data[step + 3];
-			 // alert(r + " " + g + " " + b + " " + a);
-			  var tile = new GeTile(parent);
-			  if (a == 255) {
-					tile.walkable = 0;
+			for (var i = 0; i < 32; i++) {
+				var step = (row *(id.width*4)) + (i*4) ;
+				var r = id.data[step];
+				var g = id.data[step + 1];
+				var b = id.data[step + 2];
+				var a = id.data[step + 3];
+				// alert(r + " " + g + " " + b + " " + a);
+				var tile = new GeTile(parent);
+				if (a == 255) {
+					tile.walkable = 1;
 					tile.name = "tile-" + r + "-" + g + "-" + b + ".png";
 					tile.name = "tile-on.png";
 					ShoGE.Core.Images.add(tile.name);
 					
 				} else {
-					tile.walkable = 1;
+					tile.walkable = 0;
 					tile.name = "tile-off.png";
 					ShoGE.Core.Images.add(tile.name);
 				}			  
@@ -87,17 +87,24 @@ var GeTreeNode_Cell = Class.create(GeTreeNode, {
 	    	  var b = id.data[step + 2];
 			  var a = id.data[step + 3];
 			  //alert(r + " " + g + " " + b + " " + a);
-			  var tile = new GeTile(parent);
+			  var tile;
+				if (this.tiles[row*32+i]) {
+					tile = this.tiles[row*32+i];
+					
+				} else {
+					tile = new GeTile(parent);
+					this.tiles[row*32+i] = tile;	
+			}
 			  if (a == 0) {
-					/*tile.walkable = 0;
+					//tile.walkable = 0;
+					/*
 					tile.name = "tile-" + r + "-" + g + "-" + b + ".png";
 					ShoGE.Core.Images.add(tile.name);
 					ShoGE.Core.Images.add("tile-on.png");*/
 				} else {
-					tile.walkable = 1;
+					//tile.walkable = 1;
 					tile.name = "tile-" + r + "-" + g + "-" + b + ".png";
 					ShoGE.Core.Images.add(tile.name);
-					this.tiles[row*32+i] = tile;
 				}			  
 
 			}
@@ -133,7 +140,7 @@ var GeTreeNode_Cell = Class.create(GeTreeNode, {
 		this.img_shadow.src = src;
 		src = this.get_level_path() + this.get_cell_path(this.x, this.y) + "layer-0.png";
 		ShoGE.Core.Images.add("../../" + src);
-		this.img_tile.onload = function() { that.loaded('layer'); }	
+		//this.img_tile.onload = function() { that.loaded('layer'); }	
 		this.img_tile.src = src;
 	},
 	

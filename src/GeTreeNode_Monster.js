@@ -1,3 +1,53 @@
+var GeGx_Monster_Ball = Class.create({
+	initialize: function(parent) {
+		this.parent = parent;
+	},
+	draw: function(ctx) {
+		//ctx.save();	
+		ctx.rotate(this.parent.rotate);
+		
+		ctx.translate(this.parent.phys.pos.x , this.parent.phys.pos.y);
+	
+		// 10;//Math.PI/180;
+		//console.debug(this.parent.rotate);
+		ctx.beginPath();
+		ctx.fillStyle = "rgba(20, 20, 200, 0.8)";
+		ctx.strokeStyle = "rgba(255, 20, 200, 1)";
+		ctx.arc(0, 0, 5, 0, Math.PI*2, true);
+		ctx.closePath();
+		ctx.fill();
+		ctx.stroke;
+		
+		//ctx.restore();
+	},
+});
+
+var GeTreeNode_Monster_Ball = Class.create(GeTreeNode, {
+	initialize: function($super, parent) {
+		$super(parent);
+	},
+	_init: function(parent) {
+		this.type = "monster_ball";
+		this.unfreeze();
+		this.unhide();
+		this.enable_physics();
+		this.phys.pos.x = 20;
+		this.phys.pos.y = 0;
+		this.rotate = 0;
+		this.gx = new GeGx_Monster_Ball(this);
+	},
+	
+	update: function($super, dt) {
+		$super(dt);
+		this.rotate += (Math.PI /180/3) * (dt);
+		if(this.rotate > Math.PI*2) {
+			this.rotate = 0;
+		}
+	
+	}
+});
+
+
 var GeTreeNode_Monster = Class.create(GeTreeNode, {
     initialize: function($super, parent) {
         $super(parent);
@@ -13,12 +63,12 @@ var GeTreeNode_Monster = Class.create(GeTreeNode, {
 		if (Math.random() > 0.5) {
 			minus = -1
 		}
-        this.phys.velocity.x = Math.random() * minus *5 ;
+        this.phys.force.x = (Math.random() * minus )/3;
 		minus = 1;
 		if (Math.random() > 0.5) {
 			minus = -1
 		}
-        this.phys.velocity.y = Math.random()* minus * 5;
+        this.phys.force.y = (Math.random()* minus) /3;
 		
         this.gx = new GeGx_Monster(this);
         this.bound = new GeBound(this);
@@ -46,6 +96,9 @@ var GeTreeNode_Monster = Class.create(GeTreeNode, {
 		//drawForce.unfreeze();
 		//drawForce.unhide();
 		//this.add_child(drawForce);
+		this.add_child(
+			new GeTreeNode_Monster_Ball(this)
+		);
 	},
 	preload_ressources: function($super) {
 		ShoGE.w("Loading monster ressources");
@@ -68,9 +121,14 @@ var GeGx_Monster = Class.create({
         var phys = this.parent.phys;
 		var pos = phys.interpolate();
 		//console.debug(pos.x + ", " + pos.y);
-        ctx.translate(pos.x - 16, pos.y - 16);
+		//ctx.save();
+    
+		ctx.translate(pos.x, pos.y);
+	    ctx.save();
+		ctx.translate(-16, -16);
         ctx.drawImage(ShoGE.Core.Images.get("ball-blue-32x32.png").get(), 0, 0);
         ctx.drawImage(ShoGE.Core.Images.get("ball-cover-32x32.png").get(), 0, 0);
 		ctx.drawImage(ShoGE.Core.Images.get("ball-infected-32x32.png").get(), 0, 0);
-    },
+		ctx.restore();
+	},
 });

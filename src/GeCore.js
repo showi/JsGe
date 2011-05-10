@@ -152,7 +152,7 @@ var GeCore = Class.create(GeObject, {
 		var that = this;
 		this.MainLoop = new PeriodicalExecuter(function(pe) {	
 			that.loop();
-		}, 1/100);
+		}, 1/1000);
 		this.RenderingLoop = new PeriodicalExecuter(function(pe) {	
 			that.Renderers.each(function(pair) {
 				pair.value.draw();
