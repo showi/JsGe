@@ -1700,8 +1700,6 @@ var y = Math.round(this.pos.y);
 
 if (ccell.tiles[y*32+x]  && ccell.tiles[y*32+x].walkable) {
 
-console.debug("Walkable");
-
 this.force.inv();
 
 return;
@@ -1710,11 +1708,31 @@ return;
 
 if (this.pos.x < 0 || this.pos.x > maxcellX) {
 
+if (this.pos.x < 0) {
+
+this.pos.x = 1;
+
+} else {
+
+this.pos.x = maxcellX -1;
+
+}
+
 this.force.invX();
 
 }
 
 if (this.pos.y < 0 || this.pos.y > maxcellY) {
+
+if (this.pos.y < 0) {
+
+this.pos.y = 1;
+
+} else {
+
+this.pos.y = maxcellY -1;
+
+}
 
 this.force.invY();
 
