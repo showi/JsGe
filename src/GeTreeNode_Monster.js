@@ -1,9 +1,7 @@
-/*# > Object < #*/
 var GeTreeNode_Monster = Class.create(GeTreeNode, {
     initialize: function($super, parent) {
         $super(parent);
     },
-    /*# > Method < #*/
     _init: function(parent) {
         this.type = "monster";
         this.unfreeze();
@@ -49,7 +47,6 @@ var GeTreeNode_Monster = Class.create(GeTreeNode, {
 		//drawForce.unhide();
 		//this.add_child(drawForce);
 	},
-
 	preload_ressources: function($super) {
 		ShoGE.w("Loading monster ressources");
 		ShoGE.Core.Images.add("ball-blue-32x32.png");
@@ -60,16 +57,13 @@ var GeTreeNode_Monster = Class.create(GeTreeNode, {
 	
 });
 
-/*# > Object < #*/
+
 var GeGx_Monster = Class.create({
-    /*# > Method < #*/
     initialize: function(parent) {
         this.parent = parent;
         this.width = 32;
         this.height = 32;
     },
-
-    /*# > Method < #*/
     draw: function(ctx) {
         var phys = this.parent.phys;
 		var pos = phys.interpolate();

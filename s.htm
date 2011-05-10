@@ -18,6 +18,7 @@
 <script src="src/GeDiscreteTime.js"></script>
 <script src="src/GeScreen.js"></script>
 <script src="src/GeMouse.js"></script>
+<script src="src/GeKeyboard.js"></script>
 <script src="src/GeImagePool.js"></script>
 <script src="src/GeWaitLoading.js"></script>
 
@@ -57,19 +58,16 @@
 }
 </style>
 </head>
-<body onLoad="ShoGE.Core.init(512,512);" style="background-color: black; color:white;">  
+<body id="GameHtmlBody" onLoad="ShoGE.Core.init(512,512);" style="background-color: black; color:white;">  
 	<div style="align: center;">
 		<h1>JsGe (Javascript Game Engine)</h1>
 		<h5>Just a bunch of balls bouncing around...</h5>
 		<h6><a href="https://github.com/showi/JsGe" target="_blank">source</a></h6>
 	</div>
-	<div style="float: left;">
+	<div style="clear:both;">
 		<canvas style="position: relative;" id="GameScreen"  width="512" height="512" ></canvas>
 	</div>
-	<div style="float: left;">
-		<canvas style="" id="GameScreen3" width="320" height="240"></canvas>
-	</div>	
-	<div style="clear: both">
+	<div style="">
 		<div>
 			FPS:&nbsp;<span id="GameFPS">0</span>
 		</div>
@@ -79,21 +77,31 @@
 				<div>
 			Alpha:&nbsp;<span id="GameAlpha">0</span>
 		</div>
+		<div>
+			BlueMonster:&nbsp;<span id="GameNumMonster">0</span>
+		</div>
+		<div>
+			Mouse(<span id="clickatX">0</span>,&nbsp;<span id="clickatY">0</span>)
+		</div>
+		<div>
+			Click up(<span id="clickUpX">0</span>,&nbsp;<span id="clickUpY">0</span>)
+		</div>
+		<div>
+			Click down(<span id="clickDownX">0</span>,&nbsp;<span id="clickDownY">0</span>)
+		</div>
+		<div>
+			Mouse status:&nbsp;<span id="MouseStatus">0</span>
+		</div>	
+		<div>
+			Area:&nbsp;<span id="MouseArea">0</span>
+		</div>
+		<div>
+		<span id="GameMsg"></span>
+		</div>
 	</div>
-	<div>
-		Mouse(<span id="clickatX">0</span>,&nbsp;<span id="clickatY">0</span>)
-	</div>
-	<div>
-		Click up(<span id="clickUpX">0</span>,&nbsp;<span id="clickUpY">0</span>)
-	</div>
-	<div>
-		Click down(<span id="clickDownX">0</span>,&nbsp;<span id="clickDownY">0</span>)
-	</div>
-	<div>
-		Mouse status:&nbsp;<span id="MouseStatus">0</span>
+	<div style="float:left; ">
+		<canvas style="" id="GameScreen3" width="320" height="240"></canvas>
 	</div>	
-	<div>
-		Area:&nbsp;<span id="MouseArea">0</span>
-	</div>	
+		
 </body>
 </html>

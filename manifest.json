@@ -7,10 +7,10 @@
 },
 "app": {
 "urls": [
-"http://webdev.nosferat.us/"
+"http://showi.github.com/JsGe/"
 ],
 "launch": {
-"web_url": "http://webdev.nosferat.us/js/JsGe/sm.htm"
+"web_url": "http://showi.github.com/JsGe/"
 }
 },
 "permissions": [

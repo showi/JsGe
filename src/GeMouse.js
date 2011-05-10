@@ -22,11 +22,12 @@ var GeArea = Class.create({
 });
 
 
-var GeMouse = Class.create({
-	initialize: function(id) {
+var GeMouse = Class.create(GeObject, {
+	initialize: function($super, parent, id) {
+		$super(parent);
 		this.elmID = id;
 		this.pos = new Vector2D(0 , 0);
-		this.click = new Array();
+		this.clicks = new Array();
 		this.area = null;
 		this.status = null;
 		this._init();
@@ -43,19 +44,21 @@ var GeMouse = Class.create({
 				Event.pointerX(e) - e.element().offsetLeft,
 				Event.pointerY(e) - e.element().offsetTop
 			);
+			e.stop();
 		});
 		Event.observe(this.elmID, 'mouseup', function(e) {
 			that.mouseUp(
 				Event.pointerX(e) - e.element().offsetLeft,
 				Event.pointerY(e) - e.element().offsetTop
 			);
+			e.stop();
 		});
 	},
 	
 	mouseDown: function(x, y) {
 		this.down = new Vector2D(x,y);
 		this.status = 'down';
-		$('GameScreen').style.cursor = "crosshair";
+		$(this.elmID).style.cursor = "crosshair";
 	},
 	
 	mouseUp: function(x, y) {
@@ -67,13 +70,16 @@ var GeMouse = Class.create({
 		if (lX > 1 || lY > 1) {
 			this.area = new GeArea(this.down, this.up);
 		} else {
-			this.click.push(this.down.clone());
+			this.clicks.push(this.down.clone());
 			this.area = null;
 		}
 		this.reset();
-		$('GameScreen').style.cursor = "default";
+		$(this.elmID).style.cursor = "default";
 	},
 	
+	reset_click: function() {
+		this.clicks = new Array();
+	},
 	reset: function() {
 		this.down = null;
 		this.up = null;

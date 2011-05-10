@@ -28,7 +28,7 @@ while(<$fh>) {
 		print "Appending $js\n";
 		open($fh2, "$path$js") 
 			or die "Cannot open javascript file: '$js'";
-		$out .= "\/\/----- ---[$js]--- -----\n";
+		#$out .= "\/\/----- ---[$js]--- -----\n";
 		my $sc = 0;
 		while(my $l = <$fh2>) {
 			clean_line(\$out, $l, \$sc);
@@ -36,9 +36,17 @@ while(<$fh>) {
 		next;
 	}
 }
-my $fh;
+
 open($fh, ">$path$fout")
 	or die "Cannot open out file '$path$fout'";
+# for(@buffer) {
+	# my $l = $_;
+	# #print $l;
+	# #$l =~ s/\n//sg;
+	# print $fh $l;
+# }
+$out =~ s/\r/\n/gs;
+#$out =~ s/\s+/ /gs;
 print $fh $out;
 print "\n";
 print "Javascript files merged\n";
@@ -50,36 +58,36 @@ sub clean_line {
 	my $rsc = shift;
 	$line =~ s/^\s*(.*)\s*$/$1/;
 	$line =~ /^\s*$/ and next;
-
+	$line =~ s/^\s+/ /g;
 	if ($$rsc) {
 		$line =~ /^\s*.*\*\/\s*(.*)\s*$/ and do {
 			my $tok = "$1";
 			$$rsc = 0;
-			my $tok = /^\s*$/ and return;
+			$tok = /^\s*$/ and return;
 			$$rout .= "$tok\n";
-			push @buffer, $tok;
+			push @buffer, "$tok\n";
 		};
 		return;
 	}
 	$line =~ /^\s*(.*)\s*\/\*.*\*\/\s*(.*)\s*$/ and do {
 		my $tok = "$1$2";
-		my $tok = /^\s*$/ and return;
+		$tok = /^\s*$/ and return;
 		$$rout .= "$tok\n";
-		push @buffer, $tok;
+		push @buffer, "$tok\n";
 		return;
 	};
 	$line =~ /^(.*)\/\/.*$/ and do {
 		$1 =~ /^\s*$/ and return;
 		$$rout .= "$1\n";
-		push @buffer, $1;
+		push @buffer, "$1\n";
 		return;
 	};
 	$line =~ /^\s*(.*)\s*\/\*.*$/ and do {
 		my $tok = "$1";
 		$$rsc = 1;
-		my $tok = /^\s*$/ and return;
+		$tok = /^\s*$/ and return;
 		$$rout .= "$tok\n";
-		push @buffer, $tok;
+		push @buffer, "$tok\n";
 		return;
 	};
 	$$rout .= "$line\n";

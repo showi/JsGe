@@ -47,7 +47,8 @@ var GeBound_Shadow = Class.create(GeBounding, {
 			
 			// Watching for colision
 			//var buffer = ctx2.getImageData(0,0, this.shadow.width, this.shadow.height);
-			//var buffer = ctx2.data;//getImageData(1,1,1,1);
+			//var buffer = ctx2.data;
+			//getImageData(1,1,1,1);
 			//var l = buffer.data.length / 4;
 			//for(var row = 0; row < this.shadow.height; row++) {
 	    	/*var avgCol = 0;

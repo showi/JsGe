@@ -21,7 +21,10 @@ var GeCore = Class.create(GeObject, {
 		this.add_screen("GameScreen3", width / 2, height / 2);
 		
 		/* Create our mouse */
-		this.Mouse = new GeMouse('GameScreen');
+		this.Mouse = new GeMouse(this, 'GameScreen');
+		
+		/* Create our keyboard */
+		this.Keyboard = new GeKeyboard(this, 'GameScreen');
 		
 		/* Create our image pool */
 		this.Images = new GeMediaPool();
@@ -42,7 +45,7 @@ var GeCore = Class.create(GeObject, {
 		
 		this.load_ressources();
 		
-		this.ImageReady = new GeWaitLoading(parent, this.Screen, this.Images);
+		this.ImageReady = new GeWaitLoading(parent, this.Screens.get('GameScreen'), this.Images);
 
 		this.SG.preload_ressources();
 		
@@ -59,9 +62,11 @@ var GeCore = Class.create(GeObject, {
 	load_ressources: function() 
 	{
 		var m = null;
-		for(var i = 0; i < 50; i++) {
+		this.numMonster = 0;
+		for(var i = 0; i < 1; i++) {
 			m = new GeTreeNode_Monster(null);
 			this.Grid.add(m);
+			this.numMonster++;
 		}
 		this.camera = new GeCamera(parent, m);
 		this.SG.add_child(this.camera);
@@ -129,6 +134,7 @@ var GeCore = Class.create(GeObject, {
 		$('clickatX').innerHTML = this.Mouse.pos.x;
 		$('clickatY').innerHTML = this.Mouse.pos.y;
 		$('MouseStatus').innerHTML = this.Mouse.status;
+		//$('GameMsg').innerHTML = this.Msg;
 		if (this.Mouse.status) {
 			if (this.Mouse.status == 'down') {
 				$('clickDownX').innerHTML = this.Mouse.down.x;
@@ -137,6 +143,7 @@ var GeCore = Class.create(GeObject, {
 		} else {
 			$('clickDownX').innerHTML = 0;
 			$('clickDownY').innerHTML = 0;
+			$('GameNumMonster').innerHTML = this.numMonster;
 		}
 	},
 	
@@ -158,6 +165,26 @@ var GeCore = Class.create(GeObject, {
 	
 	loop: function() 
 	{	
+		this.Msg = "Keyscan<br>-----&nbsp;---&nbsp;-----<br>";
+		var that = this;
+		this.Keyboard.scan(function(key) {
+			if (key.is(GeKeys.ENTER) && key.is_complete()) {
+				//ShoGE.w(key.get_string());
+				key.reset();
+				var m = new GeTreeNode_Monster(null);
+				that.Grid.add(m);
+				that.numMonster++;
+			}
+		});
+		this.Mouse.clicks.each(function(c) {
+				var m = new GeTreeNode_Monster(null);
+				m.phys.pos = c;
+				that.Grid.add(m);	
+				that.numMonster++;
+		});
+		this.Mouse.reset_click();
+		//$('GameMsg').innerHTML = this.Msg;
+		//this.Keyboard.reset();
 		/* Update our scene graph with discrete time */
 		this.DiscreteTime.consume(this.SG);
 	},
