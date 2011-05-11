@@ -7,10 +7,10 @@ var GeArray2D = Class.create({
 	},
 	
 	get: function(x,y) {
-		return this.data[x*this.width + this.y];
+		return this.data[y*this.width + x];
 	},
 	
 	set: function(x,y, data) {
-		this.data[x*this.width + this.y] = data;
+		this.data[y*this.width + x] = data;
 	},
 });

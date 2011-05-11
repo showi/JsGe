@@ -54,7 +54,7 @@ var GeKeyboard = Class.create(GeObject, {
 		this.elmID = id;
 		this.keys = new Hash();
 		var k = GeKeys;
-		this.keyFilter = new Array(k.LEFT, k.UP, k.RIGHT, k.DOWN, k.ESC, k.ENTER, k.SPACE);
+		this.keyFilter = new Array();
 		this._init();
 	},
 	_init: function() {
@@ -96,6 +96,9 @@ var GeKeyboard = Class.create(GeObject, {
 		for (i = 0, l = this.keyFilter.length; i < l; i++) {
 			this.keys.get(this.keyFilter[i]).reset();
 		}
-	}
+	},
+	set_keyfilter: function(keys) {
+		this.keyFilter = keys;
+	},
 	
 });

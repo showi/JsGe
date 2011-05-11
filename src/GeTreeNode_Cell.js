@@ -3,18 +3,34 @@ var GeTile = Class.create(GeObject, {
 		$super(parent);
 		this.walkable = 0;
 		this.name = "";
+	},
+	set_name: function(name) {
+		this.name = name;
+	},
+	get_name: function() {
+		return this.name;
+	},
+	set_walkable: function(bool) {
+		this.walkable = bool;
+	},
+	is_walkable: function() {
+		return this.walkable;
 	}
 });
 
 var GeTreeNode_Cell = Class.create(GeTreeNode, {
 
-	initialize: function($super, parent, x, y) {
+	initialize: function($super, parent, x, y, cell_size, tile_size) {
 		$super(parent);
 		this.x = x;
 		this.y = y;
+		this.cell_size = cell_size;
+		this.tile_size = tile_size;
+		
+		this.tiles = new GeArray2D(this.cell_size, this.cell_size);
 		//alert(this.x + ", " + this.y);
-		this.is_loaded = false;
-		this.load();
+		//this.is_loaded = false;
+		//this.load();
 	},
 
 	_init: function(parent) {
@@ -23,6 +39,42 @@ var GeTreeNode_Cell = Class.create(GeTreeNode, {
 		this.unhide();
 	},
 
+	
+	load: function(canvas) {
+		var ctx = canvas.getContext('2d');
+		var d = ctx.getImageData(0,0, canvas.width, canvas.height);
+		var msg = "";
+		for (var row = 0; row < canvas.height; row++) {
+			for (var col = 0; col < canvas.width; col++) {
+				var step = (row * d.width*4) + (col *4);
+				var r = d.data[step];
+				var g = d.data[step + 1];
+				var b = d.data[step + 2];
+				var a = d.data[step + 3];
+				var tile = new GeTile(parent);
+				
+				if (a == 255) {
+					msg += "#";
+					tile.set_name("img/tile-on.png");
+					tile.set_walkable(false);
+				} else {
+					tile.set_name("img/tile-off.png");
+					tile.set_walkable(true);
+					msg += " ";
+				}
+				//ShoGE.w("Set " + col + ", " + row + ": " + tile.get_name());
+				ShoGE.Core.Images.add(tile.get_name());
+				this.tiles.set(col, row, tile);
+			}
+			msg += "\n";
+		}
+		ShoGE.w(msg);
+		for (var row = 0; row < canvas.height; row++) {
+			for (var col = 0; col < canvas.width; col++) {
+				//ShoGE.w("Tile(" + col + ", " + row + ") = " + this.tiles.get(col, row).get_name());
+			}
+		}
+	},
 	load_shadow_info: function() {
 		//this.tiles = new Array();
 		var canvas = document.createElement('canvas');
@@ -48,15 +100,15 @@ var GeTreeNode_Cell = Class.create(GeTreeNode, {
 				var a = id.data[step + 3];
 				// alert(r + " " + g + " " + b + " " + a);
 				var tile = new GeTile(parent);
-				if (a == 255) {
+				if (!a) {
 					tile.walkable = 1;
 					tile.name = "tile-" + r + "-" + g + "-" + b + ".png";
-					tile.name = "tile-on.png";
+					tile.name = "tile-off.png";
 					ShoGE.Core.Images.add(tile.name);
 					
 				} else {
 					tile.walkable = 0;
-					tile.name = "tile-off.png";
+					tile.name = "tile-on.png";
 					ShoGE.Core.Images.add(tile.name);
 				}			  
 				this.tiles[row*32+i] = tile;
@@ -129,7 +181,7 @@ var GeTreeNode_Cell = Class.create(GeTreeNode, {
 		return "cells/" + x + "-" + y + "-";
 	},
 	
-	load: function() {
+	load_old: function() {
 		this.is_loaded = false;
 		this.img_shadow = new Image();
 		this.img_tile = new Image();
@@ -154,8 +206,7 @@ var GeTreeNode_Cell = Class.create(GeTreeNode, {
 var GeGx_Cell = Class.create({
 
     initialize: function(parent) {
-        this.parent = parent;
-		//this.tiles = new Array();
+		this.parent = parent;
     },
 
     draw: function(ctx) {
@@ -163,32 +214,27 @@ var GeGx_Cell = Class.create({
 			return;
 		}
 		if (!this.cache) {
-			//alert("building cache");
 			this.cache = document.createElement('canvas');
-			this.cache.width = 512;
-			this.cache.height = 512;
+			this.cache.width = this.parent.cell_size * this.parent.tile_size;
+			this.cache.height = this.parent.cell_size * this.parent.tile_size;
 			var lctx = this.cache.getContext('2d');
 			lctx.save();
-			for(var r = 0; r < 32; r ++) {
-				for(var c = 0; c < 32; c ++) {
+			for(var r = 0; r < this.parent.cell_size; r++) {
+				for(var c = 0; c < this.parent.cell_size; c++) {
 					lctx.save();
-					lctx.translate(c*16, r*16);
-					if (this.parent.tiles[r*32+c].walkable) {
-						lctx.drawImage(ShoGE.Core.Images.get(this.parent.tiles[r*32+c].name).get(), 0,0);
-					} else {
-						lctx.drawImage(ShoGE.Core.Images.get(this.parent.tiles[r*32+c].name).get(), 0,0);
-					}
+					lctx.translate(c*this.parent.tile_size, r*this.parent.tile_size);
+					var ct = this.parent.tiles.get(c, r);
+					//ShoGE.w(c + ", " + r + ": " + ct.get_name());
+					lctx.drawImage(ShoGE.Core.Images.get(ct.get_name()).get(), 0,0);
 					lctx.restore();
 				}	
 			}
 			lctx.restore();
 		}
-		//ctx.save();
-		ctx.translate(this.parent.x * 512, this.parent.y * 512);
+		ctx.translate(
+			this.parent.x * this.parent.cell_size * this.parent.tile_size, 
+			this.parent.y * this.parent.cell_size * this.parent.tile_size
+		);
 		ctx.drawImage(this.cache, 0,0);
-		//ctx.restore();
-		//if (!ShoGE.Core.Images.get("tile-on.png").loaded && !ShoGE.Core.Images.get("tile-on.png").loaded) {
-		//this.cache = null;
-		//}
 	},
 });
