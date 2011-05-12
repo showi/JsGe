@@ -68,7 +68,7 @@ var GeTreeNode_Cell = Class.create(GeTreeNode, {
 			}
 			msg += "\n";
 		}
-		ShoGE.w(msg);
+		//ShoGE.w(msg);
 		for (var row = 0; row < canvas.height; row++) {
 			for (var col = 0; col < canvas.width; col++) {
 				//ShoGE.w("Tile(" + col + ", " + row + ") = " + this.tiles.get(col, row).get_name());

@@ -1,56 +1,31 @@
-var GeMedia_Image = Class.create(GeObject, {
-
-	initialize: function($super, parent, src) {
-		$super(parent);
-		if (src) {
-			this.set(src);
-		}
-	},
-
-	set: function(src) {
-		this.img = new Image();
-		this.img.src = src;
-		this.loaded = false;
-		var that = this;//this.onload.bind(this);
-		this.img.onload = function() {
-			that.loaded = true;
-			ShoGE.w("Image '" + that.img.src + " loaded");
-			that.parent.total_loaded++;
-			if (that.callback) {
-				that.callback();
-			}
-		};
-	},
-	
-	get: function() {
-		return this.img;
-	},
-	
-	set_callback: function(callback) {
-		this.callback = callback;
-	}
-});
-
-
 var GeMediaPool = Class.create(GeObject, {
 	
 	initialize: function($super, id) {
 		$super(parent);
 		this.pool = new Array();
 		this.path = "res/";
-		this.nothing = new GeMedia_Image(this, this.path + "img/nothing.png");
+		this.nothing = new GeImage(this, this.path + "img/nothing.png");
 		this.total = 0;
 		this.total_loaded = 0;
 	},
 	
 	add: function(src, callback) {
 		if (this.pool[src]) {
-			//ShoGE.w("Image '" + src + " already in pool");
 			return null;
 		}
 		ShoGE.w("Image added: " + src);
-		this.pool[src] = new GeMedia_Image(this, this.path + src);
-		this.pool[src].set_callback(callback);
+		this.total++;
+		this.pool[src] = new GeImage(this, this.path + src);
+		var that = this;
+		this.pool[src].set_callback (
+			function(img) {
+				ShoGE.w("Image '" + img.src + "' loaded");
+				that.total_loaded++;
+				if (callback) {
+					callback(img);
+				}
+			}
+		);
 		return this.pool[src];
 	},
 	
@@ -62,8 +37,8 @@ var GeMediaPool = Class.create(GeObject, {
 		return this.pool[src];
 	},
 	
-
 	is_loading: function() {
-		return !(this.total - this.total_loaded);
+		var diff = this.total - this.total_loaded;
+		return diff;
 	}
 });

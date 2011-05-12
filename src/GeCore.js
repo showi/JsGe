@@ -25,6 +25,7 @@ var GeCore = Class.create(GeObject, {
 	
 		/* Create our renderers */
 		this.Renderers = new Hash();
+		
 	},
 	
 	init_global_variables: function() 
@@ -52,12 +53,13 @@ var GeCore = Class.create(GeObject, {
 		
 		new PeriodicalExecuter(function(pe) {			
 			if (that.ImageReady.is_loading()) {
+				ShoGE.w("Loading...");
 				that.ImageReady.draw();
 			} else {
 				pe.stop();
 				that.start_loop();
 			}
-		}, 0.1);
+		}, 0.5);
 		
 	},
 	
@@ -134,5 +136,9 @@ var GeCore = Class.create(GeObject, {
 	get_keyboard: function() {
 		return this.Keyboard;
 	},
+	
+	set_imageReady: function(screen, pool) {
+		this.ImageReady = new GeWaitLoading(this, screen, pool);
+	}
 	
 });	

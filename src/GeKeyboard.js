@@ -34,12 +34,14 @@ var GeKeyboard_Key = Class.create(GeObject, {
 		}
 	},
 	reset: function() {
+		//ShoGE.w("Reset Key: " + this.keyCode);
 		this.down = 0;
 		this.up = false;
 	},
 	get_string: function() {
 		return "Key["+ this.keyCode  + "] Down: " + this.down + ", Up: " + this.up;
 	},
+	
 	is: function(keyMap) {
 		if (this.keyCode == keyMap) {
 			return true;
@@ -58,11 +60,7 @@ var GeKeyboard = Class.create(GeObject, {
 		this._init();
 	},
 	_init: function() {
-		var i, l;
-		/* Init keys */
-		for (i = 0, l = this.keyFilter.length; i < l; i++) {
-			this.newKeyCode(this.keyFilter[i]);
-		}
+
 		var that = this;
 		/* Watch keydown event */
 		document.observe("keydown", function(e) {
@@ -81,15 +79,19 @@ var GeKeyboard = Class.create(GeObject, {
 	},
 	newKeyCode: function(num) {
 		if (!this.keys.get(num)) {
-			ShoGE.w("Adding key: " + num);
+			//ShoGE.w("Adding key: " + num);
 			this.keys.set(num,
 				new GeKeyboard_Key(this, num)
 			);
 		}
 	},
 	scan: function(func) {
+		var i, l;
 		for (i = 0, l = this.keyFilter.length; i < l; i++) {
-			func(this.keys.get(this.keyFilter[i]));
+			//ShoGE.w("KeyFilter: " + this.keyFilter[i]);
+			if (this.keys.get(this.keyFilter[i])) {
+				func(this.keys.get(this.keyFilter[i]));
+			}
 		}
 	},
 	reset: function() {
@@ -99,6 +101,11 @@ var GeKeyboard = Class.create(GeObject, {
 	},
 	set_keyfilter: function(keys) {
 		this.keyFilter = keys;
+			var i, l;
+			/* Init keys */
+			for (i = 0, l = this.keyFilter.length; i < l; i++) {
+				this.newKeyCode(this.keyFilter[i]);
+			}
 	},
 	
 });

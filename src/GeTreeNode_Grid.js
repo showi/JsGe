@@ -1,12 +1,50 @@
 var GeTreeNode_Grid = Class.create(GeTreeNode, {
 	
 	initialize: function($super, parent, width, height, cell_size, tile_size, src) {
-		this.src = src;
-		this.width = width;
-		this.height = height;
-		this.cell_size	= cell_size;
-		this.tile_size = tile_size;
+		this.set_src(src);
+		this.set_width(width);
+		this.set_height(height);
+		this.set_cell_size(cell_size);
+		this.set_tile_size(tile_size);
 		$super(parent);
+	},
+	set_src: function(src) {
+		this.src = src;
+	},
+	
+	get_src: function() {
+		return this.src;
+	},
+	
+	set_width: function(w) {
+		this.width = w;
+	},
+	
+	get_width: function() {
+		return this.width;
+	},
+	
+	set_height: function(h) {
+		this.height = h;
+	},
+	
+	get_height: function() {
+		return this.height;
+	},	
+	set_cell_size: function(size) {
+		this.cell_size = size;
+	},
+	
+	get_cell_size: function() {
+		return this.cell_size;
+	},
+	
+	set_tile_size: function(size) {
+		this.tile_size = size;
+	},
+	
+	get_tile_size: function() {
+		return this.tile_size;
 	},
 	
 	_init: function(parent) {
@@ -27,32 +65,32 @@ var GeTreeNode_Grid = Class.create(GeTreeNode, {
 	
 	load: function() {
 		ShoGE.w("Grid: loading " + this.src);
-		//var cell = new GeTreeNode_Cell(this, x, y);
-		//this.set(x, y, cell);
 		var simg = ShoGE.Core.Images.get(this.src).get();
 		var c = document.createElement('canvas');
 		c.width = simg.width;
 		c.height = simg.height;
-		//var ctx = c.getContext('2d');
-		//ctx.drawImage( simg, 0, 0);
-		var row;
-		var col;
+		var row, col;
 		for (row = 0; row < this.height; row++) {
 			for (col = 0; col < this.width; col++) {
 				var c2 = document.createElement('canvas');
-				c2.width = 10;
-				c2.height = 10;
+				c2.width = this.cell_size;
+				c2.height = this.cell_size;
 				var ctx2 = c2.getContext('2d');
-				var sx = col *10;
-				var sy = row * 10;
+				/*var sx = col * this.cell_size;
+				var sy = row * this.cells_size;
 				var ex = 10;
-				var ey = 10;
+				var ey = 10;*/
 				//alert(sx + ", " + sy + ", " + ex + ", " + ey);
 				//var data = ctx.getImageData(sx, sy, ex, ey);
-				ctx2.drawImage(simg, col*10, row*10, 10, 10,
-													0, 0, 10, 10);
-				var cell = new GeTreeNode_Cell(this, col, row, 10, 16);
-				ShoGE.w("Loading cell: " + col + ", " + row);
+				//alert(col + ", " + row + ", " + this.cell_size);
+				ctx2.drawImage(simg, 
+					col * this.cell_size, 
+					row* this.cell_size, 
+					this.cell_size, 
+					this.cell_size,
+													0, 0, this.cell_size, this.cell_size);
+				var cell = new GeTreeNode_Cell(this, col, row, this.cell_size, this.tile_size);
+				//ShoGE.w("Loading cell: " + col + ", " + row);
 				cell.load(c2);
 				this.set(col, row, cell);
 				//return;

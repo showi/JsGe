@@ -1,21 +1,10 @@
-var GePosition = Class.create(Vector2D, {
-	initialize: function($super, x, y, orientation) {
-		$super(x, y);
-		if (orientation) {
-			this.orientation = orientation;
-		} else {
-			this.orientation = new Vector2D(0, 1);
-		}
-	},
-});
-
 /* @PhysicalState: Storing physical state of game object
 	R4K Integration: http://gafferongames.com/game-physics/integration-basics/
 */
-var GePhysState = Class.create({
-	initialize: function(parent) {
-		this.parent = parent;
-		this.pos = new GePosition(0.0, 0.0, null);
+var GePhysState = Class.create(GeObject, {
+	initialize: function($super, parent) {
+		$super(parent);
+		this.pos = parent.position;
 		this.velocity = new Vector2D(0.0,0.0);
 		this.force = new Vector2D(0.0, 0.0);
 		this.movable = false;

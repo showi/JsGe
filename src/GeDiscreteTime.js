@@ -6,6 +6,7 @@ var GeDiscreteTime = Class.create(GeObject, {
 		this.accumulator = 0;
 		this.currentTime = Date.now();
 		this.startTime = this.currentTime;
+		this.alpha = 0;
 	},
 	
 	consume: function(that) {

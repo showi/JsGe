@@ -1,35 +1,37 @@
 var GeTreeNode = Class.create(GeObject, {
     initialize: function($super, parent) {
         $super(parent);
-        this.set_parent(parent);
         this.childs = new GeLinkedList();
 		this.iterator = this.childs.iterator();
+		this.position = new GePosition(0,0, null);
         this._init(parent);
-        //ShoGE.w("[" + this.core_id + "] Creating node tree: " + this.type);
     },
 
-  
     _init: function(parent) {
         this.type = "basic";
         this.bPhysUpdate = false;
         this.bRedraw = false;
     },
 
-   
-    set_parent: function(parent) {
+   /*set_parent: function(parent) {
         this.parent = parent;
-    },
-
+    },*/
+	
+	set_type: function(type) {
+		this.type = type;
+	},
+	
+	get_type: function() {
+		return this.type;
+	},
     
     set_physUpdate: function(bool) {
         this.bPhysUpdate = bool;
     },
-
    
     set_redraw: function(bool) {
         this.bRedraw = bool;
     },
-
     
     hide: function() {
         this.set_redraw(false);
@@ -40,7 +42,6 @@ var GeTreeNode = Class.create(GeObject, {
             child.data.hide();
         }
     },
-
 	
     unhide: function() {
         this.set_redraw(true);
@@ -51,12 +52,10 @@ var GeTreeNode = Class.create(GeObject, {
 			child.data.unhide();
 		}
     },
-
    
     hidden: function() {
         return !this.bRedraw;
     },
-
     
     freeze: function() {
         this.set_physUpdate(false);
@@ -66,7 +65,6 @@ var GeTreeNode = Class.create(GeObject, {
             child.data.freeze();
         }
     },
-
     
     unfreeze: function() {
         this.set_physUpdate(true);
@@ -77,22 +75,18 @@ var GeTreeNode = Class.create(GeObject, {
 			child.data.unfreeze();
         }
     },
-
   
     frozen: function() {
         return !this.bPhysUpdate;
     },
-
     
     get_parent: function() {
         return this.parent;
     },
-
     
     get_childs: function() {
         return this.childs;
     },
-
    
     add_child: function(node) {
 		node.parent = this;
@@ -114,7 +108,6 @@ var GeTreeNode = Class.create(GeObject, {
 			this.phys = new GePhysState(this);
 		}
 	},
-
     
     update: function(dt) {
         if (this.phys && !this.frozen()) {
