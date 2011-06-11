@@ -1,4 +1,4 @@
-var GeScreen = Class.create(GeObject, {
+var GeScreen = Class.create(GeEntity, {
 	
 	initialize: function($super, parent, id, width, height) {
 		$super(parent);
@@ -6,15 +6,17 @@ var GeScreen = Class.create(GeObject, {
 		//this.parent = parent;
 		this.width = width;
 		this.height = height;
-		this.bgcolor = "rgb(0,0,0)";
-		this.canvas = document.getElementById(id);
-		if (!this.canvas.getContext || !this.canvas.getContext('2d')){
+		this.bgcolor = "rgb(f,0,0)";
+		this.htmlCanvas = document.getElementById(id);
+		if (!this.htmlCanvas.getContext || !this.htmlCanvas.getContext('2d')){
 			alert("HTML 5 canvas may be not supported on your system");
 			exit(1);
 		}
-		this.ctx = this.canvas.getContext('2d');
-		this.init_buffer(); 
+		//this.htmlContext = this.canvas.getContext('2d'); 
+		
+		this.buffer = new GeImageBuffer(this, width, height);
 	},
+	
 	
 	set_bgcolor: function(bgcolor) {
 		this.bgcolor = bgcolor;
@@ -24,6 +26,7 @@ var GeScreen = Class.create(GeObject, {
 		return this.bgcolor;
 	},
 	
+	/*
 	init_buffer: function() {
 		this.layers = new Array();
 		var b = document.createElement('canvas');
@@ -33,17 +36,29 @@ var GeScreen = Class.create(GeObject, {
 		var ctx = b.getContext('2d');
 		this.clear(this.bgcolor);
 	},
+	*/
 	
 	swap: function() {
-		this.ctx.drawImage(this.buffer, 0, 0);
+		//ShoGE.w("Swap screen");
+		this.buffer.draw(this.htmlCanvas.getContext('2d'), 0, 0);
+		this.buffer.clear();
 	},
 	
 	clear: function(color) {
-		var bgcolor = color || this.bgcolor;
-		this.ctx.save();
-		this.ctx.fillStyle = bgcolor;
-		this.ctx.fillRect (0, 0, this.width, this.height);
-		this.ctx.restore();
+		//ShoGE.w("Clear screen " + color);
+		this.buffer.clear(color);
+	},
+	
+	getContext: function() {
+		return this.buffer.getContext();
+	},
+	
+	getCanvas: function() {
+		return this.buffer.getCanvas();
+	},
+	
+	draw: function($super, renderer) {
+		//ShoGE.w("Screen x: " + this.width/2 + " y: " + this.height/2);
+		//renderer.translate(this.width/2, this.height/2);
 	}
-
 });

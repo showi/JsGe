@@ -1,24 +1,38 @@
-var GeImage = Class.create(GeObject, {
+var GeImage = Class.create(GeLoadable, {
 
-	initialize: function($super, parent, src) {
+	initialize: function($super, parent, src, callback) {
 		$super(parent);
-		if (src) {
-			this.set(src);
+		this.setLoaded(false);
+		if (typeof(callback) == 'function') {
+			//ShoGE.w("Init image with callback");
+			this.set_callback(callback);
 		}
+		if (src) {
+			try {
+				this.set(src);
+			} catch(e) {
+				ShoGE.w("Error: Fail to add image '"+src+"'");
+			}
+		}
+		return this;
 	},
 
 	set: function(src) {
+		this.src = src;
 		this.img = new Image();
 		this.img.src = src;
-		this.loaded = false;
+		this.setLoaded(false);
+		this.error = false;
 		var that = this;//this.onload.bind(this);
 		this.img.onload = function() {
-			that.loaded = true;
-			//that.parent.total_loaded++;
-			if (that.callback) {
-				that.callback(that.img);
-			}
+			//ShoGE.w("Image loaded >> " + that.src);
+			that.setLoaded(true);
+			that.exec_callback();
 		};
+		this.img.onerror = function() {
+			that.error = true;
+			throw("Loading image " + that.src  + " failed.");
+		}
 	},
 	
 	get: function() {
@@ -26,15 +40,29 @@ var GeImage = Class.create(GeObject, {
 	},
 	
 	set_callback: function(callback) {
+		//ShoGE.w("Setting up callback");
 		this.callback = callback;
 	},
 	
-	as_canvas: function() {
+	exec_callback: function() {
+		//ShoGE.w("Exec callback "  + this.callback);
+		if (!this.callback && typeof(this.callback) != 'function') {
+			ShoGE.w("No callback to call");
+			return 0;
+		}
+		this.callback(this);
+		return 1;
+	},
+	
+	as_canvas: function() { return this.asCanvas(); },
+	
+	asCanvas: function() {
 		var canvas = document.createElement('canvas');
 		canvas.width = this.img.width;
 		canvas.height = this.img.height;
 		var ctx = canvas.getContext('2d');
 		ctx.drawImage(this.img, 0,0);
 		return canvas;
-	}
+	},
+	
 });

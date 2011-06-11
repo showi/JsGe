@@ -12,7 +12,7 @@ var GeCore = Class.create(GeObject, {
 		this.init_global_variables();
 		
 		/* Discrete Time */
-		this.DiscreteTime = new GeDiscreteTime(15);
+		this.DiscreteTime = new GeDiscreteTime(this, GE_CORE_DISCRETE_TIME);
 		
 		/* Create Screen object */
 		this.Screens = new Hash();
@@ -21,7 +21,7 @@ var GeCore = Class.create(GeObject, {
 		this.Images = new GeMediaPool();
 		
 		/* Create our scene graph */
-		this.SG = new GeTreeNode_Collection(null, "World");
+		//this.SG = new GeTreeNode_Collection(null, "World");
 	
 		/* Create our renderers */
 		this.Renderers = new Hash();
@@ -38,7 +38,11 @@ var GeCore = Class.create(GeObject, {
 	{
 		
 	},
-
+	
+	hookPreStart: function() {
+		
+	},
+	
 	start: function()
 	{
 		var that = this;
@@ -49,17 +53,18 @@ var GeCore = Class.create(GeObject, {
 		// Render HTML Elemet (Updating html element is an heavy process)
 		this.timer = new PeriodicalExecuter(function(pe) {	
 			that.html_update();
-		}, 0.5);
+		}, 0.7);
 		
 		new PeriodicalExecuter(function(pe) {			
 			if (that.ImageReady.is_loading()) {
-				ShoGE.w("Loading...");
+				//ShoGE.w("Loading...");
 				that.ImageReady.draw();
 			} else {
 				pe.stop();
+				that.hookPreStart();
 				that.start_loop();
 			}
-		}, 0.5);
+		}, 0.7);
 		
 	},
 	
@@ -86,7 +91,7 @@ var GeCore = Class.create(GeObject, {
 		var that = this;
 		this.MainLoop = new PeriodicalExecuter(function(pe) {	
 			that.loop();
-		}, 1/1000);
+		}, GE_CORE_TIMER_UPDATE);
 		this.RenderingLoop = new PeriodicalExecuter(function(pe) {	
 			that.Renderers.each(function(pair) {
 				pair.value.draw();
@@ -94,13 +99,16 @@ var GeCore = Class.create(GeObject, {
 			that.DiscreteTime.alpha = 0;
 			that.SG.post_rendering();
 	
-		}, 1/60);
+		}, GE_CORE_TIMER_RENDERING);
 	},
 	
+	hookPreUpdate: function(that) {
+		ShoGE.w("Pre update");
+	},
 	loop: function() 
 	{	
 		/* Update our scene graph with discrete time */
-		this.DiscreteTime.consume(this.SG);
+		this.DiscreteTime.consume(this, this.SG);
 	},
 	
 	/* Helpers */
@@ -139,6 +147,14 @@ var GeCore = Class.create(GeObject, {
 	
 	set_imageReady: function(screen, pool) {
 		this.ImageReady = new GeWaitLoading(this, screen, pool);
-	}
+	},
+	
+	supportsLocalStorage: function() {
+		try {
+			return 'localStorage' in window && window['localStorage'] !== null;
+		} catch (e) {
+			return false;
+		}
+	},
 	
 });	

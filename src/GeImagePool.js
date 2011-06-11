@@ -2,43 +2,64 @@ var GeMediaPool = Class.create(GeObject, {
 	
 	initialize: function($super, id) {
 		$super(parent);
-		this.pool = new Array();
+		this.pool = new Hash();
 		this.path = "res/";
-		this.nothing = new GeImage(this, this.path + "img/nothing.png");
+		var that = this;
+		//this.inc_total();
+		//this.nothing = new GeImage(this, this.path + "img/nothing.png", function() {
+			//that.inc_loaded();
+		//});
 		this.total = 0;
 		this.total_loaded = 0;
 	},
 	
-	add: function(src, callback) {
-		if (this.pool[src]) {
-			return null;
-		}
-		ShoGE.w("Image added: " + src);
-		this.total++;
-		this.pool[src] = new GeImage(this, this.path + src);
+	add: function(p_src, callback) {
+		var src = this.path + p_src;
 		var that = this;
-		this.pool[src].set_callback (
-			function(img) {
-				ShoGE.w("Image '" + img.src + "' loaded");
-				that.total_loaded++;
+		if (!this.pool.get(src)) {
+			//return this.pool[src];
+			//} else 
+			ShoGE.w("[Pool] add image: " + src);
+			this._inc_total();
+			this.pool.set(src, new GeImage(this, src, function() {
+				//ShoGE.w("Image '" + that.src + "' loaded");
+				that._inc_loaded();
 				if (callback) {
-					callback(img);
+					callback(that.pool.get(src));
 				}
+			}));
+		}
+		if (this.pool.get(src).isLoaded()) {
+			if (callback) {
+				callback(that.pool.get(src));
 			}
-		);
-		return this.pool[src];
+		}
+		return this.pool.get(src);
 	},
 	
-	get: function(src) {
-		if (!this.pool[src]) { throw("GeImagePool: Trying to get invalid image: " + src); }
-		if (!this.pool[src].loaded) {
-			return this.nothing;
+	get: function(p_src) {
+		var src = this.path + p_src;
+		var img = this.pool.get(src);
+		if (!img) { throw("GeImagePool: Trying to get invalid image: " + src); }
+		if (!img.isLoaded()) {
+			throw("Unloaded image");
+			
 		}
-		return this.pool[src];
+		return img;
 	},
 	
 	is_loading: function() {
 		var diff = this.total - this.total_loaded;
+		//ShoGE.w("Loading diff: " + diff);
 		return diff;
+	},
+	
+	_inc_total: function() {
+		//ShoGE.w("Increment total image " + this.total);
+		this.total++;
+	},
+	_inc_loaded: function() {
+		//ShoGE.w("Increment total loaded image " + this.total_loaded);
+		this.total_loaded++;
 	}
 });

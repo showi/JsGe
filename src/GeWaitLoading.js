@@ -11,10 +11,11 @@ var GeWaitLoading = Class.create(GeObject, {
 	},
 	
 	draw: function() {
-		this.screen.init_buffer();
-		var ctx = this.screen.buffer.getContext('2d');	
+		this.screen.clear();
+		var ctx = this.screen.getContext();	
 		ctx.save();
-		ctx.fillStyle = "rgb(255,255,255)";
+		ctx.fillStyle = "rgb(0,0,0)";
+		ctx.strokeStyle = "rgb(0,255,0)";
 		//ctx.font = 'italic 400 12px/2 Unknown Font, sans-serif';
 		ctx.fillText("Loading images...", 10, 10);
 		ctx.strokeText("Loading images...", 10, 10);

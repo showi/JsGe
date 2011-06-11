@@ -1,6 +1,6 @@
 var GeDiscreteTime = Class.create(GeObject, {
-	initialize: function($super, dt) {
-		$super();
+	initialize: function($super, parent, dt) {
+		$super(parent);
 		this.dt = dt;
 		this.t = 0;
 		this.accumulator = 0;
@@ -10,14 +10,19 @@ var GeDiscreteTime = Class.create(GeObject, {
 	},
 	
 	consume: function(that) {
+		//ShoGE.w("plop");
 		var newTime = Date.now();
 		var frameTime = newTime - this.currentTime;
 		this.currentTime = newTime;
 		this.accumulator += frameTime;
 		while(this.accumulator > this.dt) {
+		//ShoGE.w("Consume");
+	
 			this.accumulator -= this.dt;
 			this.t += this.dt;
-			that.update(this.dt);
+			//this.parent.hookPreUpdate(this);
+			ShoGE.Core.SG.update(this.dt);
+			//this.parent.hookPostUpdate(this)
 		}
 		this.alpha += (this.accumulator / this.dt);
 	}

@@ -7,19 +7,21 @@ var GeSpriteAnimation = Class.create({
 	},
 
 });
-var GeSprite = Class.create(  {
-	initialize: function(parent, name, x, y) {
-		this.parent = parent;
+
+var GeSprite = Class.create(GeEntity,  {
+	initialize: function($super, parent, name, src, offX, offY, sw, sh, count) {
+		$super(parent);
+		this.setType('sprite', '');
 		this.name = name;
-		this.offset = new Vector2D(x, y);
+		this.offset = new GeVector3D(offX, offY, 0);
+		this.count = count;
+		this.setU(sw/2, 0, 0);
+		this.setV(0, sh/2, 0);
 		this.animations = new Hash();
+		var img = ShoGE.Core.Image
 	},
 
-	set_animation: function(name, row, col) {
-		this.animations.set(name,
-			new GeSpriteAnimation(this, name, row, col, frames)
-		);
-	}
+	
 });
 
 var GeSpriteSet = Class.create({
