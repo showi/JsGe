@@ -8,35 +8,32 @@ var GeSubMap = Class.create(GeEntity, {
 		this.loaded = false;
 		this.width = width;
 		this.height = height;
+		this.loading = 0;
+		this.setTileWidth(tileWidth);
+		this.loadFromBig = true;
+		
 		this.map = new GeArray2D(width, height);
 		this.buffer = new GeImageBuffer(this, width, height);
-		this.setTileWidth(tileWidth);
 		this.Walker = new GeSubMapWalker(this);
-		this.loadFromBig = true;
-		var dX = tileWidth * 0;
-		var dY = tileWidth * 0;
-
-		//this.Position.set(Math.round(-this.width/2*tileWidth), Math.round(this.height/2*tileWidth));
+		
 		this.Position.set(0, 0);
+
 		this.enable('childs');
 		this.enable('canvas', new GeSubMap_Draw(this));
+
 		this.images = new Hash();
 		this.buildFrom = new Hash();
+
 		var that = this;
 		this.buildFrom.set('shadow', function() { that.buildFromShadow(); });
-		this.buildFrom.set('creatures', function() { that.buildFromCreatures(); });
-		this.buildFrom.set('nature', function() { that.buildFromNature(); });
-		if (!ShoGE.Core.TilePool) {
-			ShoGE.Core.TilePool = new GeTilePool (ShoGE.Core);
-		}
-		this.loading = 0;
-		var Twalk = new GeTile(this, "")
-		ShoGE.Core.TilePool.add('walkable', new GeTile(this, 'walkable'));
-		ShoGE.Core.TilePool.add('wall', new GeTile(this, 'wall'));		
+		//this.buildFrom.set('creatures', function() { that.buildFromCreatures(); });
+		//this.buildFrom.set('nature', function() { that.buildFromNature(); });
+
 		this.loadLayer('shadow');	
 	},
-
-	setTileWidth: function(v) {
+	
+	setTileWidth: function(v) 
+	{
 		if (v == this.tileWidth) {
 			return;
 		}
@@ -44,7 +41,8 @@ var GeSubMap = Class.create(GeEntity, {
 		this.tileWidth = v;
 	},
 	
-	pointInMap: function(x, y) {
+	pointInMap: function(x, y) 
+	{
 		if (x < 0) return false;
 		if (x > this.width) return false;
 		if (y < 0 ) return false;
@@ -52,16 +50,17 @@ var GeSubMap = Class.create(GeEntity, {
 		return true;
 	},
 	
-	update: function(dt) {
+	update: function(dt) 
+	{
 		var max = this.width * this.height;
 		for (var i = 0; i < max; i++) {
 			var tile = this.map.get(i, 0);
 			if (tile) tile.update(dt);
 		}
 	},
-	
-	
-	buildTileOverlay: function() {
+		
+	buildTileOverlay: function() 
+	{
 		ShoGE.w("Building tile overlay");
 		for (var row = 0; row < this.height; row++) {
 			for (var col = 0; col < this.width; col++) {
@@ -103,7 +102,8 @@ var GeSubMap = Class.create(GeEntity, {
 		}
 	},
 	
-	readImage: function(layer, callback) {
+	readImage: function(layer, callback , bCreate) 
+	{
 		var src = this.path + this.id + "-" + layer + ".png";
 		var img = ShoGE.Core.Images.get(src);
 		if (!img) {
@@ -122,8 +122,10 @@ var GeSubMap = Class.create(GeEntity, {
 				var a = d.data[step + 3];
 				var tile =  this.map.get(col, row);
 				if (!tile) {
+					if (!bCreate) {
+						continue;
+					}
 					ti++;
-					//ShoGE.w("Add tile: " + ti );
 					tile = new GeTile(this, col+"-"+row, col, row, this.tileWidth);		
 					this.map.set(col,row, tile);
 				}
@@ -132,10 +134,12 @@ var GeSubMap = Class.create(GeEntity, {
 		}
 	},
 
-	setTileProp: function(tile, st, g) {
+	setTileProp: function(tile, st, g) 
+	{
 		tile.setType('tile', st);
 		tile.setG(g);
 	},
+	
 	buildFromNature: function() {
 		ShoGE.w("Build from nature");
 		this.readImage('nature', function(that, tile, r, g, b, a) {
@@ -154,7 +158,33 @@ var GeSubMap = Class.create(GeEntity, {
 			return true;
 		});
 	},
-
+	
+	removeTile: function() {
+		var max = this.width * this.height;
+	
+		for (var i = 0; i < max; i++) {
+			if (!this.map.data[i]) continue;
+			//ShoGE.w("Set Friends");
+			this.map.data[i].setFriends();
+		}
+		for (var i = 0; i < max; i++) {
+			var tile = this.map.data[i];
+			if (!tile) continue;
+			var t = 0;
+			var i, s;
+			for (j = 0, s = tile.friends.length; j < s; j++) {
+				if (!tile.friends[j]) {
+					continue;
+				} else if (!tile.friends[j].isWalkable()) {
+					continue;
+				}
+				t++;
+			}
+			if (t) continue;
+			this.map.data[i] = null;
+		}
+	},
+	
 	buildFromCreatures: function() {
 		ShoGE.w("Build from creatures");
 		this.readImage('creatures', function(that, tile, r, g, b, a) {
@@ -163,24 +193,41 @@ var GeSubMap = Class.create(GeEntity, {
 				var monster = new GeEntity_Monster(null, that.tileWidth);
 				ShoGE.Core.Monster = monster;
 				that.Walker.moveTo(monster, tile.col, tile.row);
-				//tile.addChild(monster);
 			}
 		});
 	},
 	
 	buildFromShadow: function() {
+		ShoGE.w("Building map " + this.name + " shadow layer");
 		this.readImage('shadow', function(that, tile, r, g, b, a) {
-			if (a != 255) {
+			if (0 == r && 0 == g && 0 == b) {
+				tile.setWalkable(false);
+				tile.setSubType('wall');
+				that.setTileProp(tile, GE_WALL, GE_WALL_WEIGHT);
+			} else if (160 == r && 129 == g && 55 == b) {
 				tile.setWalkable(true);
+				tile.setSubType('ground');
+				that.setTileProp(tile, GE_GROUND, GE_GROUND_WEIGHT);
+			} else if (110 == r && 239 == g && 53 == b) {
+				tile.setWalkable(true);
+				tile.setSubType('grass');
 				that.setTileProp(tile, GE_GRASS, GE_GRASS_WEIGHT);
-	
+			} else if (50 == r && 50 == g && 255 == b) {
+				tile.setWalkable(true);
+				tile.setSubType('water');
+				that.setTileProp(tile, GE_WATER, GE_WATER_WEIGHT);
+			} else if (50 == r && 150 == g && 50 == b) {
+				tile.setWalkable(true);
+				tile.setSubType('forest');
+				that.setTileProp(tile, GE_FOREST, GE_FOREST_WEIGHT);
 			} else {
 				tile.setWalkable(false);
+				tile.setSubType('wall');
 				that.setTileProp(tile, GE_WALL, GE_WALL_WEIGHT);
-	
 			}
-		});	
-	},
+		}, 1);	
+		this.removeTile();
+		},
 	
 	loadLayer: function(layer) {
 		ShoGE.w("Layer:" + layer);
@@ -209,9 +256,10 @@ var GeSubMap = Class.create(GeEntity, {
 	},
 	
 	preload_ressources: function() {
-		this.loadLayer('nature');
-		this.loadLayer('creatures');
-		this.buildTileOverlay();
+		//this.loadLayer('nature');
+		//this.loadLayer('creatures');
+		//this.buildTileOverlay();
+		
 	},
 	
 });
@@ -225,20 +273,37 @@ var GeSubMap_Draw = Class.create(GeObject, {
 	
 	draw: function(renderer) 
 	{	
-			var numH = renderer.Screen.width / this.parent.tileWidth + 1;
-			var numV = renderer.Screen.height / this.parent.tileWidth + 1;
-			var position;
-			if (renderer.Camera.tracked.parent) {
-				position = renderer.Camera.tracked.parent.Position;
-			} else { return; position = this.parent.Position; }
-			var p = this.parent.Walker.getMapPosition(position);
+		/*var tagp1 = Math.random()*13453;
+		var tagp2 = Math.random()*1563;
+		var tag = Date.now() + "-" + Math.round(tagp1);
+		renderer.Camera.tracked.parent.canvas.drawFromMe(renderer,tag , 3);
 
+		
+		return;
+*/	
+			var numH = (renderer.Screen.width / this.parent.tileWidth);
+			var numV = (renderer.Screen.height / this.parent.tileWidth);
+			//numH = 6;
+			//numV = 6;
+			var position, col, row;
+				 tile = renderer.Camera.tracked.parent;
+			if (!tile) {
+				 return;
+			}
+			var x = (tile.col - tile.row);
+			var y = Math.round((tile.col + tile.row)/2) ;
+			x = tile.col;
+			y = tile.row;
+			var p = new GeVector3D(x, y);
+			//var p = this.parent.Walker.getMapPosition(PP);
+			//p = new GeVector3D(x, y, 0);
+			//ShoGE.w("Position: " + p.prettyPrint());
 			var minX, maxX, minY, maxY;
 			minX = p.getX() - numH;
 			if (minX < 0) {
 				minX = 0;
 			}
-			maxX = p.getX() + numH -1;
+			maxX = p.getX() + numH;
 			if (maxX > this.parent.width) {
 				maxX = this.parent.width;
 			}
@@ -246,7 +311,7 @@ var GeSubMap_Draw = Class.create(GeObject, {
 			if (minY < 0) {
 				minY = 0;
 			}
-			maxY = p.getY() + numV - 1;
+			maxY = p.getY() + numV;
 			if (maxY > this.parent.height) {
 				maxY = this.parent.height;
 			}
@@ -255,6 +320,9 @@ var GeSubMap_Draw = Class.create(GeObject, {
 			minY = Math.round(minY);
 			maxY = Math.round(maxY);
 			//renderer.save();
+			//ShoGE.w("Draw minX: " + minX + ", minY: " + minY + ", maxX: " + maxX + ", maxY: " + maxY);
+			
+		
 			this.drawIso(renderer, minX, minY, maxX, maxY);
 			
 			//this.drawCache(this.parent.buffer, minX, minY, maxX, maxY);
@@ -264,14 +332,26 @@ var GeSubMap_Draw = Class.create(GeObject, {
 	},
 	
 	drawIso: function(renderer, minX, minY, maxX, maxY) {
-			var row, col, i;
+		var tagp1 = Math.random()*13453;
+		//var tagp2 = Math.random()*1563;
+		var tag = Date.now() + "-" + Math.round(tagp1);
+		//renderer.Camera.tracked.parent.drawFromMe(tag , 1);		
+	
+	var row, col, i;
 			//ShoGE.w("Draw From: " + minX + " to " + maxX + " and From " + minY + " to " + maxY);
-
+				//minX = 0; 
+				//maxX = minX + 18;
+				//minY = 0; 
+				//maxY = minY + 18;
 				for (col = minX; col < maxX; col++) {
-							for (row = minY; row < maxY; row++) {
+						for (row = minY; row < maxY; row++) {
 							var x = col - row;
 							var y = Math.round((col + row ) /2);
-					this.parent.map.get(col, row).canvas.drawIso(renderer);
+							//ShoGE.w("col: " + col + ", row: " + row);
+							var tile = this.parent.map.get(col, row);
+							if (!tile) continue;
+							//if (tile.tag != tag) continue;
+							tile.draw(renderer);
 				}
 			}
 	},
@@ -326,6 +406,7 @@ var GeSubMapWalker = Class.create(GeObject, {
 	},
 	getMapPosition: function(p) 
 	{
+		x= x - y
 		return p.clone().div(this.parent.tileWidth/2 ).floor();
 	},
 	
@@ -362,9 +443,9 @@ var GeSubMapWalker = Class.create(GeObject, {
 		if (entity.parent) {
 			entity.parent.removeChild(entity);
 		}
-		var dw = this.parent.tileWidth / 2;
+		//var dw = this.parent.tileWidth / 2;
 		entity.parent = tile;
-		entity.Position.set(dw,dw);
+		//entity.Position.set(dw,dw);
 		tile.addChild(entity);
 		return true;
 	},
@@ -404,22 +485,28 @@ var GeSubMapWalker = Class.create(GeObject, {
 		//ShoGE.w("moveCardinal: " + cardinal);
 		var col = entity.parent.getCol();
 		var row = entity.parent.getRow();
+		var or;
 		switch(cardinal) {
 			case GE_NORTH:
-				return this.moveTo(entity, col, row - 1);
+				entity.setCardinalDirection(GE_N);
+				return this.moveTo(entity, col, row + 1);
 			break;
 			case GE_EAST:
+				entity.setCardinalDirection(GE_E);
 				return this.moveTo(entity, col + 1, row);
 			break;
 			case GE_SOUTH:
-				return this.moveTo(entity, col, row + 1);
+				entity.setCardinalDirection(GE_S);
+				return this.moveTo(entity, col, row - 1);
 			break;
 			case GE_WEST:
-				return this.moveTo(entity, col, row - 1);
+				entity.setCardinalDirection(GE_W);
+				return this.moveTo(entity, col  - 1, row);
 			break;
 			default:
 				return false;
 		}
+		return false;
 	},
 	
 });

@@ -59,6 +59,6 @@ var GeScreen = Class.create(GeEntity, {
 	
 	draw: function($super, renderer) {
 		//ShoGE.w("Screen x: " + this.width/2 + " y: " + this.height/2);
-		//renderer.translate(this.width/2, this.height/2);
+		renderer.translate(this.width/2, this.height/4);
 	}
 });

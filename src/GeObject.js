@@ -1,18 +1,35 @@
 var GeObject = Class.create({
-	initialize: function(parent) {
+
+	initialize: function(parent) 
+	{
 		this.core_id = ShoGE.GenID.get();
 		this.parent = parent;
 		this.setType('GeObject', "#GeObject#DEFAULT");
+		this.setClassName('GeObject');
 	},
-	set_parent: function(parent) {
-		this.setParent(parent);
+		
+	setClassName: function(className) 
+	{
+		this.className = className
 	},
 	
-	setParent: function(parent) {
+	getClassName: function() 
+	{
+		return this.className;
+	},
+	
+	set_parent: function(parent) 
+	{
+		this.setParent(parent);
+	},
+
+	setParent: function(parent) 
+	{
 		this.parent = parent;
 	},
 	
-	get_root: function() {
+	get_root: function() 
+	{
 		if (this.parent) {
 			return this.parent.get_root();
 		} else {
@@ -67,7 +84,8 @@ var GeObject = Class.create({
 		if (this.subtype) { msg += this.subtype}
 		msg += "\n";
 		return msg;
-	}
+	},
+	
 });
 
 var GeLoadable = Class.create(GeObject, {

@@ -1,22 +1,25 @@
+const GE_LOG = 0;
+const GE_WARN = 1;
+const GE_CRIT = 2;
+const GE_DEBUG = 3;
+
 var GeLog = Class.create(GeObject, {
-	initialize: function($super, id) {
+	
+	initialize: function($super, id) 
+	{
 		$super();
 		this.elm = document.getElementById(id);
 		this.count = 0;
 		
 	},
-	w: function(msg) {
-		if (console) { console.log(msg);}
-		return;
-		if(!this.elm) {
-			return;
-		}
-		if (this.count > 1000) {
-			this.count = 1;
-			this.elm.innerHTML = "";
-		}
-		var date = new Date();
-		this.elm.innerHTML += "[" + date.getTime() + "] " + msg + "<br>";
-		this.count++;
-	}
+	
+	w: function(msg, o) 
+	{
+		var m = "["  + Date.now() + "] ";
+		if (o) { m+= "(" + o.className + ") "; }
+		m+= msg; 
+		if (console) { console.log(m); return;}
+	},
+	
+
 });

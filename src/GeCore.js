@@ -31,7 +31,7 @@ var GeCore = Class.create(GeObject, {
 	init_global_variables: function() 
 	{
 		ShoGE.Log = new GeLog("GameLog");
-		ShoGE.w = function(msg) { ShoGE.Log.w(msg) };		
+		ShoGE.w = function(msg, o) { ShoGE.Log.w(msg,o) };		
 	},
 
 	load_ressources: function() 
