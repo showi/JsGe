@@ -43,6 +43,7 @@ var GeEntity = Class.create(GeNode, {
 		$super(parent);
 		this.setType("#ENTITY#", "#ENTITY#");
 		this.Position = new GeVector3D(0,0,0);
+		this.IsoPosition = new GeVector3D(0,0,0);
 		this.u = new GeVector3D(1,0,0);
 		this.v = new GeVector3D(0,1,0);
 		this.setNeedRedraw(true);
@@ -61,30 +62,40 @@ var GeEntity = Class.create(GeNode, {
 	enable: function($super, c, object) {
 		switch(c) {
 			case 'physic':
-				//ShoGE.w("Enable physic");
 				this.Physic = new GePhysic(this);
 			break;
 			case 'ai':
-				//ShoGE.w("Enable physic");
 				this.AI = object;
 			break;
 			case 'canvas':
-				//ShoGE.w("Enable canvas");
 				this.canvas = object;
+			break;
+			case 'animation':
+				this.Animation = object;
 			break;
 			default:
 				$super(c, object);
 			
 		}
 	},
+	
+	setPosition: function(x, y) {
+		this.Position.set(x * ShoGE.Core.tileWidth, y * ShoGE.Core.tileHeight, 0);
+		var iX = (x - y) * ShoGE.Core.tileWidth/2;
+		var iY = ((x + y)) * ShoGE.Core.tileHeight/4;
+		this.IsoPosition.set(iX, iY, 0);
+	},
+	
+
 	setCardinalDirection: function(card) 
 	{
-		//ShoGE.w("set cardinal direction " + card + this.getType());
 		this.cardinalDirection = card;
 	},
+	
 	getCardinalDirection: function() {
 		return this.cardinalDirection;
 	},
+	
 	setU: function(x, y, z) 
 	{
 		this.u.set(x,y,z);
@@ -106,14 +117,11 @@ var GeEntity = Class.create(GeNode, {
 			if (that.Animation)  {
 				that.Animation.update(dt);
 			}
-			//that.hookPreUpdate(that);
 			if (that.Physic) {
 				//that.Physic.update(dt);
 			}
 			if (that.AI) {
-	//ShoGE.w("Update");
-		
-	//that.AI.update(dt);
+
 			}
 			//that.hookPostUpdate(that);
 		});
@@ -126,9 +134,9 @@ var GeEntity = Class.create(GeNode, {
 			if (that.AI) {
 				that.AI.update(1);
 			}
-			if (that.Position) {
+			if (that.IsoPosition) {
 			//ShoGE.w('trans');
-				renderer.translate(that.Position.getX(), that.Position.getY());
+				renderer.translate(that.IsoPosition.getX(), that.IsoPosition.getY());
 			}
 			if (that.canvas) {
 				that.canvas.draw(renderer);

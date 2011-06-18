@@ -10,7 +10,6 @@ var GeNode = Class.create(GeObject, {
 	{
 		switch(c) {
 			case 'childs':
-				//ShoGE.w("Enabling child");
 				if (!this._childs) {
 					this._childs = new GeLinkedList();
 				}

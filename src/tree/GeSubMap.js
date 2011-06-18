@@ -16,7 +16,7 @@ var GeSubMap = Class.create(GeEntity, {
 		this.buffer = new GeImageBuffer(this, width, height);
 		this.Walker = new GeSubMapWalker(this);
 		
-		this.Position.set(0, 0);
+		this.setPosition(0, 0);
 
 		this.enable('childs');
 		this.enable('canvas', new GeSubMap_Draw(this));
@@ -282,9 +282,9 @@ var GeSubMap_Draw = Class.create(GeObject, {
 		return;
 */	
 			var numH = (renderer.Screen.width / this.parent.tileWidth);
-			var numV = (renderer.Screen.height / this.parent.tileWidth);
-			//numH = 6;
-			//numV = 6;
+			var numV = (renderer.Screen.height / this.parent.tileWidth/2);
+			numH = 7;
+			numV = 8;
 			var position, col, row;
 				 tile = renderer.Camera.tracked.parent;
 			if (!tile) {
@@ -404,10 +404,12 @@ var GeSubMapWalker = Class.create(GeObject, {
 	{
 		
 	},
-	getMapPosition: function(p) 
+	getMapPosition: function(entity) 
 	{
-		x= x - y
-		return p.clone().div(this.parent.tileWidth/2 ).floor();
+		var x = Math.round(entity.Position._A[GeX] + entity.parent.col*ShoGE.Core.tileHeight);
+		var y = Math.round(entity.Position._A[GeY] *2 - x);
+		ShoGE.w("x: " + x + ",y: " + y, this);
+		return new GeVector3D(x, y, 0);
 	},
 	
 	isWalkable: function(mapPos) 
@@ -431,7 +433,7 @@ var GeSubMapWalker = Class.create(GeObject, {
 				//ShoGE.w("Cannot move to non walkable tile ");
 				return false;
 			}
-
+			entity.Position.set(0,0);
 			return this.associate(entity, tile);
 	},
 	
@@ -441,6 +443,7 @@ var GeSubMapWalker = Class.create(GeObject, {
 			return false;
 		}
 		if (entity.parent) {
+			//ShoGE.w("Has parent, removing child");
 			entity.parent.removeChild(entity);
 		}
 		//var dw = this.parent.tileWidth / 2;
@@ -477,14 +480,57 @@ var GeSubMapWalker = Class.create(GeObject, {
 		return false;
 	},
 	
-	moveCardinal: function(entity, cardinal) {
-		if (!entity || !entity.parent) 
-		{
+	moveCardinalWith: function(entity, cardinal,  amount) {
+		if (!entity || !entity.parent) {
 			throw("Entity without parent");
 		}
-		//ShoGE.w("moveCardinal: " + cardinal);
+		var nP = new GeVector3D(entity.parent.row*ShoGE.Core.tileWidth, entity.parent.col*ShoGE.Core.tileHeight);
+		ShoGE.w("nP x: " + nP.getX() + ", y: " + nP.getY(), this);
+		
+		switch(cardinal) {
+			case GE_NORTH:
+				entity.setCardinalDirection(GE_N);
+				//return this.moveTo(entity, col, row + 1);
+				nP._A[GeY]+=amount;
+			break;
+			case GE_EAST:
+				entity.setCardinalDirection(GE_E);
+				//return this.moveTo(entity, col + 1, row);
+				nP._A[GeX]+=amount;
+			break;
+			case GE_SOUTH:
+				entity.setCardinalDirection(GE_S);
+				//return this.moveTo(entity, col, row - 1);
+				nP._A[GeY]-=amount;
+			break;
+			case GE_WEST:
+				entity.setCardinalDirection(GE_W);
+				//return this.moveTo(entity, col  - 1, row);
+				nP._A[GeX]-=amount;
+			break;
+			default:
+				throw("Unknow cardinal " + cardinal);
+		}
+		ShoGE.w("nP x: " + nP.getX() + ", y: " + nP.getY(), this);
+		var tD = this.parent.map.get(this.getMapPosition(entity));
+		if (!tD) {
+			ShoGE.w("Cannot move, no destination tile", this);
+			return;
+		}
+		var BA = new GeVector3D((entity.parent.col - tD.col)*ShoGE.Core.tileWidth, (entity.parent.row - tD.row)*ShoGE.Core.tileHeigtht, 0);
+		BA.add(nP);
+		this.Position = BA;
+		this.moveTo(entity, x, y);
+	},
+	
+	moveCardinal: function(entity, cardinal) {
+		if (!entity || !entity.parent) {
+			throw("Entity without parent");
+		}
 		var col = entity.parent.getCol();
 		var row = entity.parent.getRow();
+		ShoGE.w("moveCardinal col: " + col + ", " + row);
+	
 		var or;
 		switch(cardinal) {
 			case GE_NORTH:

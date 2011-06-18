@@ -72,6 +72,7 @@ var GeLinkedList = Class.create({
 		var elm;
 		while(elm = it.next()) {
 			if (elm.data == remElm) {
+				ShoGE.w("Removing element");
 				if (elm == this.head) {
 					this.head = elm.next;
 				}
@@ -87,11 +88,9 @@ var GeLinkedList = Class.create({
 				elm.prev = null;
 				elm.next = null;
 				return elm;
-				
-				return 1;
 			}
 		}
-		return 0;
+		return null;
 	},
 	
 	getTailItem: function() {

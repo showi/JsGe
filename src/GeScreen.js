@@ -41,7 +41,7 @@ var GeScreen = Class.create(GeEntity, {
 	swap: function() {
 		//ShoGE.w("Swap screen");
 		this.buffer.draw(this.htmlCanvas.getContext('2d'), 0, 0);
-		this.buffer.clear();
+		this.buffer.clear('rgba(0,0,0,1)');
 	},
 	
 	clear: function(color) {

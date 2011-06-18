@@ -27,7 +27,7 @@ var GeDrawTile = Class.create(GeObject, {
 			can = ShoGE.Core.TilesetPool.get("iso-64x64-outside.png").getTile("wall").getCanvas();
 		}
 		if (!can) throw("No tileset found");
-		ctx.drawImage(can, 0, 0, 64,64);
+		ctx.drawImage(can, 0, 0, ShoGE.Core.tileWidth,ShoGE.Core.tileHeight);
 	},
 	
 });
@@ -48,11 +48,11 @@ var GeTile = Class.create(GeEntity, {
 		this.col = col;
 		this.id = id;
 		// ISO POSITION
-		var x = Math.round((col - row) * w);
-		var y = Math.round(((col + row) ) * w/2);
+		//var x = Math.round((col - row) * w);
+		//var y = Math.round(((col + row) ) * w/2);
+		this.setPosition(col , row);
 		
-		this.Position.set(x, y);
-		this.NormalPosition = new GeVector3D(0, 0);
+		//this.NormalPosition = new GeVector3D(0, 0);
 		this.setWalkable(false);
 		this.enable('childs');
 		this.enable('canvas', new GeDrawTile(this));

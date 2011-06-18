@@ -21,7 +21,7 @@ var GeCamera = Class.create(GeEntity, {
 	{
 		if (this.tracked) {
 			if (this.tracked.parent) {
-				var p = this.tracked.parent.Position;
+				var p = this.tracked.parent.IsoPosition;
 				renderer.translate(-p.getX(),  -p.getY());
 			}
 		}
