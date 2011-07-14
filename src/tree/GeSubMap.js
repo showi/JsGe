@@ -171,7 +171,7 @@ var GeSubMap = Class.create(GeEntity, {
 			var tile = this.map.data[i];
 			if (!tile) continue;
 			var t = 0;
-			var i, s;
+			var s;
 			for (j = 0, s = tile.friends.length; j < s; j++) {
 				if (!tile.friends[j]) {
 					continue;

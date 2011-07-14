@@ -10,7 +10,7 @@ var GeObject = Class.create({
 		
 	setClassName: function(className) 
 	{
-		this.className = className
+		this.className = className;
 	},
 	
 	getClassName: function() 
@@ -79,9 +79,9 @@ var GeObject = Class.create({
 			msg += " no";
 		}
 		msg += "\n";
-		if (this.type) { msg += this.type}
+		if (this.type) { msg += this.type; }
 		msg += "-";
-		if (this.subtype) { msg += this.subtype}
+		if (this.subtype) { msg += this.subtype; }
 		msg += "\n";
 		return msg;
 	},

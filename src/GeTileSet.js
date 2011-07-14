@@ -60,10 +60,12 @@ var GeTileSet_AnimWalker = Class.create(GeObject, {
 	
 	getCanvas: function() 
 	{
-		var sx, sy, sw, sh;
+		var sx, sy;
 		if (this.parent.cor == GE_ROW) {
 			sx = this.parent.fStart + this.frame * this.parent.fw + this.parent.sx * this.parent.fw;
 			sy = this.parent.sy * this.parent.fh;
+		} else {
+		    throw("Invalid parent coordinate type");
 		}
 		return this.parent.parent.getCanvas(sx, sy, this.parent.fw, this.parent.fh);
 	},
@@ -118,7 +120,7 @@ var GeTileSet_Anim = Class.create(GeObject, {
 	setName: function(v) 
 	{
 		this.name = v;
-		var that = this;
+		//var that = this;
 	},
 	
 	getWalker: function()

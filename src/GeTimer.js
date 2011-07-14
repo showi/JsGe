@@ -1,7 +1,7 @@
 var GeTimer = Class.create(GeObject, {
 	initialize: function($super) {
 		$super();
-		var date = new Date();
+		//var date = new Date();
 		this.bRunning = false;
 	},
 	start: function() {

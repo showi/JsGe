@@ -75,7 +75,7 @@ var GeDrawPathFindingA = Class.create(GeObject, {
 	},
 	
 	draw_itinary: function(ctx, node) {
-			var n = node;
+			//var n = node;
 			while (node) {
 				this.draw_node(ctx, node, 'rgba(0,0,255,0.8)');
 				node = node.parent;
@@ -211,7 +211,7 @@ var GePathFindingA = Class.create(GeEntity, {
 	},
 
 	addFriendsCW: function(node, friends) {
-		var n, x, y, tile;
+		var x, y;
 		
 		var tile;
 		if (!(tile = this.map.map.get(node.x , node.y))) {
@@ -238,13 +238,13 @@ var GePathFindingA = Class.create(GeEntity, {
 	},
 
 	addFriendsACW: function(node, friends) {
-			var n, x, y, tile;
+			var x, y;
 
 					var tile;
 		if (!(tile = this.map.map.get(node.x , node.y))) {
 			return false;
 		}
-		var g = 0;
+		//var g = 0;
 		if (tile.type == 'water') {
 			g=40;
 		} else if (tile.type == 'deepWater') {

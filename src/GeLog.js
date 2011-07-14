@@ -13,13 +13,11 @@ var GeLog = Class.create(GeObject, {
 		
 	},
 	
-	w: function(msg, o) 
-	{
+	w: function(msg, o) {
 		var m = "["  + Date.now() + "] ";
 		if (o) { m+= "(" + o.className + ") "; }
 		m+= msg; 
-		if (console) { console.log(m); return;}
+		if (typeof(console)) { console.log(m); return; }
 	},
 	
-
 });

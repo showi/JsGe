@@ -18,7 +18,7 @@ var GeSprite = Class.create(GeEntity,  {
 		this.setU(sw/2, 0, 0);
 		this.setV(0, sh/2, 0);
 		this.animations = new Hash();
-		var img = ShoGE.Core.Image
+		//var img = ShoGE.Core.Image;
 	},
 
 	

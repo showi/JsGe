@@ -6,7 +6,7 @@ var GeMediaPool = Class.create(GeObject, {
 		this.setClassName('GeMediaPool');
 		this.pool = new Hash();
 		this.path = "res/";
-		var that = this;
+		//var that = this;
 		this.total = 0;
 		this.total_loaded = 0;
 	},

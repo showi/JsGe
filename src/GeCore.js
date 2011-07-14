@@ -31,7 +31,7 @@ var GeCore = Class.create(GeObject, {
 	init_global_variables: function() 
 	{
 		ShoGE.Log = new GeLog("GameLog");
-		ShoGE.w = function(msg, o) { ShoGE.Log.w(msg,o) };		
+		ShoGE.w = function(msg, o) { ShoGE.Log.w(msg,o); };		
 	},
 
 	load_ressources: function() 
@@ -138,7 +138,7 @@ var GeCore = Class.create(GeObject, {
 		return this.Mouse;
 	},
 	set_keyboard: function(id) {
-		this.Keyboard = new GeKeyboard(this, id)
+		this.Keyboard = new GeKeyboard(this, id);
 		return this.Keyboard;
 	},
 	get_keyboard: function() {

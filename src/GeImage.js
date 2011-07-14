@@ -34,7 +34,7 @@ var GeImage = Class.create(GeLoadable, {
 		this.img.onerror = function() {
 			that.error = true;
 			throw("Loading image " + that.src  + " failed.");
-		}
+		};
 	},
 	_setCanvas: function() {
 			this._canvas = document.createElement('canvas');

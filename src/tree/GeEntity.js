@@ -129,7 +129,7 @@ var GeEntity = Class.create(GeNode, {
 	
 	draw: function(renderer) 
 	{
-		renderer.save()
+		renderer.save();
 		this.traverseDown(function(that) {
 			if (that.AI) {
 				that.AI.update(1);
